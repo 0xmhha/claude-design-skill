@@ -95,7 +95,7 @@ Goal: fill in SKILL.md body sections that govern day-to-day skill behavior. Auth
 
 - [ ] Junior Designer workflow — assumptions → reasoning → placeholders → review loop. Our own structure.
 - [ ] Anti-AI-slop checklist — generic gradient avoidance, layout symmetry, font pairing pitfalls. Our own list.
-- [ ] App prototype rules — `IosFrame` (new mockup engine, written from scratch — `assets/android_frame.jsx` already in) + real-image policy + Playwright verification.
+- [x] App prototype rules — `IosFrame` (new mockup engine, written from scratch — `assets/android_frame.jsx` already in) + real-image policy + Playwright verification. (2026-05-09)
 - [ ] Slide deck conventions — 1920×1080 layout primitives, speaker-notes panel.
 - [ ] Tweaks live-tuning system — design decisions toggle-able at runtime.
 - [ ] Critique guide — N-dimension scoring after delivery, with our own dimensions.
@@ -137,6 +137,13 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - 6 fresh files authored: SKILL.md (skeleton), README.md, LICENSE (MIT), CHANGELOG.md, .gitignore, this PROJECT-PLAN.md.
 - License: MIT for now, replaceable per team policy before any external publication.
 - Next: Step 2 — SKILL.md body author pass.
+
+### 2026-05-09 · Step 2.3 — App prototype rules + IosFrame
+
+- `assets/ios_frame.jsx` authored from scratch. iPhone 15 Pro / Pro Max model registry (393×852 / 430×932 logical px), titanium-edge gradient body, Dynamic Island as a children-receiving slot with 220×48 floor + 240 ms expand transition, SF-styled status bar, home indicator. Same public API surface as the predecessor's `IosFrame` (interface is not protected); implementation written fresh — no code copied from `huashu-design/assets/ios_frame.jsx`.
+- `SKILL.md` gains a `## App prototype rules (iOS / Android)` section: Rule 1 frame wrapping (hard reject browser-window mockups for iOS / Android briefs), Rule 2 real images over placeholder grays, Rule 3 click-test before declaring done, plus the Dynamic Island slot guidance. References routing table updated; the matching item is removed from the TBD list.
+- Validated: 47/47 regression tests still pass (svg-sanitize 18 + scan_assets 13 + codex-image-import 16); JSON template parses; visual smoke through Playwright with four cases (default, dark mode, Pro Max + Live-Activity-style island, no-chrome) all rendered correctly.
+- Next: Step 2 — Junior Designer workflow OR Anti-AI-slop checklist OR Slide deck conventions (Tweaks live-tuning / Critique guide are later).
 
 ---
 

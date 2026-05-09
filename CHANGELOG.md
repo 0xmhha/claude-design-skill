@@ -14,6 +14,11 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 - `HANDOFF.md` — context briefing for fresh AI sessions. Covers project history, user's working style, anti-patterns observed in the predecessor session, decision tree, and a glossary. Read this before doing real work.
 - README.md gets a top-of-file pointer to HANDOFF.md.
 
+### Added — App prototype rules + IosFrame (Step 2.3)
+
+- `assets/ios_frame.jsx` · iPhone 15 Pro / Pro Max device frame, authored from scratch. Model registry (`iphone15pro` / `iphone15promax`), titanium-edge gradient body, SF-styled status bar (signal / Wi-Fi / battery), home indicator, and a Dynamic Island that doubles as a children-receiving slot — pass an `island` ReactNode for now-playing / timer / Live Activity mocks; auto-expands to 220×48 with a 240 ms transition. Public API surface matches the predecessor's `<IosFrame>` (interface only, not protected); implementation is original.
+- `SKILL.md` · new `## App prototype rules (iOS / Android)` section — Rule 1 frame wrapping (browser-window mockup is a hard reject for iOS / Android briefs), Rule 2 real images instead of placeholder grays, Rule 3 click-test before declaring done, plus the Dynamic Island slot guidance. References routing table gains the matching row; the TBD list loses the matching reservation.
+
 ---
 
 ## [0.1.0-alpha] · 2026-05-09

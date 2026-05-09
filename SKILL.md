@@ -150,6 +150,63 @@ Key facts (validated against codex-cli 0.130.0 on 2026-05-09):
 - Every gpt-image-2 PNG carries a `caBX` C2PA chunk (~25 KB). The
   importer strips it and substitutes the fork's own PROVENANCE entry.
 
+## App prototype rules (iOS / Android)
+
+When the user's brief is "iOS prototype" or "Android mockup", three
+rules apply before the work can be called done. Skipping any one of
+them is the tell that distinguishes a polished prototype from a
+screenshot of a landing page.
+
+### Rule 1 · Wrap every screen in a device frame
+
+- iOS → `assets/ios_frame.jsx` (`<IosFrame />`, iPhone 15 Pro / Pro Max
+  via `model="iphone15pro"` | `"iphone15promax"`).
+- Android → `assets/android_frame.jsx` (`<AndroidFrame />`, Pixel 8 /
+  Pixel 8 Pro via `model="pixel8"` | `"pixel8pro"`).
+- Both frames render their own status bar, system chrome, and bottom
+  inset. **Do not redraw any of these inside your screen content** —
+  the result is double status bars or a duplicated home indicator,
+  which immediately betrays the mockup as agent-generated.
+- A browser-window mockup (window-control dots, URL bar, tab strip)
+  delivered for an iOS / Android brief is a hard reject. Re-render
+  inside the device frame.
+
+### Rule 2 · Real images, not placeholder grays
+
+- Product photography, avatars, and brand marks come from real assets:
+  Codex / `gpt-image-2` (passed through `scripts/codex-image-import.py`),
+  user-supplied files, or CC0 sources with PROVENANCE entries.
+- Solid grey blocks, generic stock photography, and
+  `<div style="background:#ddd">` standins are silent failure modes —
+  the layout passes a quick eyeball check and the design has no taste.
+  The first reviewer with design instincts spots it before the user
+  does.
+- When you genuinely cannot source a real image, ask the user. Do not
+  ship a placeholder under a "looks fine" justification.
+
+### Rule 3 · Click-test before declaring done
+
+- Wire up at least one critical interaction (tap a primary button,
+  open a sheet, switch tabs) and verify it with Playwright or the
+  equivalent in the user's browser-automation toolset.
+- A static screen that "looks like" the prototype but has no working
+  taps is a static screen, not a prototype. Label it as such if that
+  is what the user asked for; otherwise the click-test is part of the
+  deliverable.
+- Smoke-test at the real device dimensions exposed by the frame
+  (`<IosFrame />` at 393×852 or 430×932, not a scaled-up desktop
+  preview). Long content, dark mode, and any custom Dynamic Island
+  content used in the run all need a quick visual pass.
+
+### Dynamic Island slot (iOS only)
+
+`<IosFrame island={…}>` accepts a ReactNode rendered inside the
+Dynamic Island region — pass a now-playing pill, a timer, or a Live
+Activity mock to demo state-aware UI. Omit the prop and it falls back
+to the static black pill. The slot auto-expands to at least 220 × 48 px
+with a 240 ms transition, keeping the ergonomics close to the real
+Live Activity expand without prescribing layout inside the slot.
+
 ## References routing table
 
 | Task | Read |
@@ -165,6 +222,7 @@ Key facts (validated against codex-cli 0.130.0 on 2026-05-09):
 | **Codex CLI design workflow** — GPT-5.5 reasoning + auto gpt-image-2, with import gate | `references/codex-design-workflow.md` + `scripts/codex-image-import.py` |
 | **Brand spec field reference** — what every key in `team-brand-spec.example.json` means | `references/brand-spec-fields.md` |
 | **CI workflow templates** — GitHub Actions / GitLab CI for sanitizer regression + asset scan | `references/ci-template.md` |
+| **App prototype rules** — iOS / Android device-frame wrapping, real-image policy, Playwright click-test | `## App prototype rules` (this skill) + `assets/ios_frame.jsx` + `assets/android_frame.jsx` |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -182,10 +240,6 @@ paragraphs.
 - **Junior Designer workflow** — the iterative
   assumptions → reasoning → placeholders → review loop. Step 3.
 - **Anti-AI-slop checklist** — what to avoid in generated UI. Step 3.
-- **App prototype rules (iOS / Android)** — `IosFrame` / `AndroidFrame`
-  device wrapping, real-image policy, Playwright verification.
-  Currently `assets/android_frame.jsx` is the only mockup engine
-  shipped — `IosFrame` will be authored from scratch in Step 3.
 - **Slide deck conventions** — 1920×1080 layouts, speaker-notes panel.
   Step 3.
 - **Animation rules** — Stage / Sprite engine, Expo easing, narrative
