@@ -1,0 +1,37 @@
+{
+  "_template_meta": {
+    "purpose": "Drop-in baseline for .claude/settings.json that enforces this fork's security policy at the harness level. Copy to <your-project>/.claude/settings.json (or merge with your existing file) before letting the agent run.",
+    "source": "internal-design-skill · references/security-config.md",
+    "version": "2026-05-09",
+    "remove_this_block_after_copying": true,
+    "codex_cli_note": "Codex CLI authentication is via 'codex login' (ChatGPT OAuth). The OPENAI_API_KEY env var is NEVER set in this file or in the agent harness — Codex stores its own token in ~/.codex. If your team policy requires inspectable creds, run codex with OPENAI_API_KEY exported only in the calling shell, not here."
+  },
+
+  "permissions": {
+    "deny": [
+      "Bash(yt-dlp:*)",
+      "Bash(youtube-dl:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ],
+    "ask": [
+      "Bash(curl https://commons.wikimedia.org/*)",
+      "Bash(curl https://*.metmuseum.org/*)",
+      "Bash(curl https://*.artic.edu/*)",
+      "Bash(curl https://images.unsplash.com/*)",
+      "Bash(curl https://images.pexels.com/*)",
+      "Bash(curl https://fonts.googleapis.com/*)",
+      "Bash(curl https://fonts.gstatic.com/*)",
+      "Bash(curl https://unpkg.com/react@*)",
+      "Bash(curl https://unpkg.com/react-dom@*)",
+      "Bash(curl https://unpkg.com/@babel/standalone@*)",
+
+      "Bash(codex:*)",
+      "Bash(codex exec:*)",
+      "Bash(codex login)",
+      "Bash(python3 scripts/codex-image-import.py:*)",
+
+      "WebSearch(*)"
+    ]
+  }
+}

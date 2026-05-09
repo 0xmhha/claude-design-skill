@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit — repo-managed git hook.
+#
+# Activate once per clone:
+#     ./scripts/install-hooks.sh
+#
+# What it does:
+#   * Runs scripts/svg-sanitize.py --strict on every staged .svg
+#   * Runs scripts/scan_assets.py on every staged .png / .jpg / .jpeg / .gif
+#   * Blocks the commit on the first failure
+#
+# Bypass (use only when sanitizer/scanner is wrong, never to silence findings):
+#     git commit --no-verify
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SVG_SAN="$REPO_ROOT/scripts/svg-sanitize.py"
+ASSET_SCAN="$REPO_ROOT/scripts/scan_assets.py"
+
+# Refuse to run if the tools are missing — better than silently passing.
+if [ ! -f "$SVG_SAN" ] || [ ! -f "$ASSET_SCAN" ]; then
+  echo "✘ pre-commit: scripts/svg-sanitize.py or scripts/scan_assets.py missing." >&2
+  echo "   Re-run ./scripts/install-hooks.sh from the repo root." >&2
+  exit 1
+fi
+
+STAGED="$(git diff --cached --name-only --diff-filter=ACM)"
+[ -z "$STAGED" ] && exit 0
+
+FAIL=0
+TMP_OUT="$(mktemp -d)/sanitized.svg"
+trap 'rm -rf "$(dirname "$TMP_OUT")"' EXIT
+
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  case "$f" in
+    *.svg)
+      echo "→ svg-sanitize $f"
+      if ! python3 "$SVG_SAN" --in "$REPO_ROOT/$f" --out "$TMP_OUT" --strict >/dev/null; then
+        echo "  ✘ $f failed sanitize. Run: python3 scripts/svg-sanitize.py --in $f --out /tmp/clean.svg" >&2
+        FAIL=1
+      fi
+      ;;
+    *.png|*.jpg|*.jpeg|*.gif)
+      echo "→ scan-assets $f"
+      if ! python3 "$ASSET_SCAN" --file "$REPO_ROOT/$f" >/dev/null; then
+        echo "  ✘ $f flagged. Run: python3 scripts/scan_assets.py --file $f" >&2
+        FAIL=1
+      fi
+      ;;
+  esac
+done <<< "$STAGED"
+
+if [ "$FAIL" -ne 0 ]; then
+  echo "" >&2
+  echo "Pre-commit blocked. Fix the asset(s) or, if the tool is wrong, bypass with: git commit --no-verify" >&2
+  exit 1
+fi
+
+echo "✓ pre-commit: all staged assets pass."

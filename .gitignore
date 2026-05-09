@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node / editors
+node_modules/
+*.swp
+.idea/
+.vscode/
+Thumbs.db
+
+# Per-machine harness state
+.claude/settings.local.json
+
+# Per-project secrets — actual values must NEVER be committed.
+# Only the .example.json template (in assets/) is tracked.
+team-brand-spec.json
+
+# Per-project ephemeral notes that may carry unreleased product info
+product-facts.md
+
+# Asset provenance ledger — generated per project, not tracked here
+assets/*-brand/PROVENANCE.md
+assets/*-brand/generated/
+
+# Codex CLI scratch outputs (workspace-level fallback when OPENAI_API_KEY
+# is not set — Pillow code-renders that we do NOT want to commit)
+output/
+output/imagegen/
+
+# Figma export reports
+assets/figma-reports/
