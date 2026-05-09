@@ -21,6 +21,10 @@ description: |
 > plan (see PROJECT-PLAN.md). Security and routing rules are already
 > live and load-bearing — they govern every external call this skill
 > can make.
+>
+> **For AI agents in a fresh session**: read `HANDOFF.md` at the repo root
+> first. It contains the working-style briefing and anti-pattern list
+> that prevents the most common rework loops.
 
 ## What this skill is for
 

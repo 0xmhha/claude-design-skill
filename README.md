@@ -3,6 +3,8 @@
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
 > **Status: v0.1.0-alpha · skeleton · 2026-05-09 · clean-room rewrite, no upstream skill inherited.**
 
+> 🟡 **If you're an AI agent picking this repo up in a fresh session, read [`HANDOFF.md`](HANDOFF.md) FIRST.** It contains the project context, the user's working style, the anti-patterns to avoid, and the decision tree for the next move. Skipping it costs tokens.
+
 ## What this is
 
 A skill package for Claude Code (and any markdown-skill-capable agent) that turns a design brief into hi-fi HTML prototypes, Figma-driven precision edits, and brand-correct illustrations through Codex CLI + gpt-image-2 — with security gates baked in at every boundary.
@@ -17,6 +19,7 @@ Three load-bearing rules govern every external call:
 
 ```
 claude-design-skill/
+├── HANDOFF.md                        # ⭐ READ FIRST in a new session — context briefing + anti-patterns
 ├── SKILL.md                          # main agent doc (skeleton)
 ├── README.md                         # this file
 ├── LICENSE                           # MIT

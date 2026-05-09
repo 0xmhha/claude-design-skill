@@ -7,6 +7,15 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 
 ---
 
+## [Unreleased]
+
+### Added — session-handoff briefing
+
+- `HANDOFF.md` — context briefing for fresh AI sessions. Covers project history, user's working style, anti-patterns observed in the predecessor session, decision tree, and a glossary. Read this before doing real work.
+- README.md gets a top-of-file pointer to HANDOFF.md.
+
+---
+
 ## [0.1.0-alpha] · 2026-05-09
 
 ### Initial skeleton
