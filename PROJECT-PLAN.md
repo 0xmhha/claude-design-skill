@@ -94,7 +94,7 @@ Step 2 and Step 3 below cover this.
 Goal: fill in SKILL.md body sections that govern day-to-day skill behavior. Author from scratch. No upstream prose.
 
 - [ ] Junior Designer workflow — assumptions → reasoning → placeholders → review loop. Our own structure.
-- [ ] Anti-AI-slop checklist — generic gradient avoidance, layout symmetry, font pairing pitfalls. Our own list.
+- [x] Anti-AI-slop checklist — generic gradient avoidance, layout symmetry, font pairing pitfalls. Our own list. (2026-05-10)
 - [x] App prototype rules — `IosFrame` (new mockup engine, written from scratch — `assets/android_frame.jsx` already in) + real-image policy + Playwright verification. (2026-05-09)
 - [x] Slide deck conventions — 1920×1080 layout primitives, speaker-notes panel. (2026-05-10)
 - [ ] Tweaks live-tuning system — design decisions toggle-able at runtime.
@@ -152,6 +152,13 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - Two distribution bugs found by visual smoke and fixed in the same change: (1) per-slide light-DOM `display: flex` overrode `::slotted(section) { display: none }` because `::slotted` styles lose the cascade to the slotted-element's own light-DOM CSS — fixed by `::slotted(section:not(.is-active)) { display: none !important }`. (2) `<aside slot="notes">` is a grandchild of the shadow host (nested in `<section>`), and the slot algorithm only distributes direct children; the aside leaked into the slide canvas — fixed by detaching `aside` from light DOM during `_collect()` and cloning its contents into the overlay on each render.
 - Validated: 47/47 regression tests still pass; JSON template parses; visual smoke through Playwright with four cases (cover default, cover + notes overlay, agenda + notes with `<ul>/<strong>` markup, outro + notes with `<em>` markup) — all rendered correctly after the fixes.
 - Next: Step 2 — Junior Designer workflow OR Anti-AI-slop checklist (Tweaks live-tuning / Critique guide are later); Step 3 design-styles catalog is the highest-IP-risk section.
+
+### 2026-05-10 · Step 2.2 — Anti-AI-slop checklist
+
+- `SKILL.md` gains a `## Anti-AI-slop checklist` section. Twelve patterns, each formatted as **why it's slop → what to do instead** in one or two sentences: rainbow / sunset gradient as primary identity, perfectly symmetric centered layouts, generic glassmorphism, default Inter / 16 px / 1.5 type stack, emoji-as-icon, single border-radius applied to everything, uniform vertical padding, placeholder marketing copy, stock content (Unsplash + Spline-style 3D), animated gradient-mesh hero backgrounds, default cyberpunk-neon palette for anything web3, and cargo-cult game-HUD detail. The last two are domain-specific to the maintainer's game / web3 context. Authored from observation; predecessor's anti-slop section was not read. References routing table updated; the matching item is removed from the TBD list.
+- A delivery threshold is stated explicitly: one occurrence is a fix, three or more means the design has not started yet — go back to references and try again. Concrete enough to be a real review gate, not a checklist that decorates the doc.
+- Validated: 47/47 regression tests still pass (text-only change to SKILL.md and the doc index files); JSON template parses; no visual smoke needed (no new code or asset).
+- Next: Step 2 — Junior Designer workflow (most foundational of the remaining), OR Tweaks live-tuning system, OR Critique guide; Step 3 design-styles catalog and animation engine remain the highest-IP-risk sections.
 
 ---
 

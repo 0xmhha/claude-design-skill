@@ -281,6 +281,107 @@ parent same-origin window. An explicit `https://host.example` value
 posts only to that origin. The wildcard `"*"` is intentionally
 unsupported — receivers must always be specified. Off by default.
 
+## Anti-AI-slop checklist
+
+The patterns below are the AI-generated UI tells the maintainer keeps
+running into. Each one looks fine in isolation; together they read as
+"an LLM made this" within five seconds of opening the page. Run a
+mental pass over the deliverable before declaring it done — if more
+than one pattern is present, treat it as a draft, not a delivery.
+
+Each entry is structured as: **why it's slop** → **what to do instead**.
+
+1. **Rainbow / sunset gradient as the primary identity.** Why it's
+   slop: orange → pink → purple is the LLM's reflex whenever the
+   brief mentions "modern" — every ChatGPT-flavored landing page
+   wears the same coat. → Pick one accent hue plus neutrals. If a
+   gradient is unavoidable, hold it to two adjacent hues, narrow the
+   angle, and apply it to one element only.
+
+2. **Perfectly symmetric, centered layouts.** Why it's slop:
+   centered hero + 3-column features + centered CTA is the framework
+   demo, not a design. → Use asymmetry deliberately. Off-center text,
+   mixed grid widths, deliberate vertical breaks. Symmetry should be
+   a choice, not a default.
+
+3. **Generic glassmorphism.** Why it's slop:
+   `backdrop-filter: blur(20px)` over a gradient mesh is the 2025
+   Bootstrap stripe — it shows up regardless of the brand. → Reserve
+   frosted surfaces for genuinely interactive layers (modals,
+   command palettes). Default cards should use real shadow on
+   opaque material.
+
+4. **Default type stack: Inter, 16 px body, 1.5 line-height.** Why
+   it's slop: those are the Tailwind starter defaults. Technically
+   correct, signature-free. → Tighten display line-height (1.05–1.15)
+   for headings, hand-set tracking on display sizes, and consider
+   body fonts beyond Inter (Geist, Söhne, Atlas Grotesk, Untitled
+   Sans). Different scales for marketing vs UI vs data.
+
+5. **Emoji-as-icon (🚀 fast, 💡 ideas, ⚡ performance).** Why it's
+   slop: it's the Pictionary clue of AI design — the agent picked the
+   most obvious metaphor and stopped. → Use a real icon set
+   (Lucide, Phosphor, custom SVGs) with a single stroke discipline.
+   Reserve emoji for places where the platform expects one.
+
+6. **One border-radius applied to every box.** Why it's slop:
+   12 px or 16 px corners on cards, buttons, inputs, and badges
+   collapse the visual hierarchy — nothing feels different from
+   anything else. → Pick at least three radii with intent. Sharper
+   for buttons, softer for cards, full pills for status,
+   sharp-zero for headers. Radius communicates role.
+
+7. **Uniform vertical padding everywhere.** Why it's slop: every
+   section gets `py-24` because the LLM doesn't see page rhythm —
+   hero, content, footer all read at the same density. → Vary
+   vertical rhythm: heroes breathe, dense lists compress, mid-content
+   alternates. Padding cadence is half the deck.
+
+8. **Placeholder marketing copy
+   ("Disrupt. Innovate. Iterate.").** Why it's slop: copy that
+   could plug into any product is copy that says nothing. → Either
+   real copy or no copy. An empty section is more honest than
+   "Empower your team to do more" — and ships less reputational
+   damage.
+
+9. **Stock content — Unsplash photography and Spline-style 3D
+   blobs.** Why it's slop: the diverse-team-laughing-around-laptop
+   stock photo and the pastel isometric 3D shape are both the
+   "fetched a generic asset" tell, no matter the medium. → Real
+   product imagery, real customer assets with consent, or a
+   deliberately authored illustration in your own style. No stock
+   people, no stock 3D.
+
+10. **Animated gradient-mesh backgrounds behind hero copy.** Why
+    it's slop: a WebGL orb that pulses behind the headline is every
+    AI agent's idea of "make it feel alive". It distracts from the
+    actual product and signals the same template across deliverables.
+    → Animate to reinforce hierarchy: button micro-interactions,
+    focus reveals on scroll, intentional parallax. Background
+    animation is rarely the answer to "this feels static".
+
+11. **Default cyberpunk-neon palette for anything web3.** Why it's
+    slop: every NFT marketplace and wallet mockup defaults to cyan
+    + magenta + pure-black + glow + grid. The aesthetic was
+    distinctive five years ago; today it reads as "I asked the LLM
+    for a web3 UI". → Treat the project's actual brand or product
+    as the source. If the chain has no identity yet, prefer
+    restrained material (paper-white, off-black, single accent)
+    over reflexive cyberpunk.
+
+12. **Cargo-cult game-HUD detail.** Why it's slop: fake
+    nine-segment displays, gratuitous "SYSTEM: ONLINE" overlays,
+    decorative data readouts that show nothing real — game-UI
+    cosplay without function. The LLM clutters game and web3
+    surfaces with this on instinct. → Every HUD element earns its
+    place by carrying live data the player or user actually needs.
+    Decorative chrome belongs in the wallpaper, not in the
+    interface.
+
+If the deliverable contains one of these, fix it before delivery.
+If it contains three or more, the design hasn't started yet — go
+back to references, pick a direction, and try again.
+
 ## References routing table
 
 | Task | Read |
@@ -298,6 +399,7 @@ unsupported — receivers must always be specified. Off by default.
 | **CI workflow templates** — GitHub Actions / GitLab CI for sanitizer regression + asset scan | `references/ci-template.md` |
 | **App prototype rules** — iOS / Android device-frame wrapping, real-image policy, Playwright click-test | `## App prototype rules` (this skill) + `assets/ios_frame.jsx` + `assets/android_frame.jsx` |
 | **Slide deck conventions** — 1920×1080 fixed canvas, colocated speaker notes, print-to-PDF rules, keyboard surface | `## Slide deck conventions` (this skill) + `assets/deck_stage.js` |
+| **Anti-AI-slop checklist** — 12 generated-UI tells (gradients, glassmorphism, emoji icons, default type, cyberpunk-by-reflex, fake HUD detail) with fixes | `## Anti-AI-slop checklist` (this skill) |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -314,7 +416,6 @@ paragraphs.
   game HUD, NFT marketplace, wallet/DEX, onboarding game-loop. Step 3.
 - **Junior Designer workflow** — the iterative
   assumptions → reasoning → placeholders → review loop. Step 3.
-- **Anti-AI-slop checklist** — what to avoid in generated UI. Step 3.
 - **Animation rules** — Stage / Sprite engine, Expo easing, narrative
   pacing, anti-pitfall checklist. Step 3 (engine code rewrite needed).
 - **Tweaks live-tuning system** — toggling design variations. Step 3.
