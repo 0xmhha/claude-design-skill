@@ -28,6 +28,13 @@ product-facts.md
 assets/*-brand/PROVENANCE.md
 assets/*-brand/generated/
 
+# Exception: the showcase pack ships with the repo (generic license-clean
+# visual demos generated via Codex CLI; not brand-specific). Step 3.6 ships
+# 16 PNGs + their PROVENANCE entries.
+!assets/showcase-brand/PROVENANCE.md
+!assets/showcase-brand/generated/
+!assets/showcase-brand/generated/*.png
+
 # Codex CLI scratch outputs (workspace-level fallback when OPENAI_API_KEY
 # is not set — Pillow code-renders that we do NOT want to commit)
 output/

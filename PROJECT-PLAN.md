@@ -113,7 +113,7 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - [x] `references/animation-engine.md` + `assets/animations.jsx` + `assets/easing.js` — Stage / Sprite engine + 14-curve Easing pack. Public API matches the established `<Stage>` / `<Sprite>` / `useTime` / `useSprite` / `interpolate` / `Easing` shape (interface only, not protected); implementation original. Easing has its own regression suite (`scripts/test_animations_easing.js`, 19/19). (2026-05-10)
 - [x] `references/animation-best-practices.md` + `references/animation-pitfalls.md` — animation conventions. Generic best practices cited externally (Material 3, Apple HIG, CSS Easing spec); no upstream-specific case studies retained. (2026-05-10)
 - [—] ~~`references/sfx-library.md` + `assets/sfx/`~~ — **out of scope per user instruction 2026-05-10**. Visual-only project; no SFX library will be authored, no audio assets vendored. (See decisions log entry below.)
-- [ ] `assets/showcases/` — prebuilt visual demos. Generated from scratch per scene + style combination. Each PNG gets PROVENANCE.md with prompt + Codex session id.
+- [x] `assets/showcases/` — prebuilt visual demos. 16 PNGs at `assets/showcase-brand/generated/` (codex-image-import.py path convention). Generated fresh from Codex CLI + gpt-image-2 per scene × philosophy combination. PROVENANCE.md per file with prompt SHA-256, Codex session id, stripped chunks. (2026-05-10)
 
 ---
 
@@ -237,6 +237,33 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - Carry-over text that already references sound stays unchanged — `references/design-styles.md §18 Onboarding-Game-Loop` carries the predecessor's *"haptic + animation + sound"* phrase verbatim as part of its aesthetic spec; that's a reference to the *philosophy*, not a sourcing commitment from this repo.
 - HANDOFF.md §7.5 updated with a *Status: out of scope* banner so a future fresh-session agent does not start authoring.
 - Next: Step 3.6 — `assets/showcases/` (Codex CLI + gpt-image-2 generation; visual deliverable; the environment for it is already validated per HANDOFF §4).
+
+### 2026-05-10 · Step 3.6 — `assets/showcase-brand/` (16 prebuilt visual demos)
+
+- 16 PNGs generated via Codex CLI + gpt-image-2 (`codex-cli 0.130.0`, OAuth) and imported through `scripts/codex-image-import.py` (strip-then-scan gate, `caBX` C2PA chunk removed, `scan_assets.py` post-strip PASS for every file). Path: `assets/showcase-brand/generated/01..16-*.png`. The `<brand>-brand/generated/` carrier directory is the script's path convention; HANDOFF §7.6's mention of "`assets/showcases/`" is conceptual — the actual carrier is `assets/showcase-brand/generated/`. HANDOFF §7.6 carries a *Status: shipped* banner pointing at the real path so future agents do not look in the wrong directory.
+- **Sampling matrix** — 16 cells from the 9-scene × 18-philosophy cross-product, weighted toward the maintainer's game / web3 IP-track (§06–09 game / web3 scenes occupy 4 of the 16 cells). Cells:
+  | # | Scene | Philosophy | Topic |
+  |---|---|---|---|
+  | 01 | Deck cover | §01 Editorial-identity | "Three knobs. / No re-render." |
+  | 02 | Deck cover | §08 Atmospheric gradient | "Decks, not / landing pages." (cool diffuse) |
+  | 03 | Mid-deck content | §02 Neo-grotesque utility | Rate-limit table with state colors |
+  | 04 | Mid-deck content | §07 Data-dense ledger | 24h volume snapshot (4 KPI tiles + sparklines) |
+  | 05 | Web hero with motion | §04 Editorial-spatial cinematic | "Field-tested / motion." (off-black + film-grain stripe) |
+  | 06 | Web hero with motion | §13 Kinetic typographic poster | "Type / performs." (extreme variable-font + ghost layer) |
+  | 07 | Infographic | §07 Data-dense ledger | Q1 protocol-revenue vertical infographic |
+  | 08 | Infographic | §06 Print-translation editorial | "Why deck cadence matters" essay-format infographic with drop cap |
+  | 09 | Mobile app screen | §05 Apple-system glass | iOS 18 Today screen (Health / Calendar / Forecast) |
+  | 10 | Mobile app screen | §09 Soft-tactile / paper-like | Things-3-style productivity Today screen |
+  | 11 | Game HUD overlay | §15 Game HUD | Diablo / Destiny / Genshin HUD with edge-anchored chrome |
+  | 12 | Game HUD overlay | §10 High-contrast graphic poster | Bauhaus-cross HUD (3-color discipline) |
+  | 13 | NFT marketplace card | §17 NFT Marketplace | 4-up dark-mode card grid |
+  | 14 | NFT marketplace card | §16 Web3 Minimalism | Type-first collection landing |
+  | 15 | Wallet / DEX | §16 Web3 Minimalism | Uniswap-style mobile swap |
+  | 16 | Onboarding game-loop | §18 Onboarding-Game-Loop | Step 3 / 7 chain-pick with friendly mascot |
+- **Provenance audit trail** at `assets/showcase-brand/PROVENANCE.md` (213 lines): for each of the 16 files records source generator (`codex-cli` / gpt-image-2), Codex session id, full prompt text + prompt SHA-256, source PNG SHA-256, output (stripped) PNG SHA-256, stripped-chunk list (the C2PA `caBX` block — 23–26 KB per file — replaced by this PROVENANCE entry), post-strip stego-scan result (PASS), and final import status. Format follows the same single-PROVENANCE.md table convention as the other sanitizers (svg-sanitize, codex-image-import).
+- **Validation**: 47 python regression + 19 easing + JSON template still pass; `scan_assets.py --dir assets/showcase-brand/generated/` returns "clean" for every one of the 16 files. License-clean: predecessor's `assets/showcases/` was not opened or copied; every PNG is freshly generated and individually attributable through the audit trail.
+- SKILL.md References routing table gains the matching row.
+- **Step 3 complete with this entry.** Step 3.5 was retired by user instruction (visual-only project); the remaining Step 3 work (3.1 design-styles, 3.2 scene-templates, 3.3 animation engine, 3.4 animation best-practices + pitfalls, 3.6 showcases) is shipped.
 
 ---
 

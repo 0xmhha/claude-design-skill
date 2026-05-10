@@ -299,6 +299,12 @@ not a sourcing commitment.
 
 ### 7.6 `assets/showcases/` — prebuilt visual demos
 
+> **Status: shipped 2026-05-10 at `assets/showcase-brand/generated/`**
+> (the `<brand>-brand/generated/` path is a `scripts/codex-image-import.py`
+> convention; the spec mention "`assets/showcases/`" is conceptual).
+> 16 PNGs, each with a `PROVENANCE.md` entry. See PROJECT-PLAN §7 entry
+> for the sampling matrix.
+
 - **Goal**: When the user asks "what could this look like?", the agent shows ~24 prebuilt visual demos (8 scenes × 3 styles, or whatever your taxonomy lands on).
 - **Approach**: Generate **fresh via Codex CLI** using `scripts/codex-image-import.py`. Each PNG gets PROVENANCE.md with prompt + Codex session id + stripped-chunks list. Do not copy from the predecessor's `assets/showcases/`.
 - **Done-when**: 16+ showcases on disk, each with PROVENANCE.

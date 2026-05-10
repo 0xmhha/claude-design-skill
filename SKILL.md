@@ -988,6 +988,7 @@ absolute marks.
 | **Animation engine** — `<Stage>` / `<Sprite>` timeline (controlled & rAF modes, prefers-reduced-motion respected), `useTime` / `useSprite` hooks, `interpolate` (clamp / extend), 14-curve frozen `Easing` pack with regression suite | `references/animation-engine.md` + `assets/animations.jsx` + `assets/easing.js` |
 | **Animation best practices** — 5-tier timing scale, easing selection table, stagger discipline, direction conventions, reduced-motion as first-class, performance budget, loop discipline, cross-fade vs morph | `references/animation-best-practices.md` |
 | **Animation pitfalls** — 14 anti-patterns with why-bad / symptom / fix (bounce-on-everything, linear default, single-duration, animated-gradient hero, autoplay loops, wrong property, synchronized fade, missing reduced-motion, stagger over/under, inconsistent timing, no-escape loops, scroll-jutter, hero-budget overrun) | `references/animation-pitfalls.md` |
+| **Showcase gallery** — 16 prebuilt PNG demos (9 scenes × 18 philosophies sampled to 16, weighted toward game / web3); PROVENANCE per file (Codex session, prompt SHA-256, stripped chunks, stego-scan result) | `assets/showcase-brand/generated/` + `assets/showcase-brand/PROVENANCE.md` |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
