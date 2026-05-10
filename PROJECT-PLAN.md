@@ -109,7 +109,7 @@ Rough budget: 1 session per section (= 6 sessions). Each section may grow into i
 Goal: author the design philosophy and scene template catalogs. This is where the upstream's most-substantial content lives — we deliberately do not copy or paraphrase. We restart from first principles.
 
 - [x] `references/design-styles.md` — design philosophy catalog. Flat 18 directions (no schools, no grid). 14 author-original + 4 game/web3 verbatim carry-over from prior fork-author work. (2026-05-10)
-- [ ] `references/scene-templates.md` — scene catalog: cover, infographic, slide, hero animation, game HUD overlay, NFT marketplace card, wallet/DEX, onboarding game-loop. Each entry: layout primitives + key elements + recommended styles + prompt template. Author cleanly.
+- [x] `references/scene-templates.md` — scene catalog: 9 templates (5 fresh + 4 game/web3 verbatim carry-over). Each entry: dimensions + key elements + recommended-philosophy cross-refs + prompt template. (2026-05-10)
 - [ ] `references/animation-engine.md` + `assets/animations.jsx` — Stage / Sprite engine, rewritten from scratch. Public API: `<Stage duration>`, `<Sprite start end>`, `useTime()`, `useSprite()`, `interpolate()`, `Easing`. Same shape as the upstream API (which is functional, not protected), our own implementation.
 - [ ] `references/animation-best-practices.md` + `references/animation-pitfalls.md` — animation conventions. Author cleanly. Generic best practices can be cited; specific upstream examples must be replaced.
 - [ ] `references/sfx-library.md` + `assets/sfx/` — sound effect catalog. Sourced from CC0 / freesound with PROVENANCE.md per file. Authored cleanly.
@@ -197,6 +197,16 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - License-clean: predecessor's prose for §1–20 was not read; only §21–24 (the verbatim-carry section) was opened. SKILL.md / `references/design-styles.md` contain no reference to "huashu-design" string (verified by grep). Validated: 47/47 regression tests still pass; JSON template parses; no visual smoke needed (prose only).
 - SKILL.md References routing table updated; `Design philosophy catalog` item removed from the TBD list.
 - Next: Step 3.2 — `references/scene-templates.md` (8–12 scenes, with the four maintainer-authored game/web3 scenes carried verbatim).
+
+### 2026-05-10 · Step 3.2 — `references/scene-templates.md`
+
+- `references/scene-templates.md` written from scratch (351 lines). **9 scenes** total (5 fresh + 4 verbatim) — odd count, deliberately differs from the predecessor's 12 to avoid count-match.
+- 5 fresh templates: §01 Deck cover slide / hero (1920×1080 default with social and mobile variants, cross-refs `assets/deck_stage.js`); §02 Mid-deck content slide (single-layout-primitive rule, cross-refs the deck shell); §03 Web hero with motion (1440×900 / 1920×1200 with mobile companion, ONE narrative motion enforced); §04 Infographic / data narrative (vertical / embed / in-deck variants); §05 Mobile app screen mock (cross-refs `assets/ios_frame.jsx` and `assets/android_frame.jsx`, enforces App-prototype-rules). Each: **Specs** (canvas + variants) + **Key design elements** (5–6 layout primitives) + **Recommended philosophies** (2–3 numbered cross-refs into design-styles.md) + **Scene prompt template** (copy-paste-ready 6–7-line block tuned for codex / gpt-image-2).
+- 4 verbatim templates: §06 Game HUD overlay, §07 NFT marketplace card / collection grid, §08 Wallet / DEX interface, §09 Onboarding game-loop. Carried over from the predecessor's `references/scene-templates.md §9–12`. Section numbering shifts (predecessor §9–12 → this catalog §06–09); the only other modification is the **Recommended philosophies** line, re-numbered to point at this skill's `references/design-styles.md` catalog rather than the predecessor's. Mapping applied: predecessor §21 Game HUD → this §15; §22 Web3 Minimal → §16; §23 NFT Marketplace → §17; §24 Onboarding-Loop → §18; predecessor entries not in this catalog (Territory Studio §16, Ash Thorp §15, Information Architects §03, Build §11 as a separate entry, Sagmeister §12, Takram §17) replaced with closest matches in this catalog. Replacement rationale stated in commit message. All other prose unchanged.
+- Document closes with a **fast-mapping table** (16 rows, scene × brief-shape → recommended philosophy) and a no-fusion rule ("two-template combinations are smells, not features"). Original framing.
+- License-clean: predecessor §1–8 prose was not read; only §9–12 (the verbatim-carry block) was opened. SKILL.md / `references/scene-templates.md` contain no reference to "huashu-design" string. SKILL.md References routing table updated; the matching item is removed from the TBD list.
+- Validated: 47/47 regression tests still pass; JSON template parses; no visual smoke needed (prose only).
+- Next: Step 3.3 — `references/animation-engine.md` + `assets/animations.jsx` (engine code rewrite from scratch; predecessor's `assets/animations.jsx` must NOT be carried over per HANDOFF §7.3).
 
 ---
 
