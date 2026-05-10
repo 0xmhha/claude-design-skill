@@ -6,7 +6,7 @@
 > prevent.
 
 **Last updated**: 2026-05-10
-**Active version**: v0.1.0-alpha (skeleton)
+**Active version**: Step 1–4 shipped (2026-05-10)
 **Repo**: `/Users/kevin/work/github/0xmhha/claude-design-skill`
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.
@@ -25,17 +25,22 @@ The maintainer previously hardened a fork at `0xmhha/huashu-design`. That fork d
 
 This repo (`claude-design-skill`) is the **clean-room rewrite** chosen as option (b) from the fork's `PROJECT-PLAN.md §5.2`: rewrite from scratch, carry over only the maintainer's own work from the fork, never inherit upstream prose. **MIT-licensed**. Replaceable per team policy before external publication.
 
-### What's already done (v0.1.0-alpha skeleton, 2026-05-09)
+### What's already done (Step 1 → Step 4, 2026-05-09 → 2026-05-10)
 
-- **23 files carried over** from the predecessor fork — all maintainer-authored from scratch in that fork's Phase 1–4.2. No upstream prose. See `PROJECT-PLAN.md §2`.
-- **6 fresh files**: `SKILL.md` (skeleton), `README.md`, `LICENSE` (MIT), `CHANGELOG.md`, `.gitignore`, `PROJECT-PLAN.md`.
-- **Validation**: 47/47 tests green (svg-sanitize 18 + scan_assets 13 + codex-image-import 16). `examples/dot-claude-settings.json` parses as valid JSON. assets/ scan = empty (no PNG/JPG yet).
+- **Step 1 · skeleton (2026-05-09)** — 23 files carried over from the predecessor fork (maintainer-authored, Phase 1–4.2; no upstream prose) plus 6 fresh files (`SKILL.md`, `README.md`, `LICENSE`, `CHANGELOG.md`, `.gitignore`, `PROJECT-PLAN.md`).
+- **Step 2 · SKILL.md body (2026-05-09 → 2026-05-10)** — all six body sections shipped: §6.1 Junior Designer workflow · §6.2 Anti-AI-slop checklist (12 patterns) · §6.3 App prototype rules + `assets/ios_frame.jsx` · §6.4 Slide deck conventions + `assets/deck_stage.js` · §6.5 Tweaks live-tuning system + `assets/tweaks.js` + `examples/tweaks-demo.html` · §6.6 Critique guide.
+- **Step 3 · Design knowledge (2026-05-10)** — §7.1 `references/design-styles.md` (18 directions, 14 fresh + 4 game/web3 carry-over) · §7.2 `references/scene-templates.md` (9 templates, 5 fresh + 4 carry-over) · §7.3 animation engine (`assets/animations.jsx` + `assets/easing.js` + `references/animation-engine.md` + 19-test regression suite) · §7.4 `references/animation-best-practices.md` + `references/animation-pitfalls.md` · §7.5 SFX library **out of scope per user instruction (visual-only project)** · §7.6 `assets/showcase-brand/generated/` — 16 prebuilt PNG showcases via Codex CLI + gpt-image-2.
+- **Step 4 · Internal-fit hardening (2026-05-10)** — §8.2 codename pattern catalog (conservative-pairing rule, 19/19 test) · §8.3 GitHub Actions CI active (`.github/workflows/sanitizers.yml`) · §8.4 external asset hosts whitelist boost (Lucide / Phosphor / MDN). Internal brand spec values, LICENSE / mirror policy, and internal-host additions remain **per-fork actions** (see §8 below).
+- **Validation today**: 18 + 13 + 19 + 19 regression tests pass; both JSON templates parse; `scan_assets.py --dir assets/` reports clean for every shipped PNG.
 
-### What's intentionally NOT done (DO NOT shortcut this)
+### What's intentionally NOT done
 
-The skill body — design philosophies, scene templates, slide rules, animation rules, anti-AI-slop checklist, prototype scaffolding — is **deliberately empty in `SKILL.md`**. Every body section is marked TBD. Authoring those sections by paraphrasing the upstream skill is exactly what the clean-room rewrite is meant to avoid. The body is authored from scratch in **Step 2** and **Step 3** (see §6, §7).
+Two things, deliberately, and one of them by user instruction:
 
-If you find yourself "filling in" a body section by reading the upstream and rewording it, **stop**. That's the failure mode. Author from first principles, ask the user for references, restart the section.
+1. **SFX library (§7.5)** — retired by user instruction 2026-05-10 (this project is visual-only). The HANDOFF section carries an *out of scope* banner so future fresh-session agents do not start authoring. Carry-over text that mentions sound elsewhere (e.g. `references/design-styles.md §18` Onboarding-Game-Loop's verbatim "haptic + animation + sound") stays as aesthetic-spec mentions, not sourcing commitments.
+2. **Per-fork brand integration (§8 actions that are not §8.2 / §8.3 / §8.4)** — `team-brand-spec.json` real values, internal codename additions to `DEFAULT_CODENAME_PATTERNS`, internal-host additions to the allowlist, LICENSE policy, internal git-host migration. These are per-fork actions; the templates and the security policy live in this repo, but the actual values are owned by the team that adopts the skill.
+
+If you find yourself "filling in" a body section by reading the upstream and rewording it, **stop** — that's the failure mode the clean-room rewrite was built to avoid. Author from first principles, ask the user for references, restart the section. (The original Step 2 / Step 3 body work followed this rule throughout. See `PROJECT-PLAN.md` decisions log for the per-step license-clean evidence.)
 
 ---
 
@@ -199,6 +204,7 @@ For each section: the **goal**, the **problem if absent**, the **author-clean ap
 - **Problem if absent**: The agent jumps to high-fidelity output on vague briefs and produces generic AI-slop.
 - **Approach**: Author the four-stage loop in your own words. The structure (assumptions → reasoning → placeholders → review) is a generic engineering pattern, not the upstream's IP, so you can use it — but the prose, the examples, and the failure-mode list must be original.
 - **Done-when**: SKILL.md has a "Junior Designer workflow" section ≥150 lines, with a worked example (one task walked through all four stages), and the user has read it once. No reference to "huashu-design" or its phrasing.
+- **Status**: ✓ shipped 2026-05-10 @ `8192b8b` — 241-line section in `SKILL.md`, NFT marketplace catalog card worked example.
 
 ### 6.2 Anti-AI-slop checklist
 
@@ -206,6 +212,7 @@ For each section: the **goal**, the **problem if absent**, the **author-clean ap
 - **Problem if absent**: The agent produces generic gradient-on-card layouts that look like every other ChatGPT artifact.
 - **Approach**: Author from observation, not paraphrase. Walk through 5–10 real AI-slop sites and write down what makes them feel AI. Examples worth having: rainbow gradients used as primary identity, perfectly-symmetric layouts, font pairings that are technically correct but have no taste, generic glassmorphism, default Inter + 1.5 line-height + 16px body everywhere.
 - **Done-when**: 8–12 patterns, each with a one-line "why it's slop" and a one-line "what to do instead". No upstream phrasing.
+- **Status**: ✓ shipped 2026-05-10 @ `f906134` — 12 patterns in `SKILL.md`, last two domain-specific to game / web3.
 
 ### 6.3 App prototype rules (iOS / Android)
 
@@ -216,6 +223,7 @@ For each section: the **goal**, the **problem if absent**, the **author-clean ap
   - **iOS frame must be authored from scratch.** The upstream skill had `ios_frame.jsx`; the predecessor fork carried it over but is upstream-derivative. **Do not copy.** Author a new `assets/ios_frame.jsx` with iPhone 15 Pro spec (Dynamic Island, rounded corners, status bar). Same public API as the upstream (`<IosFrame>` with width/height props) is fine — that's interface, not implementation — but the implementation code is yours.
   - Document the rule in SKILL.md: every iOS/Android prototype screen wraps in the appropriate frame; default-images-from-real-sources policy; Playwright click-test before delivery.
 - **Done-when**: `assets/ios_frame.jsx` exists, references it in SKILL.md, no code copied from the predecessor fork's `assets/ios_frame.jsx` (you can read it for spec, you cannot reuse the code).
+- **Status**: ✓ shipped 2026-05-09 @ `b771365` — `assets/ios_frame.jsx` (iPhone 15 Pro / Pro Max model registry, Dynamic Island as a children-receiving slot) + `## App prototype rules` section in SKILL.md. Predecessor `assets/ios_frame.jsx` was opened only for the public API surface; implementation original.
 
 ### 6.4 Slide deck conventions
 
@@ -223,6 +231,7 @@ For each section: the **goal**, the **problem if absent**, the **author-clean ap
 - **Problem if absent**: Agent makes "deck"s that are actually scrollable Tailwind landing pages.
 - **Approach**: Define the layout primitives in your own taxonomy. The upstream's `<deck-stage>` web component pattern is functional and you can reimplement (interface), but the JS code must be yours. Don't carry over `assets/deck_stage.js` from the predecessor.
 - **Done-when**: SKILL.md slide section, plus `assets/deck_stage.js` newly authored if needed.
+- **Status**: ✓ shipped 2026-05-10 @ `8913306` — `assets/deck_stage.js` (`<deck-stage>` web component, colocated `<aside slot="notes">` speaker-notes pattern, blackout key, `@page` print sheet) + `## Slide deck conventions` in SKILL.md. Two distribution bugs (light-DOM display cascade override; nested-aside slot routing) caught by visual smoke and fixed in the same commit.
 
 ### 6.5 Tweaks live-tuning system
 
@@ -230,6 +239,7 @@ For each section: the **goal**, the **problem if absent**, the **author-clean ap
 - **Problem if absent**: Every variation = a new full re-render.
 - **Approach**: Design your own toggle pattern. State the public API in your own naming.
 - **Done-when**: SKILL.md section + a worked HTML example.
+- **Status**: ✓ shipped 2026-05-10 @ `49be74d` — `assets/tweaks.js` (`<tweak-panel>` web component, plain `<tweak>` children, data-attribute CSS pattern, localStorage persistence, `tweakchange` event) + `examples/tweaks-demo.html` (runnable 3-knob worked example) + `## Tweaks live-tuning system` in SKILL.md.
 
 ### 6.6 Critique guide (post-delivery scoring)
 
@@ -237,6 +247,7 @@ For each section: the **goal**, the **problem if absent**, the **author-clean ap
 - **Problem if absent**: Agent declares "done" on output that has obvious issues a designer would catch in 30 seconds.
 - **Approach**: Pick **N dimensions of your choice**, where N ≠ 5 (the upstream uses 5). For example: 4 dimensions (visual hierarchy, typography, motion, narrative coherence) or 6 (add color and spacing). Define each dimension in your own words. The act of scoring 0–10 is generic; the dimension list is where IP risk lives.
 - **Done-when**: SKILL.md critique section + a sample critique on a real prior deliverable from the user.
+- **Status**: ✓ shipped 2026-05-10 @ `00f6032` — 6 dimensions (N = 6, deliberately ≠ 5) in `SKILL.md`, threshold rule, worked critique applied to `examples/tweaks-demo.html` (the actual Step 2.5 deliverable). Step 2 closes with this section.
 
 ---
 
@@ -253,6 +264,7 @@ These are the **highest-IP-risk** sections of the upstream. Author with maximum 
   - For each philosophy: a **prompt DNA line** (3–5 keywords that nail the vibe), **identifying features** (3 bullets), **reference works** cited externally (Pentagram identity, Apple Human Interface Guidelines, Field.io case studies — link to the original, don't paraphrase), and a **when-to-use** line.
   - Game / web3 specific philosophies (HUD, NFT marketplace, wallet, onboarding) are part of this catalog from day one — that's the maintainer's own work in the predecessor fork's Phase 4. The maintainer's prior text on those four philosophies (`references/design-styles.md §21–24` in the predecessor) is fork-author IP and may be carried over verbatim. The other 16–20 philosophies must be authored fresh.
 - **Done-when**: `references/design-styles.md` ≥400 lines, structurally distinct from the upstream, with the four maintainer-authored game/web3 entries carried verbatim.
+- **Status**: ✓ shipped 2026-05-10 @ `e1d4fa7` — flat 18-direction catalog (no school grouping, no `N × M` math), 14 author-original + 4 game/web3 verbatim carry-over. 578 lines. Predecessor §1–20 prose was not opened; only §21–24 (the verbatim block) was read.
 
 ### 7.2 `references/scene-templates.md` — scene catalog
 
@@ -262,6 +274,7 @@ These are the **highest-IP-risk** sections of the upstream. Author with maximum 
   - The four maintainer-authored scenes (game HUD overlay, NFT marketplace card, wallet/DEX, onboarding loop) carry over verbatim from the predecessor's `references/scene-templates.md §9–12`.
   - Other scenes — author fresh. Each scene: dimensions, key elements, recommended philosophies (cross-reference §7.1), prompt template.
 - **Done-when**: `references/scene-templates.md` covers 8–12 scenes total, with the four maintainer-authored game/web3 scenes carried verbatim.
+- **Status**: ✓ shipped 2026-05-10 @ `8f29827` — 9 scenes total (5 author-original + 4 game/web3 verbatim carry-over, predecessor §9–12 → this catalog §06–09). Cross-reference numbers in the carry-over `Recommended philosophies` lines were re-mapped to this catalog's design-styles numbering; all other prose unchanged. 351 lines.
 
 ### 7.3 `references/animation-engine.md` + `assets/animations.jsx`
 
@@ -271,12 +284,14 @@ These are the **highest-IP-risk** sections of the upstream. Author with maximum 
   - Public API can match the upstream's (`<Stage duration>`, `<Sprite start end>`, `useTime`, `useSprite`, `interpolate`, `Easing`) — that's interface, not protected IP. **Implementation must be yours.** Don't copy the upstream's `assets/animations.jsx`.
   - Document the engine in `references/animation-engine.md` with worked examples.
 - **Done-when**: `assets/animations.jsx` newly authored, regression test exists for the easing functions, SKILL.md animation section references the doc.
+- **Status**: ✓ shipped 2026-05-10 @ `ee55f2d` — `assets/animations.jsx` (`<Stage>` controlled / uncontrolled modes, `<Sprite>`, `useTime` / `useSprite`, `interpolate`) + `assets/easing.js` (14-curve frozen pack, dual export) + `scripts/test_animations_easing.js` (Node, 19/19 OK) + `references/animation-engine.md` (4 worked examples). Predecessor `assets/animations.jsx` was not opened; the public API spec from this section was the only input.
 
 ### 7.4 `references/animation-best-practices.md` + `references/animation-pitfalls.md`
 
 - **Goal**: Conventions for animation timing, narrative pacing, and what to avoid.
 - **Approach**: Generic best practices (Expo easing, anti-bounce-on-everything, etc.) can be cited from CSS/Material/Apple guidelines. **Specific upstream examples** (e.g., the upstream's "Apple Gallery showcase" case study) **must be replaced** with your own examples or omitted.
 - **Done-when**: Both files exist, each ≥120 lines, no upstream-specific case studies retained.
+- **Status**: ✓ shipped 2026-05-10 @ `a1a2ceb` — `references/animation-best-practices.md` (255 lines: 5-tier timing scale, easing selection, stagger discipline, direction conventions, reduced-motion first-class, performance budget, loop discipline, cross-fade vs morph, use-case routing) + `references/animation-pitfalls.md` (282 lines: 14 anti-patterns, `why-bad → symptom → fix`). External references only (Material Motion, Apple HIG, CSS Easing Level 1, WCAG 2.2, FLIP, Chrome animations); the upstream-specific *Apple Gallery showcase* anchor named in this section is absent (verified by grep).
 
 ### 7.5 `references/sfx-library.md` + `assets/sfx/`
 
@@ -311,16 +326,23 @@ not a sourcing commitment.
 
 ---
 
-## 8 · Step 4 — Internal brand integration (later)
+## 8 · Step 4 — Internal brand integration
+
+> **Status:** Three of the six items below are **shipped** as autonomous
+> work (the parts that do not require team-specific knowledge: the
+> generic codename catalog, GitHub Actions CI, and the public-asset-host
+> allowlist). The remaining three — real `team-brand-spec.json` values,
+> internal-host additions, and LICENSE / mirror policy — are **per-fork
+> actions** owned by the team that adopts the skill.
 
 When the team brand is finalized:
 
-- Replace placeholder values in `team-brand-spec.json` (logo, colors, typography stack).
-- Add the team's codename namespace to `references/security-config.md §1.5` and `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS`.
-- Decide `watermark.enabled` policy (default off; opt-in only).
-- Add internal asset hosts to `references/security-config.md §1.2` and `examples/dot-claude-settings.json:permissions.ask`.
-- **Mirror to the team's private git host.** While the repo is on public GitHub (`0xmhha/claude-design-skill`), keep all team-specific text out of commits. Once internal-only, this README and the LICENSE may need replacement per team policy.
-- Activate `references/ci-template.md` on the internal CI host. Sanitizer regression tests + JSON lint as hard-fail; asset scan as advisory.
+- ⏳ **Per-fork action**: Replace placeholder values in `team-brand-spec.json` (logo, colors, typography stack). The template (`assets/team-brand-spec.example.json`) and the field reference (`references/brand-spec-fields.md`, 195 lines) are in this repo and ready to copy.
+- ✓ shipped 2026-05-10 @ `eb33448` (default catalog) / ⏳ **per-fork action** (team-specific additions): `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS` ships 4 conservative-pairing patterns (project / internal-NDA-confidential / stealth-skunkworks-moonshot × asset-noun / `v\d+`× phase-keyword); `references/security-config.md §1.5` mirrors them with the *Conservative-pairing rule* paragraph that names the trade-off. Per-fork additions go through the same edit point.
+- ✓ shipped — default `enabled: false` in `assets/team-brand-spec.example.json`; `references/brand-spec-fields.md §watermark` documents the keep-it-off-until-explicitly-approved policy.
+- ✓ shipped 2026-05-10 @ `2ea3bb8` (public asset hosts) / ⏳ **per-fork action** (internal hosts): `examples/dot-claude-settings.json:permissions.ask` and `references/security-config.md §1.1` ship 5 generic-public host entries (Lucide / Phosphor CDN mirrors + MDN). Internal hosts go in `references/security-config.md §1.2 Team-extensible additions`.
+- ⏳ **Per-fork action**: **Mirror to the team's private git host.** While the repo is on public GitHub (`0xmhha/claude-design-skill`), keep all team-specific text out of commits. Once internal-only, this README and the LICENSE may need replacement per team policy.
+- ✓ shipped 2026-05-10 @ `d5dba7b`: `.github/workflows/sanitizers.yml` runs the full guard chain (SVG sanitizer 18 + scan_assets 13 + codex-image-import 19 + animations easing 19 + JSON template lint + advisory asset scan) on every push to `master` / `main` and every pull request. Translating to an internal CI host (GitLab / Bitbucket / Buildkite) is documented in `references/ci-template.md` *Internal GH Enterprise / Bitbucket / Buildkite* section.
 
 ---
 
