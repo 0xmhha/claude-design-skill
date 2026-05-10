@@ -152,6 +152,18 @@ listed here. If the patterns below change, both gates pick the change up.
 |---|---|---|
 | `\bproject[-_ ]?[a-z]{4,}\b` | "project Falcon", "project_phoenix", "project-eagle" | "logo for project Phoenix" → blocked |
 | `\b(internal\|nda\|confidential)[-_ ][a-z]+` | "internal-prototype", "nda assets", "confidential-roadmap" | "render the internal-prototype hero" → blocked |
+| `\b(stealth\|skunkworks\|moonshot)[-_ ](launch\|product\|asset\|hero\|build\|alpha\|beta\|prerelease\|prototype)\b` | "stealth-launch", "skunkworks-build", "moonshot prototype" — keyword **must** be paired with an asset / build noun | "render the stealth-launch hero" → blocked; bare "stealth fighter aesthetic" → **not** blocked (conservative by design) |
+| `\bv\d+(?:\.\d+)?[-_ ](stealth\|internal\|prerelease\|preview)\b` | "v3-stealth", "v2 internal", "v1.5-prerelease" | "design v3-stealth marketing page" → blocked; bare "v3 update" → **not** blocked |
+
+**Conservative-pairing rule**: the third-row family (`stealth` /
+`skunkworks` / `moonshot`) requires a paired asset / build noun, and
+the fourth-row family (`v\d+`) requires a paired phase keyword. Bare
+adjective use of those words is **deliberately left through** so
+legitimate design language ("stealth fighter aesthetic", "v3 update
+marketing") is not over-blocked. Trade-off: a determined leaker who
+uses one of these words alone, with no paired noun, will pass the
+gate. Acceptable, because the policy of last resort is the WebSearch
+manual checklist (§1.3) plus per-call user approval.
 
 **Per-team additions**: the team's own codename namespace (e.g. studio
 codenames, partner publisher names under NDA, internal milestone

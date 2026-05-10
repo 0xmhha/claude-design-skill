@@ -51,7 +51,7 @@ python3 scripts/test_svg_sanitize.py 2>&1        | grep -E '^(Ran|OK|FAIL)'
 python3 scripts/test_scan_assets.py 2>&1         | grep -E '^(Ran|OK|FAIL)'
 python3 scripts/test_codex_image_import.py 2>&1  | grep -E '^(Ran|OK|FAIL)'
 node    scripts/test_animations_easing.js 2>&1   | tail -3
-# Expected: 18/18, 13/13, 16/16, 19/19, all OK.
+# Expected: 18/18, 13/13, 19/19, 19/19, all OK.
 
 # 2. Settings template must be valid JSON
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))" && echo "OK"

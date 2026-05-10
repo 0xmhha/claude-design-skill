@@ -101,9 +101,28 @@ PNG_WHITELIST = _load_scan_assets_whitelist()
 # Default codename patterns blocked from being sent to Codex CLI.
 # Real list lives in references/security-config.md §1.5; this is a
 # minimal regex-set so the script is self-contained for tests.
+#
+# Each pattern is intentionally conservative — it must catch obvious
+# internal-codename leaks while leaving generic design language
+# (e.g. "stealth fighter aesthetic", "v3 update") alone. Trade-off
+# discussed in references/security-config.md §1.5.
 DEFAULT_CODENAME_PATTERNS = (
     re.compile(r"\bproject[-_ ]?[a-z]{4,}\b", re.IGNORECASE),  # "project Falcon"
     re.compile(r"\b(internal|nda|confidential)[-_ ][a-z]+", re.IGNORECASE),
+    # Internal-phase keyword followed by an asset / build noun:
+    # "stealth-launch", "skunkworks-build", "moonshot prototype".
+    # The required noun-suffix avoids matching generic adjective use
+    # ("stealth fighter aesthetic" is left alone).
+    re.compile(
+        r"\b(stealth|skunkworks|moonshot)[-_ ](launch|product|asset|hero|build|alpha|beta|prerelease|prototype)\b",
+        re.IGNORECASE,
+    ),
+    # Versioned internal-phase release codes: "v3-stealth", "v2 internal",
+    # "v1.5-prerelease". Plain "v3 update" is not matched.
+    re.compile(
+        r"\bv\d+(?:\.\d+)?[-_ ](stealth|internal|prerelease|preview)\b",
+        re.IGNORECASE,
+    ),
 )
 
 PROMPT_PREVIEW_LIMIT = 300

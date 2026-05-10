@@ -274,7 +274,7 @@ Before each step is marked done:
 ```bash
 python3 scripts/test_svg_sanitize.py        # must be 18/18 OK
 python3 scripts/test_scan_assets.py         # must be 13/13 OK
-python3 scripts/test_codex_image_import.py  # must be 16/16 OK
+python3 scripts/test_codex_image_import.py  # must be 19/19 OK
 node    scripts/test_animations_easing.js   # must be 19/19 OK
 python3 scripts/scan_assets.py --dir assets/  # must list 'clean' for every file
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"

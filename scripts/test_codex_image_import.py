@@ -171,6 +171,46 @@ class TestConfidentialityGate(CodexImportCase):
         )
         self.assertEqual(code, 4)
 
+    def test_internal_phase_noun_caught(self) -> None:
+        # "stealth-launch", "skunkworks-build", "moonshot prototype"
+        # The keyword must be followed by an asset/build noun.
+        self._drop_png("a.png", make_clean_png())
+        code = self._run(
+            "--brand", "acme",
+            "--name", "asset",
+            "--prompt", "render the stealth-launch hero illustration",
+            "--codex-home", str(self.codex_home),
+            "--assets-root", str(self.assets_root),
+        )
+        self.assertEqual(code, 4, "exit 4 = stealth-launch should fire the gate")
+
+    def test_versioned_phase_caught(self) -> None:
+        # "v3-stealth", "v2 internal", "v1.5-prerelease".
+        self._drop_png("a.png", make_clean_png())
+        code = self._run(
+            "--brand", "acme",
+            "--name", "asset",
+            "--prompt", "design v3-stealth marketing page header",
+            "--codex-home", str(self.codex_home),
+            "--assets-root", str(self.assets_root),
+        )
+        self.assertEqual(code, 4, "exit 4 = v3-stealth should fire the gate")
+
+    def test_generic_adjective_use_not_blocked(self) -> None:
+        # Conservative-pattern guarantee: bare adjective use without a
+        # paired internal-phase noun must not trigger the gate. This
+        # protects legitimate design briefs like "stealth fighter
+        # aesthetic" or "v3 update marketing".
+        self._drop_png("a.png", make_clean_png())
+        code = self._run(
+            "--brand", "acme",
+            "--name", "asset",
+            "--prompt", "stealth fighter aesthetic, v3 update marketing visual",
+            "--codex-home", str(self.codex_home),
+            "--assets-root", str(self.assets_root),
+        )
+        self.assertEqual(code, 0, "must not false-positive on generic adjective use")
+
 
 # --- 2. Stego scan hard-fail -----------------------------------------------
 class TestStegoHardFail(CodexImportCase):
