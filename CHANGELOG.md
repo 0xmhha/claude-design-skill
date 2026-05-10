@@ -26,6 +26,12 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 - Path note: the carrier directory is `assets/showcase-brand/` (a `scripts/codex-image-import.py` path convention — `<brand>-brand/generated/`); HANDOFF §7.6's mention of `assets/showcases/` is conceptual. HANDOFF §7.6 carries a *Status: shipped* banner pointing at the real path. SKILL.md References routing table gains the matching row.
 - Validation: 47 python regression + 19 easing + JSON template all still pass; `scan_assets.py --dir assets/showcase-brand/generated/` returns "clean" for every file. License-clean: predecessor's `assets/showcases/` was not opened or copied; each PNG is freshly generated and individually attributable through the audit trail.
 
+### Boosted — External asset hosts whitelist (Step 4.4)
+
+- `examples/dot-claude-settings.json` `permissions.ask` gains 5 new generic-public entries: `unpkg.com/lucide-static@*` and `cdn.jsdelivr.net/npm/lucide-static@*` (Lucide icon SVGs · ISC), `unpkg.com/@phosphor-icons/core@*` and `cdn.jsdelivr.net/npm/@phosphor-icons/core@*` (Phosphor icon SVGs · MIT), `developer.mozilla.org/*` (MDN reference · CC-BY-SA 2.5). The version stamp inside `_template_meta` bumped 2026-05-09 → 2026-05-10.
+- `references/security-config.md §1.1` allowlist table mirrors the same 3 host families with purpose + license columns. Pinned versions only — `@*` major-pin convention matches the existing React / Babel rows. SRI integrity hash policy and HTTPS-only rule continue to apply.
+- These additions cover the most common fetch needs in prototype UI work (icon libraries) and reference reading (MDN). Internal team-specific hosts continue to live under §1.2 *Team-extensible additions* — that template stays untouched.
+
 ### Activated — GitHub Actions CI (Step 4.3)
 
 - `.github/workflows/sanitizers.yml` ships the reference workflow that runs on every push to master / main and on every pull request. Steps: SVG sanitizer regression (18 tests), scan_assets self-check (13), codex-image-import gate (19), animations easing regression (19, Node), JSON template lint (settings + brand-spec example), and an advisory asset scan over `assets/`. `permissions: contents: read` keeps the workflow from being able to push back into the repo. No untrusted GitHub-event input is interpolated into `run:` steps — workflow is injection-safe.

@@ -2,7 +2,7 @@
   "_template_meta": {
     "purpose": "Drop-in baseline for .claude/settings.json that enforces this fork's security policy at the harness level. Copy to <your-project>/.claude/settings.json (or merge with your existing file) before letting the agent run.",
     "source": "internal-design-skill · references/security-config.md",
-    "version": "2026-05-09",
+    "version": "2026-05-10",
     "remove_this_block_after_copying": true,
     "codex_cli_note": "Codex CLI authentication is via 'codex login' (ChatGPT OAuth). The OPENAI_API_KEY env var is NEVER set in this file or in the agent harness — Codex stores its own token in ~/.codex. If your team policy requires inspectable creds, run codex with OPENAI_API_KEY exported only in the calling shell, not here."
   },
@@ -25,6 +25,12 @@
       "Bash(curl https://unpkg.com/react@*)",
       "Bash(curl https://unpkg.com/react-dom@*)",
       "Bash(curl https://unpkg.com/@babel/standalone@*)",
+
+      "Bash(curl https://unpkg.com/lucide-static@*)",
+      "Bash(curl https://unpkg.com/@phosphor-icons/core@*)",
+      "Bash(curl https://cdn.jsdelivr.net/npm/lucide-static@*)",
+      "Bash(curl https://cdn.jsdelivr.net/npm/@phosphor-icons/core@*)",
+      "Bash(curl https://developer.mozilla.org/*)",
 
       "Bash(codex:*)",
       "Bash(codex exec:*)",

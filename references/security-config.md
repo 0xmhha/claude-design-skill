@@ -34,6 +34,9 @@ The skill may automatically download assets **only** from the domains below. All
 | `pexels.com` / `images.pexels.com` | Photography | Pexels License |
 | `fonts.googleapis.com` / `fonts.gstatic.com` | Web font CSS + WOFF/WOFF2 | OFL / Apache 2.0 |
 | `unpkg.com/react@*` `unpkg.com/react-dom@*` `unpkg.com/@babel/standalone@*` | React + Babel pinned versions for prototype HTML (required by `references/react-setup.md`) | MIT (with SRI integrity hash) |
+| `unpkg.com/lucide-static@*` and `cdn.jsdelivr.net/npm/lucide-static@*` | Lucide icon SVGs (pinned versions) for prototype UI work | ISC |
+| `unpkg.com/@phosphor-icons/core@*` and `cdn.jsdelivr.net/npm/@phosphor-icons/core@*` | Phosphor icon SVGs (pinned versions) for prototype UI work | MIT |
+| `developer.mozilla.org` | MDN reference content (CSS / Web API documentation, occasional embedded SVG diagrams) | CC-BY-SA 2.5 — attribution required when reproducing |
 
 **Rules of the allowlist**:
 - Pinned versions only (no `@latest`, no unpinned majors)

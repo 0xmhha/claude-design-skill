@@ -278,6 +278,14 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - `references/ci-template.md` updated: the live workflow path is now named (`.github/workflows/sanitizers.yml`); test counts in the *What the CI does* table reflect Steps 3.3 + 4.2 (18 / 13 / 19 / 19); the GitHub Actions snippet matches the live workflow body. The non-GitHub CI host snippets (GitLab CI, internal Buildkite / Bitbucket migration notes) are preserved as the alternate-platform path.
 - Validated locally: 18/13/19/19 + JSON OK before commit. The first run of the workflow on GitHub will confirm the full chain on Ubuntu / Python 3.10 / Node 22.
 
+### 2026-05-10 · Step 4.4 — external asset hosts whitelist boost
+
+- `examples/dot-claude-settings.json` `permissions.ask` gains 5 generic-public host entries (3 host families): Lucide icons (`unpkg` + `jsdelivr` mirrors, ISC), Phosphor icons (`unpkg` + `jsdelivr` mirrors, MIT), MDN reference (`developer.mozilla.org/*`, CC-BY-SA 2.5). All pinned to major versions (`@*`) for the package CDNs; MDN is wildcard-path on the documentation host.
+- `references/security-config.md §1.1` allowlist table mirrors the same 3 host families with purpose + license columns. SRI integrity hash policy and HTTPS-only rule continue to apply.
+- Internal team-specific hosts continue to live under §1.2 *Team-extensible additions* — that template stays untouched (no fork-author work in this commit, only the public allowlist boost).
+- The version stamp inside `_template_meta` bumped `2026-05-09 → 2026-05-10`.
+- Validated: 18/13/19/19 regression + JSON template parse all still OK.
+
 ---
 
 ## 8. Validation
