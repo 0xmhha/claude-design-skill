@@ -97,7 +97,7 @@ Goal: fill in SKILL.md body sections that govern day-to-day skill behavior. Auth
 - [x] Anti-AI-slop checklist — generic gradient avoidance, layout symmetry, font pairing pitfalls. Our own list. (2026-05-10)
 - [x] App prototype rules — `IosFrame` (new mockup engine, written from scratch — `assets/android_frame.jsx` already in) + real-image policy + Playwright verification. (2026-05-09)
 - [x] Slide deck conventions — 1920×1080 layout primitives, speaker-notes panel. (2026-05-10)
-- [ ] Tweaks live-tuning system — design decisions toggle-able at runtime.
+- [x] Tweaks live-tuning system — design decisions toggle-able at runtime. (2026-05-10)
 - [ ] Critique guide — N-dimension scoring after delivery, with our own dimensions.
 
 Rough budget: 1 session per section (= 6 sessions). Each section may grow into its own `references/*.md` if it crosses ~150 lines.
@@ -168,6 +168,15 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - License-clean: predecessor SKILL.md "Junior Designer" content was not read; the four-stage structure is a generic engineering pattern (HANDOFF §6.1 explicitly allows it); prose, examples, and failure modes are original. SKILL.md contains no reference to "huashu-design" (verified by grep). References routing table updated; the matching item is removed from the TBD list.
 - Validated: 47/47 regression tests still pass (text-only change); JSON template parses; no visual smoke needed.
 - Next: Step 2 — Tweaks live-tuning system (§6.5) OR Critique guide (§6.6) — the last two Step 2 items; Step 3 design-styles catalog and animation engine remain the highest-IP-risk sections.
+
+### 2026-05-10 · Step 2.5 — Tweaks live-tuning system
+
+- `assets/tweaks.js` authored from scratch as a `<tweak-panel>` web component plus plain `<tweak>` children. Floating panel (bottom-right by default), hidden until `t` (Esc to close), built-in **Reset** button, position attribute (`bottom-right` / `bottom-left` / `top-right` / `top-left`), `open` / `hotkey=""` overrides. Each `<tweak>` declares `name`, `options="a|b|c"`, `default`, optional `label`. Panel writes `data-tweak-<name>` onto `<html>` so caller CSS uses pure attribute selectors — **no caller JS required**. Selections persist under `tweak::<pathname>::<name>` in localStorage; every change emits a `document` `tweakchange` CustomEvent (`{name, value, source: "user"|"restore"}`). Public methods: `.set()`, `.get()`, `.values`, `.reset()`. License-clean: predecessor `tweaks-system.md` and the predecessor's tweaks asset were not read; element name (`<tweak-panel>` + plain `<tweak>`), localStorage key shape, event name, panel chrome, and Reset behavior are own choices.
+- `examples/tweaks-demo.html` ships a runnable worked example. Three live tweaks (palette / density / accent) drive five CSS variables (`--bg`, `--fg`, `--muted`, `--gap`, `--accent`) on a real layout — page background, card padding, grid gap, accent CTA, and pill swatches all move when a tweak is toggled. The page declares its own CSS responses to `:root[data-tweak-palette="cool"]` etc.; toggle survives reload via localStorage.
+- `SKILL.md` gains a `## Tweaks live-tuning system` section: why the pattern exists (re-rendering through an LLM is lossy and slow; designers want to compare, not regenerate; most variations are CSS-variable swaps), full public API for both elements, the caller CSS pattern, persistence/hotkey/event contract, public methods, the example reference, and a *when not to use it* list (one-off A/Bs, layout-structure changes, production apps). References routing table updated; the matching item is removed from the TBD list.
+- One bug caught by visual smoke and fixed in this commit: `customElements.define('tweak', Tweak)` threw a `SyntaxError` because the web-components spec requires a hyphen in registered names — `tweak` is illegal as a registered custom-element name. Fixed by leaving `<tweak>` as a plain unknown HTML element (panel reads attributes off the children; no registered element needed), and explicitly hiding `<tweak>` children in `_collect()` so their default inline box does not affect surrounding layout.
+- Validated: 47/47 regression tests still pass; JSON template parses; visual smoke through Playwright with three states (default warm/comfortable/orange, panel revealed via `t` hotkey, panel after `.set()` of cool/spacious/blue) all rendered correctly; `data-tweak-*` attributes verified on `<html>`, three localStorage keys verified.
+- Next: Step 2 — Critique guide (§6.6, the last Step 2 item); Step 3 design-styles catalog and animation engine remain the highest-IP-risk sections.
 
 ---
 

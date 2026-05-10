@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-tweak-palette="warm"
+      data-tweak-density="comfortable"
+      data-tweak-accent="orange">
+<head>
+  <meta charset="UTF-8" />
+  <title>tweak-panel · live design tuning</title>
+  <script src="../assets/tweaks.js" defer></script>
+  <style>
+    /* ---- Caller-defined tweak responses (only CSS, no JS). ---- */
+
+    :root {
+      --bg: #fef3c7;
+      --fg: #1a1a1a;
+      --muted: rgba(26,26,26,0.65);
+      --accent: #f97316;
+      --accent-soft: rgba(249,115,22,0.16);
+      --gap: 24px;
+      --radius: 14px;
+      --pad-card: 24px 26px;
+    }
+
+    /* palette */
+    :root[data-tweak-palette="warm"]    { --bg: #fef3c7; --fg: #1a1a1a; --muted: rgba(26,26,26,0.62); }
+    :root[data-tweak-palette="cool"]    { --bg: #dbeafe; --fg: #0f172a; --muted: rgba(15,23,42,0.62); }
+    :root[data-tweak-palette="neutral"] { --bg: #f4f4f5; --fg: #18181b; --muted: rgba(24,24,27,0.62); }
+
+    /* density (gap + card padding) */
+    :root[data-tweak-density="compact"]      { --gap: 14px; --pad-card: 16px 18px; }
+    :root[data-tweak-density="comfortable"]  { --gap: 24px; --pad-card: 24px 26px; }
+    :root[data-tweak-density="spacious"]     { --gap: 40px; --pad-card: 36px 40px; }
+
+    /* accent */
+    :root[data-tweak-accent="orange"] { --accent: #f97316; --accent-soft: rgba(249,115,22,0.16); }
+    :root[data-tweak-accent="blue"]   { --accent: #2563eb; --accent-soft: rgba(37,99,235,0.16); }
+    :root[data-tweak-accent="green"]  { --accent: #16a34a; --accent-soft: rgba(22,163,74,0.16); }
+
+    /* ---- Page proper ---- */
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+      min-height: 100vh;
+      transition: background 240ms ease, color 240ms ease;
+    }
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 64px 32px 96px;
+    }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    h1 {
+      margin: 16px 0 0 0;
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.4px;
+    }
+    p.lede {
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.5;
+    }
+
+    .grid {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap);
+      transition: gap 220ms ease;
+    }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius);
+      padding: var(--pad-card);
+      transition: padding 220ms ease, background 220ms ease;
+    }
+    .card .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card h3 {
+      margin: 8px 0 6px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+    .card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .card .pill {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .cta {
+      margin-top: 36px;
+      display: inline-block;
+      padding: 12px 22px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 220ms ease, transform 120ms ease;
+    }
+    .cta:hover { transform: translateY(-1px); }
+
+    .footnote {
+      margin-top: 64px;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.55;
+    }
+    .footnote code {
+      background: rgba(0,0,0,0.06);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">tweak-panel · live design tuning</div>
+    <h1>Three knobs.<br />No re-render.</h1>
+    <p class="lede">
+      Press <code style="background:rgba(0,0,0,0.08);padding:2px 8px;border-radius:5px;">T</code>
+      to open the panel in the bottom-right. Toggle palette, density, or
+      accent — the layout updates live. Selections persist in
+      localStorage so the next reload remembers them; press
+      <strong>Reset</strong> to clear.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="label">Step 1</div>
+        <h3>Declare tweaks once</h3>
+        <p>Add a <code style="font-family:ui-monospace,Menlo,monospace;">&lt;tweak-panel&gt;</code> at the end of <code style="font-family:ui-monospace,Menlo,monospace;">&lt;body&gt;</code> with one <code style="font-family:ui-monospace,Menlo,monospace;">&lt;tweak&gt;</code> child per design knob.</p>
+        <span class="pill">markup</span>
+      </div>
+      <div class="card">
+        <div class="label">Step 2</div>
+        <h3>React in CSS</h3>
+        <p>Each tweak writes <code style="font-family:ui-monospace,Menlo,monospace;">data-tweak-&lt;name&gt;</code> onto <code style="font-family:ui-monospace,Menlo,monospace;">&lt;html&gt;</code>; caller CSS uses the attribute selector to switch design tokens.</p>
+        <span class="pill">CSS-only</span>
+      </div>
+      <div class="card">
+        <div class="label">Step 3</div>
+        <h3>Persist + observe</h3>
+        <p>Selections survive reload via localStorage. Listen for the <code style="font-family:ui-monospace,Menlo,monospace;">tweakchange</code> CustomEvent on <code style="font-family:ui-monospace,Menlo,monospace;">document</code> if app code needs to react.</p>
+        <span class="pill">progressive</span>
+      </div>
+    </div>
+
+    <a href="#" class="cta">Hypothetical CTA</a>
+
+    <p class="footnote">
+      The page itself never imports React or any framework. The whole
+      surface — bg, gap, radius, accent — moves on three CSS variables
+      that the tweak-panel toggles via <code>data-tweak-*</code>
+      attributes. Design exploration without a re-prompt.
+    </p>
+  </main>
+
+  <tweak-panel position="bottom-right">
+    <tweak name="palette"
+           options="warm|cool|neutral"
+           default="warm"
+           label="Palette"></tweak>
+    <tweak name="density"
+           options="compact|comfortable|spacious"
+           default="comfortable"
+           label="Density"></tweak>
+    <tweak name="accent"
+           options="orange|blue|green"
+           default="orange"
+           label="Accent"></tweak>
+  </tweak-panel>
+</body>
+</html>

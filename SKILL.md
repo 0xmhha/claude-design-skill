@@ -624,6 +624,132 @@ decision, a typography decision, or a new artifact — run all four
 stages. The discipline is what stops the work from regressing to
 LLM baseline.
 
+## Tweaks live-tuning system
+
+When the user says "show me a cooler version" or "what does this
+look like denser?", the wrong move is to ask the LLM to re-render
+the whole artifact. The right move is to expose the variation as a
+live toggle the user can flip themselves — no re-prompt, no
+regenerated layout, no taste drift between rounds.
+
+`assets/tweaks.js` ships a small two-element component for that —
+`<tweak-panel>` plus `<tweak>` children — that turns a handful of
+attribute declarations into a floating panel of segmented controls.
+
+### Why this exists
+
+- **Re-rendering is expensive and lossy.** Every full re-render
+  through an LLM risks landing on a different version of "the same
+  design", and small details drift between rounds.
+- **Designers want to compare, not regenerate.** Switching between
+  warm and cool palette in 100 ms next to each other is a different
+  decision-making mode than reading two regenerated versions
+  separately.
+- **Most design variations are CSS variables.** Palette, density,
+  accent, radius scale, type scale — the variation lives in tokens,
+  not layout. A live toggle exposes the tokens to the user without
+  the agent in the loop.
+
+### Public API
+
+Caller markup (place at end of `<body>`; one panel per page):
+
+```html
+<tweak-panel position="bottom-right">
+  <tweak name="palette"
+         options="warm|cool|neutral"
+         default="warm"
+         label="Palette"></tweak>
+  <tweak name="density"
+         options="compact|comfortable|spacious"
+         default="comfortable"
+         label="Density"></tweak>
+  <tweak name="accent"
+         options="orange|blue|green"
+         default="orange"
+         label="Accent"></tweak>
+</tweak-panel>
+```
+
+`<tweak-panel>` attributes:
+
+- `position` — `"bottom-right"` (default), `"bottom-left"`,
+  `"top-right"`, `"top-left"`.
+- `open` — present means the panel starts visible. Absent means
+  hidden until the hotkey is pressed.
+- `hotkey` — toggle key, default `"t"`. Pass `hotkey=""` to disable
+  the hotkey entirely (use the `.set()` API instead).
+
+`<tweak>` attributes:
+
+- `name` — required. Becomes `data-tweak-<name>` on `<html>`.
+  Lowercase, kebab-case (`palette`, `card-radius`).
+- `options` — required. Pipe-separated value list (`"a|b|c"`).
+- `default` — required. One of the options.
+- `label` — optional. Display name in the panel; defaults to `name`.
+
+### Caller CSS pattern (no JavaScript on the caller side)
+
+The panel writes the chosen values onto `<html>` as
+`data-tweak-<name>` attributes. Caller CSS reads them back with
+attribute selectors and rewrites design tokens:
+
+```css
+:root[data-tweak-palette="warm"]    { --bg: #fef3c7; --fg: #1a1a1a; }
+:root[data-tweak-palette="cool"]    { --bg: #dbeafe; --fg: #0f172a; }
+:root[data-tweak-density="compact"] { --gap: 14px; }
+:root[data-tweak-accent="orange"]   { --accent: #f97316; }
+```
+
+The page itself binds those tokens (`background: var(--bg)`,
+`gap: var(--gap)`, etc.). No caller JS is required for the live
+update — the cascade does the work.
+
+### Persistence, hotkey, event
+
+- **localStorage** — selections persist per `(pathname, name)` pair
+  under the `tweak::` namespace; reload remembers them. The panel's
+  built-in **Reset** button (top-right of the panel) restores
+  defaults and clears storage.
+- **Hotkey** — `t` toggles the panel; `Esc` closes it when open.
+  Both are scoped: typing in `<input>`, `<textarea>`, `<select>`,
+  or a `contenteditable` element does not trigger the hotkey.
+- **Event** — every change dispatches a `tweakchange` CustomEvent
+  on `document`. `event.detail` is `{ name, value, source }` where
+  `source` is `"user"` (panel click or `.set()`) or `"restore"`
+  (initial localStorage replay). Use this if app code needs to
+  reload data on density change, swap an icon set on accent change,
+  etc.
+
+### Public methods
+
+The panel exposes a small JS API for programmatic use:
+
+- `.set(name, value)` — change a tweak from code (e.g. URL
+  parameter, A/B routing, or a "magic key" cheat in dev).
+- `.get(name)` — read the current value.
+- `.values` — `{ name: value, … }` snapshot.
+- `.reset()` — restore defaults and clear localStorage.
+
+### Worked example
+
+A runnable demo lives at `examples/tweaks-demo.html`. It declares
+three tweaks (palette / density / accent), wires the matching CSS
+on `<html>`, and lets the page background, grid gap, card padding,
+and accent move live as the panel toggles. Open it, press `t`,
+change a value, reload the page — the choice survives.
+
+### When *not* to use it
+
+- A one-off A/B that does not need live exploration. Just render
+  both side by side.
+- Variations that change layout structure, not just tokens. Layout
+  changes warrant a real re-render — the tweak panel is for token
+  swaps, not whole-page restructure.
+- Production apps. Tweak-panel is a design-review tool. Strip it
+  out before shipping (or hide it behind a `?tweaks=1` URL guard
+  if you want it preserved as a dev affordance).
+
 ## References routing table
 
 | Task | Read |
@@ -643,6 +769,7 @@ LLM baseline.
 | **Slide deck conventions** — 1920×1080 fixed canvas, colocated speaker notes, print-to-PDF rules, keyboard surface | `## Slide deck conventions` (this skill) + `assets/deck_stage.js` |
 | **Anti-AI-slop checklist** — 12 generated-UI tells (gradients, glassmorphism, emoji icons, default type, cyberpunk-by-reflex, fake HUD detail) with fixes | `## Anti-AI-slop checklist` (this skill) |
 | **Junior Designer workflow** — 4-stage loop (assumptions → reasoning → placeholders → review), worked NFT marketplace card example, failure modes, short-circuit rules | `## Junior Designer workflow` (this skill) |
+| **Tweaks live-tuning system** — `<tweak-panel>` + `<tweak>` web component, data-attribute CSS pattern, localStorage persistence, hotkey, `tweakchange` event | `## Tweaks live-tuning system` (this skill) + `assets/tweaks.js` + `examples/tweaks-demo.html` |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -659,7 +786,6 @@ paragraphs.
   game HUD, NFT marketplace, wallet/DEX, onboarding game-loop. Step 3.
 - **Animation rules** — Stage / Sprite engine, Expo easing, narrative
   pacing, anti-pitfall checklist. Step 3 (engine code rewrite needed).
-- **Tweaks live-tuning system** — toggling design variations. Step 3.
 - **Critique guide** — N-dimension scoring after delivery. Step 3.
 
 ## Cross-agent environment adaptation
