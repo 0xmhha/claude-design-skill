@@ -111,7 +111,7 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - [x] `references/design-styles.md` — design philosophy catalog. Flat 18 directions (no schools, no grid). 14 author-original + 4 game/web3 verbatim carry-over from prior fork-author work. (2026-05-10)
 - [x] `references/scene-templates.md` — scene catalog: 9 templates (5 fresh + 4 game/web3 verbatim carry-over). Each entry: dimensions + key elements + recommended-philosophy cross-refs + prompt template. (2026-05-10)
 - [x] `references/animation-engine.md` + `assets/animations.jsx` + `assets/easing.js` — Stage / Sprite engine + 14-curve Easing pack. Public API matches the established `<Stage>` / `<Sprite>` / `useTime` / `useSprite` / `interpolate` / `Easing` shape (interface only, not protected); implementation original. Easing has its own regression suite (`scripts/test_animations_easing.js`, 19/19). (2026-05-10)
-- [ ] `references/animation-best-practices.md` + `references/animation-pitfalls.md` — animation conventions. Author cleanly. Generic best practices can be cited; specific upstream examples must be replaced.
+- [x] `references/animation-best-practices.md` + `references/animation-pitfalls.md` — animation conventions. Generic best practices cited externally (Material 3, Apple HIG, CSS Easing spec); no upstream-specific case studies retained. (2026-05-10)
 - [ ] `references/sfx-library.md` + `assets/sfx/` — sound effect catalog. Sourced from CC0 / freesound with PROVENANCE.md per file. Authored cleanly.
 - [ ] `assets/showcases/` — prebuilt visual demos. Generated from scratch per scene + style combination. Each PNG gets PROVENANCE.md with prompt + Codex session id.
 
@@ -219,6 +219,15 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - License-clean: predecessor's `references/animation-engine.md` and `assets/animations.jsx` were not opened. The catalog under `references/animation-engine.md` references no "huashu-design" string.
 - SKILL.md References routing table gains the matching row.
 - Next: Step 3.4 — `references/animation-best-practices.md` + `references/animation-pitfalls.md` (timing conventions, narrative pacing, anti-pitfall checklist; cite generic best practices externally rather than paraphrasing the predecessor's distillation).
+
+### 2026-05-10 · Step 3.4 — animation best-practices + pitfalls
+
+- `references/animation-best-practices.md` (255 lines, exceeds the ≥120-line floor in HANDOFF §7.4 done-when). Sections: 5-tier timing scale (Feedback / Small / Medium / Entrance / Heroic with concrete ms ranges); easing selection table (entrance / exit / state-change / spinner / celebratory / ambient); stagger discipline (per-element delay × group size, runway-vs-duration rule); direction conventions (Material gravity-aligned + game-HUD "home edge"); reduced-motion as first-class with three satisfying patterns; performance budget (transform / opacity hot path); loop discipline (when to loop, when to refuse); cross-fade vs morph; use-case routing (deck cover / app screen / modal / hover / loading / state ack / game HUD damage flash / wallet transaction confirmation). Closes with seven external references (Material Motion, Apple HIG Motion, CSS Easing Level 1, WCAG 2.2, FLIP, Chrome animations guide).
+- `references/animation-pitfalls.md` (282 lines, exceeds ≥120 floor). 14 pitfalls each formatted as **why it's bad → symptom → fix**: bounce-on-everything, linear-as-default, single-duration system, animated gradient mesh behind hero copy, autoplay-loop hero video, wrong CSS property animated, synchronized group fade, missing `prefers-reduced-motion`, decorative chrome on every state, stagger too aggressive, inconsistent timing, ambient loops with no escape, scroll-jutter without `will-change`, hero animation budget over 4 s. Closes with the threshold rule from `## Critique guide` ("3+ pitfalls = structural rethink, 1–2 = patch and ship") and a cross-link to dimension 5 (Motion & micro-interactions) of the Critique guide.
+- License-clean: predecessor `animation-best-practices.md` and `animation-pitfalls.md` were not opened. Generic best practices cited via external links; the upstream-specific anchor *Apple Gallery showcase* mentioned in HANDOFF §7.4 is **absent** (verified by grep). No "huashu-design" string in either file.
+- SKILL.md References routing table gains both rows; the TBD list loses the *Animation rules* item — which had bundled engine + best-practices + pitfalls. Step 3.3 + Step 3.4 together close the bundle.
+- Validated: 47 python regression tests + 19 easing tests + JSON template all still pass; no visual smoke needed (prose only).
+- Next: Step 3.5 — `references/sfx-library.md` + `assets/sfx/` (CC0 sourcing required; predecessor's `assets/sfx/*.mp3` must NOT be carried over per HANDOFF §7.5; provenance per file).
 
 ---
 

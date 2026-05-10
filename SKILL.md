@@ -986,6 +986,8 @@ absolute marks.
 | **Design philosophy catalog** — flat list of 18 directions (14 author-original + 4 game/web3 carry-over), each with Prompt DNA / signature traits / external references / search keywords | `references/design-styles.md` |
 | **Scene template library** — 9 output-type-anchored templates (5 fresh: deck cover / mid-deck content / web hero / infographic / mobile app screen + 4 verbatim game/web3) with dimensions, layout primitives, recommended-philosophy cross-refs, and prompt templates | `references/scene-templates.md` |
 | **Animation engine** — `<Stage>` / `<Sprite>` timeline (controlled & rAF modes, prefers-reduced-motion respected), `useTime` / `useSprite` hooks, `interpolate` (clamp / extend), 14-curve frozen `Easing` pack with regression suite | `references/animation-engine.md` + `assets/animations.jsx` + `assets/easing.js` |
+| **Animation best practices** — 5-tier timing scale, easing selection table, stagger discipline, direction conventions, reduced-motion as first-class, performance budget, loop discipline, cross-fade vs morph | `references/animation-best-practices.md` |
+| **Animation pitfalls** — 14 anti-patterns with why-bad / symptom / fix (bounce-on-everything, linear default, single-duration, animated-gradient hero, autoplay loops, wrong property, synchronized fade, missing reduced-motion, stagger over/under, inconsistent timing, no-escape loops, scroll-jutter, hero-budget overrun) | `references/animation-pitfalls.md` |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -993,9 +995,6 @@ These sections will be authored from scratch in subsequent steps. Do
 not pull text from any third-party design skill. Each section will get
 its own `references/<topic>.md` file when it grows beyond a few
 paragraphs.
-
-- **Animation rules** — Stage / Sprite engine, Expo easing, narrative
-  pacing, anti-pitfall checklist. Step 3 (engine code rewrite needed).
 
 ## Cross-agent environment adaptation
 
