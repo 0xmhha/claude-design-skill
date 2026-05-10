@@ -93,7 +93,7 @@ Step 2 and Step 3 below cover this.
 
 Goal: fill in SKILL.md body sections that govern day-to-day skill behavior. Author from scratch. No upstream prose.
 
-- [ ] Junior Designer workflow — assumptions → reasoning → placeholders → review loop. Our own structure.
+- [x] Junior Designer workflow — assumptions → reasoning → placeholders → review loop. Our own structure. (2026-05-10)
 - [x] Anti-AI-slop checklist — generic gradient avoidance, layout symmetry, font pairing pitfalls. Our own list. (2026-05-10)
 - [x] App prototype rules — `IosFrame` (new mockup engine, written from scratch — `assets/android_frame.jsx` already in) + real-image policy + Playwright verification. (2026-05-09)
 - [x] Slide deck conventions — 1920×1080 layout primitives, speaker-notes panel. (2026-05-10)
@@ -159,6 +159,15 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - A delivery threshold is stated explicitly: one occurrence is a fix, three or more means the design has not started yet — go back to references and try again. Concrete enough to be a real review gate, not a checklist that decorates the doc.
 - Validated: 47/47 regression tests still pass (text-only change to SKILL.md and the doc index files); JSON template parses; no visual smoke needed (no new code or asset).
 - Next: Step 2 — Junior Designer workflow (most foundational of the remaining), OR Tweaks live-tuning system, OR Critique guide; Step 3 design-styles catalog and animation engine remain the highest-IP-risk sections.
+
+### 2026-05-10 · Step 2.1 — Junior Designer workflow
+
+- `SKILL.md` gains a `## Junior Designer workflow` section (241 lines, exceeds the ≥150-line floor in HANDOFF §6.1 done-when). Four stages: (1) assumptions, explicit — numbered claims tagged `(verified)` / `(inferred)` / `(open)`; (2) reasoning, visible — one short paragraph framed as a contract that review pushes against; (3) placeholders, before details — labeled gray blocks and `[bracketed]` text before any polish; (4) review, before delivery — three concrete checklists (brief, assumptions, anti-slop). Each stage carries an explicit failure mode.
+- One worked example walked through all four stages: an NFT-marketplace catalog card. Domain-aligned with the maintainer's game / web3 IP-track. Stage 1 surfaces seven assumptions including two `(open)` defaults to flag with the user; Stage 2 fixes the artwork-dominant + price-as-primary direction; Stage 3 ships rough placeholders (`[NFT 4:5]`, `[2.4 ETH]`, `[12 holders]`); Stage 4 scores the artifact 1/12 anti-slop with the in-flight pattern already on the open-question list.
+- Consolidated failure-mode list (5 items) plus a short-circuit rule: tweaks need only Stage 4, copy-edits need Stage 1 + 4, repeat tasks need Stage 3 + 4, anything new runs the full loop.
+- License-clean: predecessor SKILL.md "Junior Designer" content was not read; the four-stage structure is a generic engineering pattern (HANDOFF §6.1 explicitly allows it); prose, examples, and failure modes are original. SKILL.md contains no reference to "huashu-design" (verified by grep). References routing table updated; the matching item is removed from the TBD list.
+- Validated: 47/47 regression tests still pass (text-only change); JSON template parses; no visual smoke needed.
+- Next: Step 2 — Tweaks live-tuning system (§6.5) OR Critique guide (§6.6) — the last two Step 2 items; Step 3 design-styles catalog and animation engine remain the highest-IP-risk sections.
 
 ---
 

@@ -382,6 +382,248 @@ If the deliverable contains one of these, fix it before delivery.
 If it contains three or more, the design hasn't started yet — go
 back to references, pick a direction, and try again.
 
+## Junior Designer workflow
+
+Most failure modes in agent-driven design come from one move: the
+agent skips the slow part of the work and goes straight to high-
+fidelity output. The result looks finished and tastes generic — the
+LLM baseline. This section defines a four-stage loop that forces
+slowness at the points where it matters and speed at the points
+where it doesn't.
+
+### Why this section exists
+
+When a brief is vague ("design our wallet onboarding", "make a
+deck cover for the seed-round talk"), the path of least resistance
+is to start drawing. Drawing without an explicit thinking pass
+means taste fills the gaps, and the agent's taste is, by default,
+the average of every Behance hero shot since 2022. Run the loop
+even when the brief feels small. The loop is short.
+
+### The four stages
+
+Every design pass walks the same loop:
+
+1. **Assumptions, explicit** — write down what the brief left unsaid,
+   before any pixel is drawn.
+2. **Reasoning, visible** — explain the design direction in one short
+   paragraph, before opening the artifact.
+3. **Placeholders, before details** — block out structure with
+   deliberately rough content first; refine after the bones are
+   right.
+4. **Review, before delivery** — score the artifact against the
+   brief, the assumptions, and the anti-slop checklist before
+   declaring done.
+
+Skipping a stage is allowed. Skipping a stage *implicitly* is the
+failure. If you skip Stage 1 because the brief is genuinely clear,
+say so out loud. If you skip Stage 3 because the artifact is one
+trivial change, say so. Implicit skipping is how the loop becomes
+ornamental.
+
+### Stage 1 · Assumptions, explicit
+
+Most briefs are vague. The agent's job in Stage 1 is to surface the
+gaps, not paper over them.
+
+- Open the response (or a fresh note) with a numbered list of
+  claims about the brief.
+- Each claim ends in one of three markers: `(verified)` if the
+  brief states it, `(inferred)` if a sibling brief or the project
+  brand spec states it, `(open)` if neither — a real gap that
+  needs a default or a question.
+- Group every `(open)` claim and decide once: ask the user now, or
+  proceed with a default and flag it on delivery. Asking too often
+  is annoying; defaulting silently is the failure mode that
+  produces generic output.
+
+The deliverable from Stage 1 is the numbered list itself, plus one
+consolidated message to the user if any open question is too costly
+to default. One message — not seven, scattered across stages.
+
+**Failure mode**: assumptions made implicitly ("game and web3 means
+dark mode, of course") and never written down. The next round of
+feedback then asks "why dark?" and the agent has no answer except
+"it felt right".
+
+### Stage 2 · Reasoning, visible
+
+Before generating the artifact, write the design reasoning as one
+short paragraph. Not a thesis. Three to five sentences that connect
+the brief, the assumptions, and the chosen direction.
+
+A worked shape:
+
+> The brief is a wallet onboarding flow for a new chain. The
+> audience is power users moving over from existing wallets — not
+> first-time crypto users — so the explanation step compresses.
+> Reasoning: lead with the chain identity, fold the seed-phrase
+> warning into one screen with stronger affordance, drop the
+> educational interstitial. Direction: minimal-editorial,
+> restrained typography, single accent (chain hex).
+
+The reasoning paragraph is a **contract**. When the artifact is
+reviewed, the reasoning is what the reviewer pushes against — not
+the final pixels alone. A reviewer who only critiques pixels gets
+"I'll change the corner radius"; a reviewer who critiques the
+reasoning gets "the audience assumption is wrong, here's why".
+
+**Failure mode**: starting the artifact with no written reasoning,
+then post-rationalizing during review. The post-rationalization is
+always too generous to the work that already exists.
+
+### Stage 3 · Placeholders, before details
+
+Block out structure first. Refine later. The placeholder is
+*supposed* to look unfinished — that's the point. Polishing one
+region while three others are wrong is the most expensive thing
+the agent can do.
+
+- For typography: `[heading]`, `[subhead]`, `[body 80–120 words]`.
+  Real type on placeholder copy is fine — placeholder copy in real
+  type is the goal.
+- For images: a flat colored block at the right aspect ratio,
+  labeled `[3:2 product still]` or `[NFT 4:5]`, not the first
+  Unsplash result.
+- For data: `[42]`, `[2.4 ETH]`, `[12 holders]`. The shape of the
+  number, not the number.
+
+Stage 3 exposes the layout's bones. If the bones are wrong — if
+the price field is fighting the title for emphasis, if the artwork
+crop is half a card too tight — that becomes obvious in placeholder
+form within a minute, instead of after an hour of polish.
+
+**Failure mode**: skipping placeholders and starting hi-fi from
+the first stroke. The agent then becomes attached to the first
+hi-fi version, can't critique it, and ships it.
+
+### Stage 4 · Review, before delivery
+
+Before declaring done, score the artifact against three concrete
+checklists:
+
+- **The brief**: does each requested element exist? (binary check)
+- **The assumptions**: did any Stage-1 assumption get violated
+  silently? (most common failure)
+- **The anti-slop checklist** (`## Anti-AI-slop checklist` in this
+  skill): how many patterns are present?
+
+If three or more anti-slop patterns are present, treat the artifact
+as a draft. Go back to Stage 2 (reasoning) and try a different
+direction — the direction itself is what's drifting toward LLM
+baseline.
+
+If zero or one anti-slop patterns are present and assumptions are
+intact, declare done. **Surface the artifact with the Stage-2
+reasoning paragraph attached.** The reviewer should see what was
+decided, not just what was made. Without the reasoning, the only
+thing reviewable is the pixels, and pixel-level review tends to be
+too kind to the work.
+
+**Failure mode**: review against "does it look fine?" and ship.
+"Looks fine" is the LLM design baseline; shipping that is shipping
+the LLM baseline.
+
+### Worked example · NFT marketplace catalog card
+
+A real walk-through. The brief from the user: "Design a card for
+an NFT marketplace catalog. Mid-fidelity — clickable but not
+finished."
+
+#### Stage 1 · assumptions
+
+1. Card is clicked through to a detail page. `(verified)` — "clickable" in brief.
+2. Catalog shows 3–5 cards per row on desktop, 2 on tablet, 1 on phone. `(open)` — defaulted; flagged.
+3. Each NFT carries: artwork, title, collection name, current price, last sale, holder count. `(inferred)` — common marketplace schema; if the project's schema differs, regenerate.
+4. Price uses the chain's native token with fiat conversion in muted text. `(inferred)` — convention.
+5. Card hover reveals nothing essential — affordance only. `(inferred)` — revealed-on-hover content is mobile-hostile.
+6. Card width sits at roughly 280–320 px on desktop default. `(inferred)`
+7. Card uses the project's brand spec; no project-brand was supplied yet. `(open)` — neutral material until brand spec arrives, flagged.
+
+The two `(open)` claims fold into one message to the user:
+*"Two defaults applied — confirm or change: card grid columns
+(default 4 on desktop), brand spec source (using neutral material
+until you supply one). Both flagged on the artifact."*
+
+#### Stage 2 · reasoning
+
+> Marketplace catalog cards live in a dense scan-grid; the card has
+> to communicate identity, price, and "is this still hot" within a
+> glance. Direction: artwork dominates (top ~65 % of the card), a
+> compact text rail beneath promotes price as the primary data
+> point, with title and collection demoted to supporting context.
+> Restrained chrome — neutral surface, hairline edge — so the
+> artwork carries the visual weight, not the card itself.
+
+Three things review will push against: artwork-dominant ratio,
+price-as-primary-data, and muted chrome.
+
+#### Stage 3 · placeholders
+
+The first artifact is intentionally rough:
+
+- Artwork: solid `#E5E5E5` block, 4:5 aspect, labeled `[NFT 4:5]`.
+- Title: `[Collection Name #0042]` in display weight, single line, ellipsis on overflow.
+- Collection: `[creator handle]` in muted body weight.
+- Price row: `[2.4 ETH]` primary, `[~$8,300]` secondary in `0.7` opacity.
+- Stat row: `[12 holders]` and `[last 1.9 ETH]`, separated by a thin divider.
+- Hairline 1 px border on the card; 12 px radius on the card chrome, 8 px on the artwork crop.
+
+This pass is delivered with the Stage-2 reasoning paragraph
+attached. No real artwork, no chosen typeface, no animation.
+Speed-of-iteration over polish.
+
+#### Stage 4 · review
+
+Run the checks before declaring done.
+
+- **Brief check**: clickable card, mid-fidelity. ✓ (placeholder is mid-fi by design.)
+- **Assumption check**: card width 296 px (within range); grid count flagged for user; brand neutrality flagged for user; no silent violations.
+- **Anti-slop check**: zero rainbow gradients, no glassmorphism, no emoji, hairline border + neutral surface, two radii (card / artwork crop) instead of one. The single in-flight pattern is the default-neutral palette — acceptable because it is explicitly flagged as a Stage-1 open question. Score: 1 of 12 patterns, with that one already on the open-question list.
+- **Final**: deliver with the reasoning paragraph plus the open-question list. The user sees what was decided and what is still open.
+
+If the user redirects ("price isn't the primary data — holder
+count is, this is a collector audience"), the reasoning paragraph
+gets edited first, then Stages 3 + 4 re-run. Stages 1 + 2 don't
+restart unless the brief itself changed.
+
+### Failure modes (consolidated)
+
+1. **Skipping Stage 1, claiming the brief was clear.** Cure: every
+   brief surfaces at least one assumption. If you find none, you
+   didn't read closely enough.
+2. **Writing the reasoning paragraph after the artifact.** Cure:
+   reasoning before pixels. If reasoning comes second, the
+   artifact already chose the direction and reasoning is just
+   defending it.
+3. **Hi-fi from the first stroke.** Cure: even on a small brief,
+   label the first artifact "draft" and refine before delivery.
+   Ten minutes of placeholder work prevents thirty minutes of
+   subtle backtracking.
+4. **Reviewing against "looks fine".** Cure: review against the
+   assumptions list and the anti-slop checklist. Both are
+   concrete; "looks fine" is not.
+5. **Asking the user every open question at every stage.** Cure:
+   bundle. Stage 1 produces one consolidated message; Stage 4
+   produces one consolidated delivery message. Two checkpoints per
+   round, not seven.
+
+### When to short-circuit the loop
+
+Some briefs don't need the full loop:
+
+- A single CSS-value tweak. **Stage 4 alone** (review the change in
+  context) is enough.
+- A direct copy-edit. **Stage 1 + Stage 4** are enough (was the
+  rewrite intent stated? does the new copy match the brief?).
+- A repeat task with all stages established last round. **Stage 3 +
+  Stage 4** suffice — apply the established direction, review.
+
+For anything above "tweak" — anything that involves a layout
+decision, a typography decision, or a new artifact — run all four
+stages. The discipline is what stops the work from regressing to
+LLM baseline.
+
 ## References routing table
 
 | Task | Read |
@@ -400,6 +642,7 @@ back to references, pick a direction, and try again.
 | **App prototype rules** — iOS / Android device-frame wrapping, real-image policy, Playwright click-test | `## App prototype rules` (this skill) + `assets/ios_frame.jsx` + `assets/android_frame.jsx` |
 | **Slide deck conventions** — 1920×1080 fixed canvas, colocated speaker notes, print-to-PDF rules, keyboard surface | `## Slide deck conventions` (this skill) + `assets/deck_stage.js` |
 | **Anti-AI-slop checklist** — 12 generated-UI tells (gradients, glassmorphism, emoji icons, default type, cyberpunk-by-reflex, fake HUD detail) with fixes | `## Anti-AI-slop checklist` (this skill) |
+| **Junior Designer workflow** — 4-stage loop (assumptions → reasoning → placeholders → review), worked NFT marketplace card example, failure modes, short-circuit rules | `## Junior Designer workflow` (this skill) |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -414,8 +657,6 @@ paragraphs.
   proposing from memory.
 - **Scene templates** — cover, infographic, slide deck, hero animation,
   game HUD, NFT marketplace, wallet/DEX, onboarding game-loop. Step 3.
-- **Junior Designer workflow** — the iterative
-  assumptions → reasoning → placeholders → review loop. Step 3.
 - **Animation rules** — Stage / Sprite engine, Expo easing, narrative
   pacing, anti-pitfall checklist. Step 3 (engine code rewrite needed).
 - **Tweaks live-tuning system** — toggling design variations. Step 3.
