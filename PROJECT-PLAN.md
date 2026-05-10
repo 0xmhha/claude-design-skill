@@ -110,7 +110,7 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 
 - [x] `references/design-styles.md` — design philosophy catalog. Flat 18 directions (no schools, no grid). 14 author-original + 4 game/web3 verbatim carry-over from prior fork-author work. (2026-05-10)
 - [x] `references/scene-templates.md` — scene catalog: 9 templates (5 fresh + 4 game/web3 verbatim carry-over). Each entry: dimensions + key elements + recommended-philosophy cross-refs + prompt template. (2026-05-10)
-- [ ] `references/animation-engine.md` + `assets/animations.jsx` — Stage / Sprite engine, rewritten from scratch. Public API: `<Stage duration>`, `<Sprite start end>`, `useTime()`, `useSprite()`, `interpolate()`, `Easing`. Same shape as the upstream API (which is functional, not protected), our own implementation.
+- [x] `references/animation-engine.md` + `assets/animations.jsx` + `assets/easing.js` — Stage / Sprite engine + 14-curve Easing pack. Public API matches the established `<Stage>` / `<Sprite>` / `useTime` / `useSprite` / `interpolate` / `Easing` shape (interface only, not protected); implementation original. Easing has its own regression suite (`scripts/test_animations_easing.js`, 19/19). (2026-05-10)
 - [ ] `references/animation-best-practices.md` + `references/animation-pitfalls.md` — animation conventions. Author cleanly. Generic best practices can be cited; specific upstream examples must be replaced.
 - [ ] `references/sfx-library.md` + `assets/sfx/` — sound effect catalog. Sourced from CC0 / freesound with PROVENANCE.md per file. Authored cleanly.
 - [ ] `assets/showcases/` — prebuilt visual demos. Generated from scratch per scene + style combination. Each PNG gets PROVENANCE.md with prompt + Codex session id.
@@ -208,6 +208,18 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - Validated: 47/47 regression tests still pass; JSON template parses; no visual smoke needed (prose only).
 - Next: Step 3.3 — `references/animation-engine.md` + `assets/animations.jsx` (engine code rewrite from scratch; predecessor's `assets/animations.jsx` must NOT be carried over per HANDOFF §7.3).
 
+### 2026-05-10 · Step 3.3 — animation engine (`assets/animations.jsx` + `assets/easing.js` + `scripts/test_animations_easing.js` + `references/animation-engine.md`)
+
+- `assets/animations.jsx` written from scratch. Implements `<Stage>` (clock owner; uncontrolled rAF or controlled-via-`time` prop; `paused`, `loop`, `respectReducedMotion`, `onTimeUpdate`), `<Sprite>` (clip with `start` / `end` / `keepAfter` / `freezeBefore`), `useTime()`, `useSprite()`, `interpolate(t, [in], [out], easing?, extrapolate?)`. Public API matches the established Stage / Sprite shape (interface only, not protected by IP); implementation is original — predecessor's `assets/animations.jsx` was **not opened**, only the API spec from HANDOFF §7.3 was consumed.
+- `assets/easing.js` separated as a pure CommonJS-friendly module (dual export: `module.exports` + `window.Easing`). 14 curves: `linear` · `easeIn/Out/InOut Quad` · `easeIn/Out/InOut Cubic` · `easeIn/Out/InOut Expo` · `easeIn/Out/InOut Back` · `easeOutElastic`. Pack is `Object.freeze`d; no state, no side effects.
+- `scripts/test_animations_easing.js` is the regression suite required by HANDOFF §7.3 done-when. Stdlib only (`node:assert/strict`), 19 tests covering: every curve maps `0→0` and `1→1`; `easeOut` is the algebraic mirror of `easeIn` for the Quad / Cubic / Expo families; `easeOutCubic(0.25) > 0.25` (faster early than linear); `easeInCubic(0.75) < 0.75` (slower late); midpoint values for `easeInOutQuad/Cubic`; `easeOutBack` overshoots `[0, 1]` somewhere in `(0, 1)` and `easeInBack` undershoots; `easeOutElastic` stays in a sane `[-0.5, 1.5]` band; pure-function determinism; pack is frozen. **19/19 OK.**
+- `references/animation-engine.md` ships the engine reference: API surface table, `<Stage>` props (controlled vs uncontrolled), `<Sprite>` lifecycle (active / `keepAfter` / `freezeBefore`), `useTime` / `useSprite` semantics, `interpolate` signature, the 14-curve table with shape descriptions, four worked examples (single fade-in; staggered three-line title; controlled-mode snapshot testing; easing showcase). Closes with performance notes and a "when *not* to reach for the engine" list.
+- `HANDOFF.md §1` verification block updated to include `node scripts/test_animations_easing.js`. The `Expected:` line now reads "18/18, 13/13, 16/16, 19/19, all OK."
+- Visual smoke through Playwright at three deterministic frames (controlled-mode `<Stage time={t}>`): t=0 (everything invisible — `freezeBefore` was deliberately omitted on the stagger sprites so they render nothing before `start`), t=500 (line 1 settled, line 2 mid-stagger, line 3 still hidden because `start=600 > 500`; easing bars at normalized progress 0.25 visibly diverge — linear 25 %, easeOutCubic ~58 %, easeInOutCubic ~6 %, easeOutBack ~80 %, easeOutElastic ~88 %), t=1500 (all lines settled via `keepAfter`; bars at normalized 0.75 — linear 75 %, easeOutCubic 98.4 %, easeOutBack **106.4 %** demonstrating overshoot, easeOutElastic 100.55 % showing settling oscillation). Cross-checked numerically via DOM inspection: every reading matches the closed-form value within IEEE rounding.
+- License-clean: predecessor's `references/animation-engine.md` and `assets/animations.jsx` were not opened. The catalog under `references/animation-engine.md` references no "huashu-design" string.
+- SKILL.md References routing table gains the matching row.
+- Next: Step 3.4 — `references/animation-best-practices.md` + `references/animation-pitfalls.md` (timing conventions, narrative pacing, anti-pitfall checklist; cite generic best practices externally rather than paraphrasing the predecessor's distillation).
+
 ---
 
 ## 8. Validation
@@ -218,6 +230,7 @@ Before each step is marked done:
 python3 scripts/test_svg_sanitize.py        # must be 18/18 OK
 python3 scripts/test_scan_assets.py         # must be 13/13 OK
 python3 scripts/test_codex_image_import.py  # must be 16/16 OK
+node    scripts/test_animations_easing.js   # must be 19/19 OK
 python3 scripts/scan_assets.py --dir assets/  # must list 'clean' for every file
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
 ```

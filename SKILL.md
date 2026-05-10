@@ -985,6 +985,7 @@ absolute marks.
 | **Critique guide** — 6-dimension scoring (visual hierarchy, typography, color & contrast, spacing & rhythm, motion & micro-interactions, copy & narrative), threshold rule, worked critique on `tweaks-demo.html` | `## Critique guide` (this skill) |
 | **Design philosophy catalog** — flat list of 18 directions (14 author-original + 4 game/web3 carry-over), each with Prompt DNA / signature traits / external references / search keywords | `references/design-styles.md` |
 | **Scene template library** — 9 output-type-anchored templates (5 fresh: deck cover / mid-deck content / web hero / infographic / mobile app screen + 4 verbatim game/web3) with dimensions, layout primitives, recommended-philosophy cross-refs, and prompt templates | `references/scene-templates.md` |
+| **Animation engine** — `<Stage>` / `<Sprite>` timeline (controlled & rAF modes, prefers-reduced-motion respected), `useTime` / `useSprite` hooks, `interpolate` (clamp / extend), 14-curve frozen `Easing` pack with regression suite | `references/animation-engine.md` + `assets/animations.jsx` + `assets/easing.js` |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
