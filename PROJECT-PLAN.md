@@ -265,6 +265,19 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - SKILL.md References routing table gains the matching row.
 - **Step 3 complete with this entry.** Step 3.5 was retired by user instruction (visual-only project); the remaining Step 3 work (3.1 design-styles, 3.2 scene-templates, 3.3 animation engine, 3.4 animation best-practices + pitfalls, 3.6 showcases) is shipped.
 
+### 2026-05-10 · Step 4.2 — codename pattern catalog hardening
+
+- `scripts/codex-image-import.py` `DEFAULT_CODENAME_PATTERNS` gains 2 conservative-pairing patterns that catch internal-phase leaks while leaving generic design language alone. The `stealth|skunkworks|moonshot` family must be paired with an asset / build noun (`launch|product|asset|hero|build|alpha|beta|prerelease|prototype`) — `stealth-launch hero` fires the gate, `stealth fighter aesthetic` does not. The `v\d+(?:\.\d+)?` family must be paired with a phase keyword (`stealth|internal|prerelease|preview`) — `v3-stealth marketing` fires, `v3 update` does not.
+- `scripts/test_codex_image_import.py` 16 → 19 tests: 2 positive (stealth-launch noun-paired, v3-stealth versioned-phase) plus 1 negative (the must-not-false-positive contract — `stealth fighter aesthetic, v3 update marketing visual` must pass `0`).
+- `references/security-config.md §1.5` table gains 2 rows + the *Conservative-pairing rule* paragraph, naming the trade-off explicitly: a determined leaker using a bare keyword passes the gate; the WebSearch manual checklist (§1.3) plus per-call user approval is the policy of last resort.
+- HANDOFF.md §1 verification block + this file's §8 Validation block bumped to `19/19` for codex-image-import.
+
+### 2026-05-10 · Step 4.3 — GitHub Actions CI activated
+
+- `.github/workflows/sanitizers.yml` ships the reference workflow on this repo's GitHub. Triggers: push to `master` / `main` and any pull request. Steps: SVG sanitizer (18 tests), scan_assets self-check (13), codex-image-import gate (19), animations easing (19, Node), JSON template lint (settings + brand-spec example), advisory asset scan over `assets/`. Pinned `actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`. `permissions: contents: read` so the workflow cannot push back into the repo. No untrusted GitHub-event input is interpolated into `run:` steps — workflow is injection-safe per the standard guidance.
+- `references/ci-template.md` updated: the live workflow path is now named (`.github/workflows/sanitizers.yml`); test counts in the *What the CI does* table reflect Steps 3.3 + 4.2 (18 / 13 / 19 / 19); the GitHub Actions snippet matches the live workflow body. The non-GitHub CI host snippets (GitLab CI, internal Buildkite / Bitbucket migration notes) are preserved as the alternate-platform path.
+- Validated locally: 18/13/19/19 + JSON OK before commit. The first run of the workflow on GitHub will confirm the full chain on Ubuntu / Python 3.10 / Node 22.
+
 ---
 
 ## 8. Validation

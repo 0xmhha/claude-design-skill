@@ -1,0 +1,44 @@
+name: sanitizers
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  guards:
+    name: Sanitizer / JSON / asset-scan / easing guards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: SVG sanitizer regression tests
+        run: python3 scripts/test_svg_sanitize.py
+
+      - name: scan_assets self-check
+        run: python3 scripts/test_scan_assets.py
+
+      - name: codex-image-import gate tests
+        run: python3 scripts/test_codex_image_import.py
+
+      - name: Animations easing regression tests
+        run: node scripts/test_animations_easing.js
+
+      - name: JSON template lint
+        run: |
+          python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
+          python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
+
+      - name: Image asset scan (advisory)
+        run: python3 scripts/scan_assets.py --dir assets/ --advisory

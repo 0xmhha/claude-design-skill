@@ -1,8 +1,13 @@
 # CI template · sanitizer + JSON + asset-scan guards
 
-> Drop-in template for GitHub Actions, GitLab CI, or any platform. **Copy-paste**, don't `cp` — the right path depends on which CI platform your team uses.
+> The reference workflow ships at `.github/workflows/sanitizers.yml`
+> and runs on this repo's GitHub. Use the snippets below as a
+> drop-in template for forks that target a different CI platform
+> (GitLab, Bitbucket, internal Buildkite, etc.) — copy-paste, do
+> not `cp`, the right path depends on the platform.
 >
-> Why a template instead of a committed workflow: this fork stays platform-agnostic until the team commits to a CI host. See `PROJECT-PLAN.md` Phase 5 §5.3.
+> Local equivalent: `./scripts/install-hooks.sh` activates the
+> pre-commit hook that runs the same checks (`.githooks/pre-commit`).
 
 ---
 
@@ -10,19 +15,24 @@
 
 | Job | Severity | What |
 |---|---|---|
-| SVG sanitizer regression tests | **hard-fail** | `python3 scripts/test_svg_sanitize.py` — 16 tests, regression in policy = block merge |
+| SVG sanitizer regression tests | **hard-fail** | `python3 scripts/test_svg_sanitize.py` — 18 tests, regression in policy = block merge |
+| `scan_assets` self-tests | **hard-fail** | `python3 scripts/test_scan_assets.py` — 13 tests, sanity-checks the scanner against synthetic adversarial input |
+| Codex-image-import gate tests | **hard-fail** | `python3 scripts/test_codex_image_import.py` — 19 tests, including the conservative-pairing codename catalog |
+| Animations easing regression tests | **hard-fail** | `node scripts/test_animations_easing.js` — 19 tests, asserts every easing curve is `0→0`, `1→1`, monotonic ordering, frozen pack |
 | JSON template lint | **hard-fail** | `examples/dot-claude-settings.json` + `assets/team-brand-spec.example.json` parse cleanly |
 | Asset scan | **advisory** | `python3 scripts/scan_assets.py --dir assets/ --advisory` — reports without blocking |
-| `scan_assets` self-tests | **hard-fail** | `python3 scripts/test_scan_assets.py` — sanity-checks the scanner against synthetic adversarial input |
 
 Promote the asset scan from advisory to hard-fail (drop `--advisory`) once the catalog is clean.
 
 ---
 
-## GitHub Actions (`.github/workflows/ci.yml`)
+## GitHub Actions (`.github/workflows/sanitizers.yml`)
+
+This repo ships the workflow at `.github/workflows/sanitizers.yml`.
+The reference body:
 
 ```yaml
-name: CI
+name: sanitizers
 
 on:
   push:
@@ -34,16 +44,28 @@ permissions:
 
 jobs:
   guards:
-    name: Sanitizer + JSON + asset-scan guards
+    name: Sanitizer / JSON / asset-scan / easing guards
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
       - name: SVG sanitizer regression tests
         run: python3 scripts/test_svg_sanitize.py
+
+      - name: scan_assets self-check
+        run: python3 scripts/test_scan_assets.py
+
+      - name: codex-image-import gate tests
+        run: python3 scripts/test_codex_image_import.py
+
+      - name: Animations easing regression tests
+        run: node scripts/test_animations_easing.js
 
       - name: JSON template lint
         run: |
@@ -52,23 +74,13 @@ jobs:
 
       - name: Image asset scan (advisory)
         run: python3 scripts/scan_assets.py --dir assets/ --advisory
-
-      - name: scan_assets self-check
-        run: python3 scripts/test_scan_assets.py
 ```
 
 Notes:
 - `permissions: contents: read` keeps the workflow from being able to push back into the repo. This is the secure default.
 - No untrusted input (PR titles, commit messages, branch refs) is interpolated into `run:` steps — workflow is injection-safe.
-- The workflow uses pinned major versions (`@v4`, `@v5`); pin to specific SHAs if your security policy requires it.
-
-To activate:
-
-```bash
-mkdir -p .github/workflows
-$EDITOR .github/workflows/ci.yml   # paste the YAML above
-git add .github/workflows/ci.yml
-```
+- Pinned major versions (`@v4`, `@v5`); pin to specific commit SHAs if your security policy requires it.
+- Node 22 matches the maintainer's local runtime (`nvm` v22.16.0 verified 2026-05-10).
 
 ---
 

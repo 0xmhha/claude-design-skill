@@ -26,6 +26,12 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 - Path note: the carrier directory is `assets/showcase-brand/` (a `scripts/codex-image-import.py` path convention — `<brand>-brand/generated/`); HANDOFF §7.6's mention of `assets/showcases/` is conceptual. HANDOFF §7.6 carries a *Status: shipped* banner pointing at the real path. SKILL.md References routing table gains the matching row.
 - Validation: 47 python regression + 19 easing + JSON template all still pass; `scan_assets.py --dir assets/showcase-brand/generated/` returns "clean" for every file. License-clean: predecessor's `assets/showcases/` was not opened or copied; each PNG is freshly generated and individually attributable through the audit trail.
 
+### Activated — GitHub Actions CI (Step 4.3)
+
+- `.github/workflows/sanitizers.yml` ships the reference workflow that runs on every push to master / main and on every pull request. Steps: SVG sanitizer regression (18 tests), scan_assets self-check (13), codex-image-import gate (19), animations easing regression (19, Node), JSON template lint (settings + brand-spec example), and an advisory asset scan over `assets/`. `permissions: contents: read` keeps the workflow from being able to push back into the repo. No untrusted GitHub-event input is interpolated into `run:` steps — workflow is injection-safe.
+- `references/ci-template.md` now points readers at the live workflow path (`.github/workflows/sanitizers.yml`) instead of describing it as a copy-paste template only. Test counts in the *What the CI does* table updated to reflect Steps 3.3 + 4.2 (18 / 13 / 19 / 19). The drop-in template for non-GitHub CI hosts (GitLab / Bitbucket / Buildkite) is preserved as the alternate-platform path.
+- Local equivalent unchanged: `./scripts/install-hooks.sh` activates the matching pre-commit hook (`.githooks/pre-commit`).
+
 ### Hardened — Codename pattern catalog (Step 4.2)
 
 - `scripts/codex-image-import.py` `DEFAULT_CODENAME_PATTERNS` gains 2 conservative-pairing patterns: `\b(stealth|skunkworks|moonshot)[-_ ](launch|product|asset|hero|build|alpha|beta|prerelease|prototype)\b` (the keyword **must** be paired with an asset / build noun, so "stealth fighter aesthetic" passes through and only "stealth-launch hero" fires the gate); `\bv\d+(?:\.\d+)?[-_ ](stealth|internal|prerelease|preview)\b` (versioned phase codes like "v3-stealth", "v2 internal" — bare "v3 update" passes). The conservative-pairing trade-off is documented inline in the script and in `references/security-config.md §1.5`.
