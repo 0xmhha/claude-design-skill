@@ -5,7 +5,7 @@
 > and creates rework — the failure mode this document was written to
 > prevent.
 
-**Last updated**: 2026-05-09
+**Last updated**: 2026-05-10
 **Active version**: v0.1.0-alpha (skeleton)
 **Repo**: `/Users/kevin/work/github/0xmhha/claude-design-skill`
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.

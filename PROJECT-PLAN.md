@@ -96,7 +96,7 @@ Goal: fill in SKILL.md body sections that govern day-to-day skill behavior. Auth
 - [ ] Junior Designer workflow — assumptions → reasoning → placeholders → review loop. Our own structure.
 - [ ] Anti-AI-slop checklist — generic gradient avoidance, layout symmetry, font pairing pitfalls. Our own list.
 - [x] App prototype rules — `IosFrame` (new mockup engine, written from scratch — `assets/android_frame.jsx` already in) + real-image policy + Playwright verification. (2026-05-09)
-- [ ] Slide deck conventions — 1920×1080 layout primitives, speaker-notes panel.
+- [x] Slide deck conventions — 1920×1080 layout primitives, speaker-notes panel. (2026-05-10)
 - [ ] Tweaks live-tuning system — design decisions toggle-able at runtime.
 - [ ] Critique guide — N-dimension scoring after delivery, with our own dimensions.
 
@@ -144,6 +144,14 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - `SKILL.md` gains a `## App prototype rules (iOS / Android)` section: Rule 1 frame wrapping (hard reject browser-window mockups for iOS / Android briefs), Rule 2 real images over placeholder grays, Rule 3 click-test before declaring done, plus the Dynamic Island slot guidance. References routing table updated; the matching item is removed from the TBD list.
 - Validated: 47/47 regression tests still pass (svg-sanitize 18 + scan_assets 13 + codex-image-import 16); JSON template parses; visual smoke through Playwright with four cases (default, dark mode, Pro Max + Live-Activity-style island, no-chrome) all rendered correctly.
 - Next: Step 2 — Junior Designer workflow OR Anti-AI-slop checklist OR Slide deck conventions (Tweaks live-tuning / Critique guide are later).
+
+### 2026-05-10 · Step 2.4 — Slide deck conventions + deck_stage.js
+
+- `assets/deck_stage.js` authored from scratch as a `<deck-stage>` web component. 1920×1080 fixed canvas with letterbox auto-fit, colocated `<aside slot="notes">` speaker-notes pattern, in-canvas notes overlay (toggle with `n`), blackout (`b`), keyboard surface (←/→/space/pgup/pgdown/home/end/1–9/esc), localStorage position memory, hash deep-link, opt-in postMessage broadcast (no wildcard, same security stance as the predecessor), and a `@page` print sheet that emits one canvas-sized page per slide. CSS variable hooks (`--deck-bg`, `--deck-slide-bg`, `--deck-stage-shadow`, `--deck-font`) for theming without forking. Same custom-element name and similar attribute set as the predecessor; implementation is original — different shadow-DOM bootstrap (`createElement`-based, no static `innerHTML`), different method decomposition, different localStorage key prefix, brand-new notes overlay (predecessor had none).
+- `SKILL.md` gains a `## Slide deck conventions` section: Rule 1 fixed canvas (not flow layout, browser-window mockup is a hard reject), Rule 2 colocated speaker notes (`<aside slot="notes">` inside each `<section>`, never orphaned in `<head>`), Rule 3 print = one canvas-sized page per slide (Cmd / Ctrl + P verified before delivery), Rule 4 keyboard as user surface; plus CSS hooks and the broadcast-origin policy. References routing table updated; the matching item is removed from the TBD list.
+- Two distribution bugs found by visual smoke and fixed in the same change: (1) per-slide light-DOM `display: flex` overrode `::slotted(section) { display: none }` because `::slotted` styles lose the cascade to the slotted-element's own light-DOM CSS — fixed by `::slotted(section:not(.is-active)) { display: none !important }`. (2) `<aside slot="notes">` is a grandchild of the shadow host (nested in `<section>`), and the slot algorithm only distributes direct children; the aside leaked into the slide canvas — fixed by detaching `aside` from light DOM during `_collect()` and cloning its contents into the overlay on each render.
+- Validated: 47/47 regression tests still pass; JSON template parses; visual smoke through Playwright with four cases (cover default, cover + notes overlay, agenda + notes with `<ul>/<strong>` markup, outro + notes with `<em>` markup) — all rendered correctly after the fixes.
+- Next: Step 2 — Junior Designer workflow OR Anti-AI-slop checklist (Tweaks live-tuning / Critique guide are later); Step 3 design-styles catalog is the highest-IP-risk section.
 
 ---
 

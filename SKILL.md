@@ -207,6 +207,80 @@ to the static black pill. The slot auto-expands to at least 220 × 48 px
 with a 240 ms transition, keeping the ergonomics close to the real
 Live Activity expand without prescribing layout inside the slot.
 
+## Slide deck conventions
+
+When the user asks for a "slide deck", "presentation", or "투표 자료",
+the deliverable is a deck — not a scrollable web page. The four rules
+below separate decks from landing pages.
+
+### Rule 1 · Fixed canvas, not flow layout
+
+- Canvas is **1920 × 1080 by default** (16:9). Portrait, square, or
+  any other ratio is fine — declare it once on the deck shell, never
+  per slide.
+- Wrap every slide deck in `<deck-stage>` from `assets/deck_stage.js`.
+  The component pins the canvas size, scales to the viewport with
+  letterbox bars, and lets the user keep designing at canvas pixels
+  even on a 1280 × 720 laptop screen.
+- A slide that needs scrolling to read is a layout failure, not a
+  deck. If the content does not fit, split the slide; do not ship a
+  scrollable section. (Speaker notes are the exception — they live in
+  the notes overlay, not on the slide canvas.)
+- Markup shape: each slide is a `<section>` child of `<deck-stage>`.
+  No outer `<main>`, no scrollable wrapper.
+
+### Rule 2 · Speaker notes are colocated, not orphaned
+
+- Notes belong **with** the slide they annotate, as
+  `<aside slot="notes">…</aside>` nested inside the matching
+  `<section>`. The component routes the slot into the in-canvas notes
+  overlay (`n` to toggle).
+- Notes can carry markup — bold, lists, emphasis, links — and the
+  overlay clones the live DOM, so author markup renders. (No
+  untrusted HTML flows in; the page is the source.)
+- Empty notes render an explicit `— no notes —` placeholder. Don't
+  omit the slot just to hide the placeholder; an explicit "no notes
+  for this slide" is information.
+
+### Rule 3 · Print = one canvas-sized page per slide
+
+- The deck must export to PDF cleanly via `Cmd / Ctrl + P`.
+- `<deck-stage>` injects an `@page` rule that matches the canvas
+  size and a `@media print` block that strips the counter, click-zone
+  navs, notes overlay, and blackout layer. One slide → one page.
+- Verify before delivery: open the deck, print to PDF, confirm one
+  slide per page at the right dimensions, no scrollbar bleed, no
+  cropped text. A deck that "looks great in the browser but renders
+  4 slides per page in PDF" is a deck that has not been tested.
+
+### Rule 4 · Treat the keyboard as a user surface
+
+- Built-in shortcuts (designed; document them in any handout):
+  `← / →`, `space`, `pgup / pgdown`, `home / end`, `1–9` (jump to
+  slide N), `n` (toggle speaker-notes overlay), `b` (blackout to
+  pure black; press again to restore), `esc` (close blackout or
+  notes).
+- The presenter should never have to touch the mouse during a live
+  talk. If a deliverable hides a critical interaction behind a click,
+  add the keyboard equivalent or move the interaction into the
+  slide's static layout.
+
+### CSS hooks (theming without forking the component)
+
+`<deck-stage>` exposes four CSS variables on the host:
+`--deck-bg` (letterbox color), `--deck-slide-bg` (canvas background
+when the slide doesn't paint its own), `--deck-stage-shadow`
+(canvas drop-shadow), `--deck-font` (counter / notes font). Set
+them inline on the element, in the document stylesheet, or per
+slide for chapter-color treatments.
+
+### Slide-change broadcast (opt-in only)
+
+`broadcast-origin="self"` posts a slide-change message to the
+parent same-origin window. An explicit `https://host.example` value
+posts only to that origin. The wildcard `"*"` is intentionally
+unsupported — receivers must always be specified. Off by default.
+
 ## References routing table
 
 | Task | Read |
@@ -223,6 +297,7 @@ Live Activity expand without prescribing layout inside the slot.
 | **Brand spec field reference** — what every key in `team-brand-spec.example.json` means | `references/brand-spec-fields.md` |
 | **CI workflow templates** — GitHub Actions / GitLab CI for sanitizer regression + asset scan | `references/ci-template.md` |
 | **App prototype rules** — iOS / Android device-frame wrapping, real-image policy, Playwright click-test | `## App prototype rules` (this skill) + `assets/ios_frame.jsx` + `assets/android_frame.jsx` |
+| **Slide deck conventions** — 1920×1080 fixed canvas, colocated speaker notes, print-to-PDF rules, keyboard surface | `## Slide deck conventions` (this skill) + `assets/deck_stage.js` |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -240,8 +315,6 @@ paragraphs.
 - **Junior Designer workflow** — the iterative
   assumptions → reasoning → placeholders → review loop. Step 3.
 - **Anti-AI-slop checklist** — what to avoid in generated UI. Step 3.
-- **Slide deck conventions** — 1920×1080 layouts, speaker-notes panel.
-  Step 3.
 - **Animation rules** — Stage / Sprite engine, Expo easing, narrative
   pacing, anti-pitfall checklist. Step 3 (engine code rewrite needed).
 - **Tweaks live-tuning system** — toggling design variations. Step 3.
