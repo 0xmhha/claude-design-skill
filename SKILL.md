@@ -983,6 +983,7 @@ absolute marks.
 | **Junior Designer workflow** — 4-stage loop (assumptions → reasoning → placeholders → review), worked NFT marketplace card example, failure modes, short-circuit rules | `## Junior Designer workflow` (this skill) |
 | **Tweaks live-tuning system** — `<tweak-panel>` + `<tweak>` web component, data-attribute CSS pattern, localStorage persistence, hotkey, `tweakchange` event | `## Tweaks live-tuning system` (this skill) + `assets/tweaks.js` + `examples/tweaks-demo.html` |
 | **Critique guide** — 6-dimension scoring (visual hierarchy, typography, color & contrast, spacing & rhythm, motion & micro-interactions, copy & narrative), threshold rule, worked critique on `tweaks-demo.html` | `## Critique guide` (this skill) |
+| **Design philosophy catalog** — flat list of 18 directions (14 author-original + 4 game/web3 carry-over), each with Prompt DNA / signature traits / external references / search keywords | `references/design-styles.md` |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -991,10 +992,6 @@ not pull text from any third-party design skill. Each section will get
 its own `references/<topic>.md` file when it grows beyond a few
 paragraphs.
 
-- **Design philosophy catalog** — design schools and their identifying
-  features. Authored in Step 3, not before. Until then, when the user
-  needs design direction, ask the user for references rather than
-  proposing from memory.
 - **Scene templates** — cover, infographic, slide deck, hero animation,
   game HUD, NFT marketplace, wallet/DEX, onboarding game-loop. Step 3.
 - **Animation rules** — Stage / Sprite engine, Expo easing, narrative
