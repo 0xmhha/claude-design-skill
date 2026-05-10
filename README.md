@@ -1,7 +1,8 @@
 # claude-design-skill
 
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
-> **Status: v0.1.0-alpha · skeleton · 2026-05-09 · clean-room rewrite, no upstream skill inherited.**
+> **Status: Step 1–4 shipped · 2026-05-10 · clean-room rewrite, no upstream skill inherited.**
+> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 regression tests across the four sanitizer / engine suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
 
 > 🟡 **If you're an AI agent picking this repo up in a fresh session, read [`HANDOFF.md`](HANDOFF.md) FIRST.** It contains the project context, the user's working style, the anti-patterns to avoid, and the decision tree for the next move. Skipping it costs tokens.
 
@@ -15,21 +16,24 @@ Three load-bearing rules govern every external call:
 2. **Confidentiality gate before any external call.** Internal codenames, NDA partners, unreleased products never leave the local agent — not via WebSearch, not via Codex CLI, not via image-gen prompts. Pattern table in `references/security-config.md §1.5`.
 3. **Strip-then-scan import gate** for every external asset. SVGs go through whitelist sanitize + CSP + visibility comment. PNGs go through chunk scan + AI metadata strip. Sanitizer rejection is never silent — every reject lands in PROVENANCE.
 
-## What's in here (v0.1.0-alpha skeleton)
+## What's in here
 
 ```
 claude-design-skill/
 ├── HANDOFF.md                        # ⭐ READ FIRST in a new session — context briefing + anti-patterns
-├── SKILL.md                          # main agent doc (skeleton)
+├── SKILL.md                          # main agent doc — workflows, App / Slide / Anti-slop / Junior Designer / Tweaks / Critique sections
 ├── README.md                         # this file
 ├── LICENSE                           # MIT
 ├── CHANGELOG.md                      # release log
-├── PROJECT-PLAN.md                   # decision log + Step 2/3 plan
-├── .gitignore
+├── PROJECT-PLAN.md                   # decision log
+├── .gitignore                        # also names the showcase-pack exception
+├── .github/
+│   └── workflows/
+│       └── sanitizers.yml            # CI on every push + PR
 ├── .githooks/
-│   └── pre-commit                    # opt-in: SVG sanitize + asset scan on staged files
+│   └── pre-commit                    # opt-in local equivalent: SVG sanitize + asset scan on staged files
 ├── references/                       # task-specific guides
-│   ├── security-config.md            # allowlist · WebSearch policy · Codex policy · codename patterns
+│   ├── security-config.md            # allowlist · WebSearch policy · Codex policy · codename pattern catalog
 │   ├── svg-sanitize.md               # XXE guard · whitelist · CSP · visibility comment
 │   ├── production-boundaries.md      # prototype ↔ production migration table
 │   ├── codex-design-workflow.md      # GPT-5.5 + gpt-image-2 with strip-then-scan import
@@ -39,24 +43,50 @@ claude-design-skill/
 │   ├── figma-component-grouping.md   # detect repeats and promote to components
 │   ├── figma-brand-spec-import.md    # Figma → team-brand-spec.json
 │   ├── brand-spec-fields.md          # field reference for team-brand-spec.example.json
-│   └── ci-template.md                # GitHub Actions / GitLab CI templates
+│   ├── ci-template.md                # live GitHub workflow + alternate-platform snippets
+│   ├── design-styles.md              # 18-direction design philosophy catalog (14 fresh + 4 game/web3 carry-over)
+│   ├── scene-templates.md            # 9 output-type templates (5 fresh + 4 game/web3 carry-over)
+│   ├── animation-engine.md           # <Stage> / <Sprite> reference + worked examples
+│   ├── animation-best-practices.md   # 5-tier timing scale, easing selection, stagger, reduced-motion
+│   └── animation-pitfalls.md         # 14 anti-patterns with why-bad / symptom / fix
 ├── scripts/
 │   ├── svg-sanitize.py               # whitelist-based SVG sanitizer (stdlib only)
 │   ├── test_svg_sanitize.py          # 18 regression tests
 │   ├── scan_assets.py                # PNG chunk + JPG segment scanner (stdlib only)
 │   ├── test_scan_assets.py           # 13 regression tests
-│   ├── codex-image-import.py         # Codex PNG → strip caBX → scan → import
-│   ├── test_codex_image_import.py    # 16 regression tests
+│   ├── codex-image-import.py         # Codex PNG → strip caBX → scan → import (with conservative-pairing codename catalog)
+│   ├── test_codex_image_import.py    # 19 regression tests
+│   ├── test_animations_easing.js     # 19 regression tests for the Easing pack (Node, stdlib only)
 │   └── install-hooks.sh              # opt-in pre-commit hook installer
 ├── assets/
 │   ├── team-brand-spec.example.json  # team brand-spec template
-│   └── android_frame.jsx             # Pixel 8 / 8 Pro mockup wrapper
+│   ├── ios_frame.jsx                 # iPhone 15 Pro / Pro Max device frame
+│   ├── android_frame.jsx             # Pixel 8 / 8 Pro device frame
+│   ├── deck_stage.js                 # <deck-stage> 1920×1080 web component
+│   ├── tweaks.js                     # <tweak-panel> live design-tuning controls
+│   ├── animations.jsx                # Stage / Sprite timeline engine
+│   ├── easing.js                     # 14-curve frozen Easing pack (CommonJS + window)
+│   └── showcase-brand/
+│       ├── PROVENANCE.md             # 213-line audit trail for the 16 showcase PNGs
+│       └── generated/                # 16 prebuilt visual demos (gpt-image-2)
 └── examples/
     ├── dot-claude-settings.json      # drop-in Claude Code permissions baseline
+    ├── tweaks-demo.html              # runnable <tweak-panel> example
     └── README.md                     # how to wire up the settings
 ```
 
-47/47 tests green. `python3 scripts/test_svg_sanitize.py && python3 scripts/test_scan_assets.py && python3 scripts/test_codex_image_import.py`
+Run the full guard chain locally:
+
+```bash
+python3 scripts/test_svg_sanitize.py        # 18/18
+python3 scripts/test_scan_assets.py         # 13/13
+python3 scripts/test_codex_image_import.py  # 19/19
+node    scripts/test_animations_easing.js   # 19/19
+python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
+python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
+```
+
+GitHub Actions runs the same chain on every push and PR.
 
 ## Quick start
 
@@ -82,11 +112,17 @@ Then talk to your agent (Claude Code, Cursor, Trae, or any markdown-skill-capabl
 "Sanitize this external SVG before I inline it"
 ```
 
-## What's missing (intentionally)
+## What ships (vs what's intentionally out of scope)
 
-The skill body — design philosophies, scene templates, animation rules, slide layouts, anti-AI-slop checklist — is **not** in this skeleton. The skeleton ships only what's already authored from scratch by this project's maintainer in a previous fork. Skill body sections are authored fresh in Step 2 / Step 3 (see `PROJECT-PLAN.md`).
+**In the box (Step 1–4 shipped, 2026-05-10):**
+- Security gates · sanitizers · Figma MCP routing · Codex CLI bridge with strip-then-scan import (Step 1)
+- SKILL.md body: Junior Designer workflow · Anti-AI-slop checklist (12 patterns) · App prototype rules (`<IosFrame>` + `<AndroidFrame>`) · Slide deck conventions (`<deck-stage>`) · Tweaks live-tuning system (`<tweak-panel>`) · Critique guide (6 dimensions, threshold rule, worked critique) (Step 2)
+- Design knowledge catalog: 18-direction design philosophy catalog · 9 scene templates · Stage / Sprite animation engine + 14-curve Easing pack · animation best-practices + pitfalls · 16 prebuilt visual showcases (Step 3)
+- Internal-fit hardening: codename pattern catalog with conservative-pairing rule · GitHub Actions CI · external asset hosts whitelist (Step 4)
 
-Until those sections land, when the user asks for design direction the skill should ask for concrete references rather than propose from memory — Core Principle #0 still applies.
+**Intentionally out of scope:**
+- **Sound effects (Step 3.5)** — retired by user instruction 2026-05-10. This project is visual-only; deliverables that need sound source it per-deliverable rather than vendoring an SFX pack here.
+- **Internal brand integration (Step 4 fork-specific)** — `team-brand-spec.json` real values, internal codenames added to the pattern list, internal asset hosts added to the allowlist. These are per-fork actions; the templates live in this repo (`references/brand-spec-fields.md`, `references/security-config.md §1.2`, `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS`).
 
 ## License
 
@@ -98,11 +134,11 @@ If your team needs a different license (internal-only, Apache 2.0, source-availa
 
 ## Roadmap
 
-- **v0.1.0-alpha (this release)** — skeleton: security gates, sanitizers, Figma MCP routing, Codex bridge, Android frame.
-- **v0.2.0** — SKILL.md body authored: Junior Designer workflow, anti-AI-slop checklist, app prototype rules including iOS frame.
-- **v0.3.0** — Design philosophy catalog (authored from scratch), scene templates (cover / slide / infographic / hero animation), critique guide.
-- **v0.4.0** — Animation engine (Stage / Sprite) rewrite, slide deck conventions, Tweaks live-tuning.
-- **v1.0.0** — Internal brand wired in, CI workflow active, designer dogfooding pass complete.
+- **v0.1.0-alpha (2026-05-09)** — skeleton: security gates, sanitizers, Figma MCP routing, Codex bridge, Android frame.
+- **Step 2 (2026-05-09 → 05-10)** — SKILL.md body authored: Junior Designer workflow · Anti-AI-slop checklist · App prototype rules + IosFrame · Slide deck conventions + deck_stage.js · Tweaks live-tuning system + tweaks.js + worked example · Critique guide.
+- **Step 3 (2026-05-10)** — Design knowledge catalog: design-styles.md (18 directions) · scene-templates.md (9 templates) · animation engine (animations.jsx + easing.js + 19 regression tests) · animation best-practices + pitfalls · 16 showcase PNGs. (Step 3.5 SFX library retired by user instruction.)
+- **Step 4 (2026-05-10)** — Internal-fit hardening: codename catalog conservative-pairing rule · GitHub Actions CI active · external asset hosts whitelist boost. Internal brand spec values + LICENSE / mirror policy remain per-fork actions.
+- **Next** — designer dogfooding pass · per-fork brand integration when a team adopts the skill.
 
 ## Contributing
 
