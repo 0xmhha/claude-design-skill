@@ -112,7 +112,7 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - [x] `references/scene-templates.md` — scene catalog: 9 templates (5 fresh + 4 game/web3 verbatim carry-over). Each entry: dimensions + key elements + recommended-philosophy cross-refs + prompt template. (2026-05-10)
 - [x] `references/animation-engine.md` + `assets/animations.jsx` + `assets/easing.js` — Stage / Sprite engine + 14-curve Easing pack. Public API matches the established `<Stage>` / `<Sprite>` / `useTime` / `useSprite` / `interpolate` / `Easing` shape (interface only, not protected); implementation original. Easing has its own regression suite (`scripts/test_animations_easing.js`, 19/19). (2026-05-10)
 - [x] `references/animation-best-practices.md` + `references/animation-pitfalls.md` — animation conventions. Generic best practices cited externally (Material 3, Apple HIG, CSS Easing spec); no upstream-specific case studies retained. (2026-05-10)
-- [ ] `references/sfx-library.md` + `assets/sfx/` — sound effect catalog. Sourced from CC0 / freesound with PROVENANCE.md per file. Authored cleanly.
+- [—] ~~`references/sfx-library.md` + `assets/sfx/`~~ — **out of scope per user instruction 2026-05-10**. Visual-only project; no SFX library will be authored, no audio assets vendored. (See decisions log entry below.)
 - [ ] `assets/showcases/` — prebuilt visual demos. Generated from scratch per scene + style combination. Each PNG gets PROVENANCE.md with prompt + Codex session id.
 
 ---
@@ -228,6 +228,15 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - SKILL.md References routing table gains both rows; the TBD list loses the *Animation rules* item — which had bundled engine + best-practices + pitfalls. Step 3.3 + Step 3.4 together close the bundle.
 - Validated: 47 python regression tests + 19 easing tests + JSON template all still pass; no visual smoke needed (prose only).
 - Next: Step 3.5 — `references/sfx-library.md` + `assets/sfx/` (CC0 sourcing required; predecessor's `assets/sfx/*.mp3` must NOT be carried over per HANDOFF §7.5; provenance per file).
+
+### 2026-05-10 · Step 3.5 — out of scope (user instruction)
+
+- User instruction 2026-05-10: *"사운드는 필요 없어. 시각적인것만 잘 지원해도 충분한것 같아."* This project is visual-only.
+- Decision: Step 3.5 is skipped entirely. No `references/sfx-library.md` will be authored. No `assets/sfx/` will be created. No audio sanitizer will be added to `scripts/`. The HANDOFF.md §7.5 done-when bar (20+ SFX with PROVENANCE) is retired for this repo.
+- Reasoning surfaced before the decision: the only deliverables that would have benefited from vendored SFX are sound-bearing motion artifacts (deck cover reveal, app prototype interaction feedback, game HUD state changes, onboarding reward pings, wallet transaction confirmation, hero web animation). The user evaluated their actual deliverable mix as visual-only and chose to retire the section rather than ship a partial doc-only Step 3.5.
+- Carry-over text that already references sound stays unchanged — `references/design-styles.md §18 Onboarding-Game-Loop` carries the predecessor's *"haptic + animation + sound"* phrase verbatim as part of its aesthetic spec; that's a reference to the *philosophy*, not a sourcing commitment from this repo.
+- HANDOFF.md §7.5 updated with a *Status: out of scope* banner so a future fresh-session agent does not start authoring.
+- Next: Step 3.6 — `assets/showcases/` (Codex CLI + gpt-image-2 generation; visual deliverable; the environment for it is already validated per HANDOFF §4).
 
 ---
 

@@ -280,9 +280,22 @@ These are the **highest-IP-risk** sections of the upstream. Author with maximum 
 
 ### 7.5 `references/sfx-library.md` + `assets/sfx/`
 
-- **Goal**: Sound effect catalog for animation deliverables.
-- **Approach**: **Source from CC0 / freesound** with PROVENANCE.md per file. Do not carry over the predecessor's `assets/sfx/*.mp3` — those came from upstream and their provenance is unknown to this repo.
-- **Done-when**: 20+ SFX, every file has a PROVENANCE entry naming the original CC0 / freesound source.
+> **Status: out of scope per user instruction 2026-05-10.** This
+> project is visual-only — no sound deliverables. Do not author
+> the SFX catalog, do not source CC0 mp3s, do not build an audio
+> sanitizer. If a future deliverable needs sound, the caller is
+> responsible for sourcing per-deliverable; this skill will not
+> ship vendored audio.
+
+- ~~**Goal**: Sound effect catalog for animation deliverables.~~ (skipped)
+- ~~**Approach**: Source from CC0 / freesound with PROVENANCE.md per file.~~ (skipped)
+- ~~**Done-when**: 20+ SFX, every file has a PROVENANCE entry.~~ (skipped)
+
+The carry-over notes referencing sound that already shipped (e.g.
+`references/design-styles.md §18 Onboarding-Game-Loop` mentions
+"haptic + animation + sound" as part of the verbatim-carried
+predecessor prose) stay as-is — that's an aesthetic-spec mention,
+not a sourcing commitment.
 
 ### 7.6 `assets/showcases/` — prebuilt visual demos
 
