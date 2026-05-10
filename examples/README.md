@@ -5,6 +5,7 @@ Copy-paste starting points for the most common per-project setup tasks.
 | File | Drop into | Purpose |
 |---|---|---|
 | `dot-claude-settings.json` | `<your-project>/.claude/settings.json` | Harness-level security baseline — `deny` for `yt-dlp` / `wget` / unrestricted `curl`; `ask` per-call for allowlisted hosts and `WebSearch`. Mirrors `references/security-config.md` §3. |
+| `tweaks-demo.html` | open in any browser (or serve over `python3 -m http.server`) | Runnable worked example for the `<tweak-panel>` live-tuning component (`assets/tweaks.js`). Three knobs (palette · density · accent) drive five CSS variables on a real layout. Press `t` to reveal the panel. |
 
 ## Using `dot-claude-settings.json`
 
@@ -32,3 +33,21 @@ After copying, ask the agent something that should be blocked:
 Run: curl https://example.com -o test.html
 ```
 The agent should refuse (or ask) — not silently fetch. If it silently fetches, the settings file isn't being picked up. Check that the path is exactly `.claude/settings.json` relative to where the agent is launched.
+
+## Using `tweaks-demo.html`
+
+The demo links to `../assets/tweaks.js` directly, so you need to serve
+the repo root (or the `examples/` directory's parent) for the relative
+path to resolve:
+
+```bash
+cd /path/to/internal-design-skill
+python3 -m http.server 8000
+# then open http://127.0.0.1:8000/examples/tweaks-demo.html
+```
+
+Press `t` to toggle the floating panel; press `Esc` to close it. The
+**Reset** button in the panel header clears the localStorage state and
+restores the defaults. For the full API and the *when not to use it*
+list, see `SKILL.md ## Tweaks live-tuning system` and the engine
+reference at `assets/tweaks.js`.

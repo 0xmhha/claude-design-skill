@@ -1,8 +1,11 @@
 # claude-design-skill
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![sanitizers](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml)
+
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
 > **Status: Step 1–4 shipped · 2026-05-10 · clean-room rewrite, no upstream skill inherited.**
-> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 regression tests across the four sanitizer / engine suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
+> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 9 regression tests across the five sanitizer / engine / fork-helper suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
 
 > 🟡 **If you're an AI agent picking this repo up in a fresh session, read [`HANDOFF.md`](HANDOFF.md) FIRST.** It contains the project context, the user's working style, the anti-patterns to avoid, and the decision tree for the next move. Skipping it costs tokens.
 
