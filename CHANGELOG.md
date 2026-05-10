@@ -26,6 +26,13 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 - Path note: the carrier directory is `assets/showcase-brand/` (a `scripts/codex-image-import.py` path convention — `<brand>-brand/generated/`); HANDOFF §7.6's mention of `assets/showcases/` is conceptual. HANDOFF §7.6 carries a *Status: shipped* banner pointing at the real path. SKILL.md References routing table gains the matching row.
 - Validation: 47 python regression + 19 easing + JSON template all still pass; `scan_assets.py --dir assets/showcase-brand/generated/` returns "clean" for every file. License-clean: predecessor's `assets/showcases/` was not opened or copied; each PNG is freshly generated and individually attributable through the audit trail.
 
+### Added — `init-brand` fork-bootstrap helper
+
+- `scripts/init-brand.py` automates the cp + meta-strip + JSON-validate sequence a per-fork operator otherwise does by hand. Default invocation copies `assets/team-brand-spec.example.json` to `team-brand-spec.json`, strips the `_meta` / `_note` guidance keys (which exist in the example as inline documentation), re-validates the result is parseable JSON, and prints a 10-item checklist of the most-common fields to fill in (team.company, brand.name, logo.primary, colors.primary, typography.display, etc.). Flags: `--target`, `--example`, `--keep-meta`, `--force`. Exit codes: `0` written, `1` source-missing / target-collision / invalid-JSON / write-failure. Stdlib only.
+- `scripts/test_init_brand.py` (9 tests) covers: default run writes target · `_meta` / `_note` keys are stripped at all nesting depths · actual fields preserved · `--keep-meta` preserves them · target collision blocks without `--force` · `--force` overwrites · missing source errors out without creating target · invalid JSON in source errors out · written file round-trips.
+- `.github/workflows/sanitizers.yml` gains the new step. `references/ci-template.md` table + GitHub-Actions snippet mirror the addition. `HANDOFF.md §1` verification block + `PROJECT-PLAN.md §8` Validation block bumped to include `9/9 OK`.
+- `references/brand-spec-fields.md` gains a *Bootstrap script* section pointing per-fork operators at the new helper.
+
 ### Boosted — External asset hosts whitelist (Step 4.4)
 
 - `examples/dot-claude-settings.json` `permissions.ask` gains 5 new generic-public entries: `unpkg.com/lucide-static@*` and `cdn.jsdelivr.net/npm/lucide-static@*` (Lucide icon SVGs · ISC), `unpkg.com/@phosphor-icons/core@*` and `cdn.jsdelivr.net/npm/@phosphor-icons/core@*` (Phosphor icon SVGs · MIT), `developer.mozilla.org/*` (MDN reference · CC-BY-SA 2.5). The version stamp inside `_template_meta` bumped 2026-05-09 → 2026-05-10.

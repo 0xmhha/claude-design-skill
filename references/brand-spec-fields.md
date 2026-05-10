@@ -175,6 +175,36 @@ The example file uses `_meta` (top-level) and `_note` (per-section) keys for inl
 
 ---
 
+## Bootstrap script
+
+`scripts/init-brand.py` automates the cp + meta-strip + JSON-validate
+sequence so a fork operator does not have to do it by hand:
+
+```bash
+python3 scripts/init-brand.py
+# -> writes team-brand-spec.json with the _meta / _note guidance keys
+#    stripped, then prints a checklist of the most-common fields to
+#    fill in
+```
+
+Common variations:
+
+```bash
+# Target a specific path (e.g. inside a separate project repo):
+python3 scripts/init-brand.py --target /path/to/your-project/team-brand-spec.json
+
+# Keep the inline _meta / _note guidance for reference while you fill
+# in the fields:
+python3 scripts/init-brand.py --keep-meta
+
+# Overwrite an existing target (the script refuses by default):
+python3 scripts/init-brand.py --force
+```
+
+Exit codes: `0` written, `1` source missing / target collision /
+invalid JSON / write failure. Stdlib only — no external dependencies.
+Regression suite: `scripts/test_init_brand.py` (9 tests).
+
 ## Validation
 
 Before committing, validate JSON with:

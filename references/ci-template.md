@@ -19,6 +19,7 @@
 | `scan_assets` self-tests | **hard-fail** | `python3 scripts/test_scan_assets.py` — 13 tests, sanity-checks the scanner against synthetic adversarial input |
 | Codex-image-import gate tests | **hard-fail** | `python3 scripts/test_codex_image_import.py` — 19 tests, including the conservative-pairing codename catalog |
 | Animations easing regression tests | **hard-fail** | `node scripts/test_animations_easing.js` — 19 tests, asserts every easing curve is `0→0`, `1→1`, monotonic ordering, frozen pack |
+| `init-brand` bootstrap helper tests | **hard-fail** | `python3 scripts/test_init_brand.py` — 9 tests for the cp + meta-strip + JSON-validate contract used by per-fork operators |
 | JSON template lint | **hard-fail** | `examples/dot-claude-settings.json` + `assets/team-brand-spec.example.json` parse cleanly |
 | Asset scan | **advisory** | `python3 scripts/scan_assets.py --dir assets/ --advisory` — reports without blocking |
 
@@ -66,6 +67,9 @@ jobs:
 
       - name: Animations easing regression tests
         run: node scripts/test_animations_easing.js
+
+      - name: init-brand bootstrap helper tests
+        run: python3 scripts/test_init_brand.py
 
       - name: JSON template lint
         run: |

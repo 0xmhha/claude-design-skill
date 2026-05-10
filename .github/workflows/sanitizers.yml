@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   guards:
-    name: Sanitizer / JSON / asset-scan / easing guards
+    name: Sanitizer / JSON / asset-scan / easing / init-brand guards
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,6 +34,9 @@ jobs:
 
       - name: Animations easing regression tests
         run: node scripts/test_animations_easing.js
+
+      - name: init-brand bootstrap helper tests
+        run: python3 scripts/test_init_brand.py
 
       - name: JSON template lint
         run: |
