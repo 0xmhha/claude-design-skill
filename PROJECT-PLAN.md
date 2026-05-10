@@ -98,7 +98,7 @@ Goal: fill in SKILL.md body sections that govern day-to-day skill behavior. Auth
 - [x] App prototype rules — `IosFrame` (new mockup engine, written from scratch — `assets/android_frame.jsx` already in) + real-image policy + Playwright verification. (2026-05-09)
 - [x] Slide deck conventions — 1920×1080 layout primitives, speaker-notes panel. (2026-05-10)
 - [x] Tweaks live-tuning system — design decisions toggle-able at runtime. (2026-05-10)
-- [ ] Critique guide — N-dimension scoring after delivery, with our own dimensions.
+- [x] Critique guide — N-dimension scoring after delivery, with our own dimensions. (2026-05-10)
 
 Rough budget: 1 session per section (= 6 sessions). Each section may grow into its own `references/*.md` if it crosses ~150 lines.
 
@@ -177,6 +177,16 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - One bug caught by visual smoke and fixed in this commit: `customElements.define('tweak', Tweak)` threw a `SyntaxError` because the web-components spec requires a hyphen in registered names — `tweak` is illegal as a registered custom-element name. Fixed by leaving `<tweak>` as a plain unknown HTML element (panel reads attributes off the children; no registered element needed), and explicitly hiding `<tweak>` children in `_collect()` so their default inline box does not affect surrounding layout.
 - Validated: 47/47 regression tests still pass; JSON template parses; visual smoke through Playwright with three states (default warm/comfortable/orange, panel revealed via `t` hotkey, panel after `.set()` of cool/spacious/blue) all rendered correctly; `data-tweak-*` attributes verified on `<html>`, three localStorage keys verified.
 - Next: Step 2 — Critique guide (§6.6, the last Step 2 item); Step 3 design-styles catalog and animation engine remain the highest-IP-risk sections.
+
+### 2026-05-10 · Step 2.6 — Critique guide (Step 2 complete)
+
+- `SKILL.md` gains a `## Critique guide` section (211 lines). Six dimensions, defined in concrete behavior rather than adjectives: (1) Visual hierarchy — eye finds primary message in <2 s without reading; (2) Typography — typeface / scale / line-height / tracking visibly *intent*; (3) Color & contrast — role-system + WCAG AA, on its own axis so accessibility is not buried inside "visual"; (4) Spacing & rhythm — vertical cadence variation across hero / content / dense / footer; (5) Motion & micro-interactions — hover, focus, state transitions, `prefers-reduced-motion`; (6) Copy & narrative — specificity vs marketing-template fill. **N = 6 deliberately**: HANDOFF.md §6.6 requires N ≠ 5 (predecessor uses 5); the split that earned the seat is putting color & contrast and spacing & rhythm on their own axes.
+- Scoring shape stated: each dimension yields one line — `score / 10 · one-sentence reason · one concrete fix`. Threshold table: 51–60 ship, 39–50 fix-and-rescore, 27–38 return to Stage 2 reasoning, <27 scrap. The threshold matters because the agent's natural failure mode is to declare "looks fine" at a 35.
+- Worked critique applied to `examples/tweaks-demo.html` — a real prior deliverable from this session, viewed in three states during Step 2.5's visual smoke. Total: 38 / 60 unfixed, with motion (4) and the placeholder "Hypothetical CTA" copy as the largest gaps. The closing turn is the load-bearing one: 38 sits in the "return to Stage 2" band, but the *brief-relative* score (the demo's brief is "prove the API", not "publish a marketing page") is materially higher; the rule is to re-score against the actual brief before scrapping. That single turn is what stops the next fresh agent from auto-failing demonstration artifacts.
+- Limitations stated explicitly: critique reflects only what the agent can see (no exposure to internal brand taste); single passes score state, not trajectory (Stage-3 placeholders read low on several axes by design); overall <27 means brief or direction is wrong, not that the agent is bad at design — fix one level up at Stage 2 reasoning, not at this layer.
+- License-clean: predecessor's critique section (5 dimensions) was not read; N = 6 by design; dimension definitions, scoring shape, threshold table, and worked critique are all original. SKILL.md contains no reference to "huashu-design" (verified by grep).
+- Validated: 47/47 regression tests still pass; JSON template parses; no visual smoke needed (text-only change).
+- **Step 2 complete.** All six body sections (§6.1 Junior Designer workflow, §6.2 Anti-AI-slop checklist, §6.3 App prototype rules + IosFrame, §6.4 Slide deck conventions + deck_stage.js, §6.5 Tweaks live-tuning system, §6.6 Critique guide) are authored. Next milestone is Step 3 (design philosophy catalog, scene templates, animation engine, animation best-practices, SFX library, showcase generation) — the highest-IP-risk sections of the upstream.
 
 ---
 

@@ -750,6 +750,218 @@ change a value, reload the page — the choice survives.
   out before shipping (or hide it behind a `?tweaks=1` URL guard
   if you want it preserved as a dev affordance).
 
+## Critique guide
+
+The agent's biggest review failure isn't shipping bad work — it's
+shipping work that has obvious issues a designer would catch in
+thirty seconds. The fix is a structured pass over the artifact,
+scored on six concrete dimensions, before declaring done. The
+Junior Designer workflow's Stage 4 (`## Junior Designer workflow`)
+calls this section; this is where the actual critique runs.
+
+### Why six dimensions
+
+Five dimensions is the most common shape, which is why this skill
+deliberately uses six. The split that matters is putting **color
+& contrast** on its own axis (so accessibility doesn't hide inside
+"visual"), and putting **spacing & rhythm** on its own axis (so
+density choices show up in the score). Both move differently from
+hierarchy and typography and deserve their own evaluation.
+
+### The six dimensions
+
+Each dimension is defined in concrete behavior — what passes, what
+fails — not adjectives.
+
+#### 1 · Visual hierarchy
+
+Can the eye find the primary message in under two seconds without
+reading? Score how well size, weight, contrast, and position route
+attention. A 10 has one obvious entry point and a clear secondary
+read; a 4 has the headline, a sub-section, and a CTA all competing
+for first place.
+
+Common fail: every card weighs the same — same border, same
+padding, same heading size — so nothing leads.
+
+#### 2 · Typography
+
+Are the typeface, scale, line-height, and tracking deliberate, or
+are they the LLM defaults (Inter, 16 px, 1.5 line-height,
+auto-tracking)? Score the *intent* visible in the choices, not the
+choices themselves. Geist at 16 px is a 9; Inter at 16 px is a 6
+unless there's an explicit reason ("we standardized on Inter
+because the brand spec says so" → 8).
+
+Common fail: display heading at body line-height (1.5). Tight
+display copy needs 1.05–1.15.
+
+#### 3 · Color & contrast
+
+Does the palette have a role-system (primary surface, secondary
+surface, accent, danger, muted text), and does every text block
+hit WCAG AA contrast ratios at the actual sizes used?
+
+The role-system check is structural: a 9 says "this is the muted
+text token, used in 3 places consistently"; a 5 says "I can find
+six grays in the file with no obvious reason for any of them."
+
+The contrast check is mechanical: pick the worst-case body text
+on the worst-case background and compute the ratio. Below 4.5:1
+on body, below 3:1 on large display, score drops by 2.
+
+#### 4 · Spacing & rhythm
+
+Is the vertical cadence varied across hero / content / dense /
+footer regions, or does every section get the same `py-24`?
+Spacing is half the design — sections that read "uniform" usually
+read "AI" because the LLM doesn't see page rhythm.
+
+Score the *cadence variation*, not the absolute spacing. A 9
+breathes in the hero, compresses through dense lists, lets the
+footer step down. A 5 paints every region the same height.
+
+#### 5 · Motion & micro-interactions
+
+Do animations reinforce hierarchy and state, or just decorate?
+Hover affordance, focus rings, state transitions, list reorder —
+these earn motion. Ambient orb pulses behind the headline don't.
+
+Specifically score:
+
+- Does every interactive element have a hover *and* focus state?
+- Are state transitions (loading → loaded, closed → open)
+  animated to communicate the change, not to dress it up?
+- Is reduced-motion respected (`@media (prefers-reduced-motion)`)?
+
+A 9 reinforces; a 4 decorates; a 1 has no motion at all and a
+non-trivial number of interactive elements.
+
+#### 6 · Copy & narrative
+
+Does the copy say something specific to this product, or is it
+placeholder marketing fill? "Empower your team to do more" plugs
+into any product, so it says nothing. Real copy mentions the
+actual feature, the actual pain, the actual user.
+
+Score the *specificity*. A 9 has a sentence the user could read
+and identify the product cold. A 5 reads like marketing-template
+copy. A 2 has lorem ipsum still in production positions.
+
+### Scoring shape
+
+Each dimension gets a single line: **score / 10 · one-sentence
+reason · one concrete fix**. No essay paragraphs. The point of the
+critique is to land actionable fixes, not to admire the analysis.
+
+Aggregate score is the sum / 60 (or the average × 10). Use it as
+a delivery gate, not a vanity metric:
+
+| Total | Action |
+|---|---|
+| 51–60 | Ship. Apply any fix that costs <5 minutes; let the rest go to v2. |
+| 39–50 | Apply every named fix, then re-score. Do not ship the unfixed pass. |
+| 27–38 | Return to Stage 2 reasoning. The direction itself is drifting; restating the contract usually surfaces what's wrong. |
+| <27 | Scrap. The brief or the chosen direction is wrong. Don't polish a wrong direction. |
+
+The threshold matters because the agent's natural failure mode is
+to declare "looks fine" at a 35 and ship.
+
+### Worked critique · `examples/tweaks-demo.html`
+
+Applied to a real prior deliverable from this skill — the
+tweak-panel demo, viewed at desktop 1280 × 900 in three states
+(default warm-comfortable-orange, panel revealed, cool-spacious-
+blue). The screenshots from Step 2.5's visual smoke are the
+evidence base.
+
+**1 · Visual hierarchy** · 7 / 10. The hero sequences cleanly
+(eyebrow → "Three knobs. No re-render." → lede → grid → CTA →
+footnote). The three step-cards weigh exactly the same, though,
+so the 1 → 2 → 3 sequence reads as parallel rather than ordered.
+*Fix*: tone the Step 2 + Step 3 eyebrow color one notch muter, or
+let Step 1's heading be slightly heavier. One change, ~2 min.
+
+**2 · Typography** · 6 / 10. Display weight 800 with -1.4 px
+tracking on the h1 shows intent. Body and inline `<code>` are
+LLM-default — system stack on body, ad-hoc inline-styled `code`
+spans inside the lede paragraph. The `code` styling is
+copy-pasted from the card-detail block and not factored to a
+shared token.
+*Fix*: pull `<code>` into one shared rule (background, padding,
+radius, font-family); pick a body font with character (Geist,
+Söhne, or Untitled Sans).
+
+**3 · Color & contrast** · 7 / 10. Palette × accent matrix
+(3 × 3) all clear AA on body text against the page background.
+Card surfaces are `rgba(255,255,255,0.5)` — fine on the warm
+yellow palette, but on the `cool` palette (`#dbeafe`) the cards
+nearly disappear because the white overlay reads almost identical
+to the background.
+*Fix*: make the card overlay palette-aware
+(`:root[data-tweak-palette="cool"] .card { background:
+rgba(255,255,255,0.7); }`), or switch to a darker translucent
+overlay (`rgba(0,0,0,0.04)`).
+
+**4 · Spacing & rhythm** · 6 / 10. The compact / comfortable /
+spacious tweak shows that the *cadence engine* exists. The
+delivered cadence itself, though, is uniform: hero, grid, CTA,
+and footnote all sit at default `comfortable` rhythm. The hero
+doesn't breathe more than the dense content does.
+*Fix*: hero gets larger top/bottom padding, footnote gets smaller
+top margin. Two CSS rules, one rhythm check.
+
+**5 · Motion & micro-interactions** · 4 / 10. Tweak transitions
+are well-tuned (240 ms ease on bg, gap, padding). Outside the
+tweak panel itself, though, only the CTA has hover (`translateY`).
+Cards, eyebrows, and pills have no hover or focus state. Reduced-
+motion is not respected. Keyboard focus ring is browser-default
+(invisible on the colored backgrounds).
+*Fix*: ship a `:focus-visible { outline: 2px solid var(--accent);
+outline-offset: 3px }` rule; add a subtle card hover (`box-shadow`
+lift); wrap the existing transitions in
+`@media (prefers-reduced-motion: no-preference)`.
+
+**6 · Copy & narrative** · 8 / 10. "Three knobs. No re-render."
+is direct, specific, marketing-fluff-free. Step descriptions name
+the actual mechanism (`data-tweak-<name>` attribute, localStorage,
+CustomEvent). The footnote is honest about what the page proves.
+The single placeholder is "Hypothetical CTA" on the button — used
+deliberately to signal it's a demo, but in any other context it
+would itself be slop (Anti-slop pattern #8).
+*Fix*: leave it for the demo, but flag it explicitly in the body
+copy: change the CTA to "Hypothetical CTA — wire to real action"
+or similar so the placeholder is self-labeled.
+
+**Total: 38 / 60.** Threshold table places this in
+**27–38: return to Stage 2 reasoning**.
+
+But the demo's purpose was *narrow* — show that three knobs move
+five CSS variables — not "publish a marketing landing page." The
+brief is the lower bar. Re-scored against the actual brief
+("worked example proving the tweak-panel API"), motion and
+spacing weights drop and the artifact passes. **This is exactly
+the case the threshold table is meant to surface**: the unfixed
+score is a 38, but the *brief-relative* score is higher. Re-score
+relative to the brief before scrapping; don't auto-fail on
+absolute marks.
+
+### Limitations
+
+- The critique gates *what the agent can see*. If the brief
+  involves a brand the agent has no exposure to, mechanical
+  contrast and spacing checks still apply, but typography and
+  copy critiques will miss brand-internal taste decisions.
+- A single critique pass scores the *current state*, not the
+  trajectory. If the artifact is a Stage-3 placeholder by design
+  (per Junior Designer workflow), several dimensions will be
+  intentionally unfinished — score against the *placeholder*
+  brief, not the polish brief.
+- Overall scores under 27 don't mean "the agent is bad at
+  design"; they mean the brief or the chosen direction is wrong.
+  The fix is one level up (Stage 2 reasoning), not at this
+  layer.
+
 ## References routing table
 
 | Task | Read |
@@ -770,6 +982,7 @@ change a value, reload the page — the choice survives.
 | **Anti-AI-slop checklist** — 12 generated-UI tells (gradients, glassmorphism, emoji icons, default type, cyberpunk-by-reflex, fake HUD detail) with fixes | `## Anti-AI-slop checklist` (this skill) |
 | **Junior Designer workflow** — 4-stage loop (assumptions → reasoning → placeholders → review), worked NFT marketplace card example, failure modes, short-circuit rules | `## Junior Designer workflow` (this skill) |
 | **Tweaks live-tuning system** — `<tweak-panel>` + `<tweak>` web component, data-attribute CSS pattern, localStorage persistence, hotkey, `tweakchange` event | `## Tweaks live-tuning system` (this skill) + `assets/tweaks.js` + `examples/tweaks-demo.html` |
+| **Critique guide** — 6-dimension scoring (visual hierarchy, typography, color & contrast, spacing & rhythm, motion & micro-interactions, copy & narrative), threshold rule, worked critique on `tweaks-demo.html` | `## Critique guide` (this skill) |
 
 ## Body sections — TBD (authored in Step 2 / Step 3)
 
@@ -786,7 +999,6 @@ paragraphs.
   game HUD, NFT marketplace, wallet/DEX, onboarding game-loop. Step 3.
 - **Animation rules** — Stage / Sprite engine, Expo easing, narrative
   pacing, anti-pitfall checklist. Step 3 (engine code rewrite needed).
-- **Critique guide** — N-dimension scoring after delivery. Step 3.
 
 ## Cross-agent environment adaptation
 
