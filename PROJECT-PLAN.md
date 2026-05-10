@@ -81,11 +81,11 @@ This project takes a different route — option (b) from the fork's `PROJECT-PLA
 
 ---
 
-## 3. What is intentionally NOT here yet
+## 3. What was deliberately empty at Step 1, and how it was filled
 
-The skill body — design knowledge, scenes, workflows — is **deliberately empty in this skeleton**. Rationale: those sections in the upstream skill are the parts that risk being "substantial derivative" if copied or paraphrased. Authoring them from scratch with our own voice and our own taxonomy keeps the project license-clean and lets us tailor the body to game / web3 design needs.
+The skill body — design knowledge, scenes, workflows — was deliberately empty in the v0.1.0-alpha skeleton. Rationale: those sections in the upstream skill are the parts that risk being "substantial derivative" if copied or paraphrased. Authoring them from scratch with our own voice and our own taxonomy keeps the project license-clean and lets us tailor the body to game / web3 design needs.
 
-Step 2 and Step 3 below cover this.
+Step 2 (SKILL.md body) and Step 3 (design-knowledge catalog) covered this in 2026-05-09 → 2026-05-10. See the per-step decisions log entries below for the license-clean evidence each section recorded (predecessor read scope, fresh-author scope, verbatim carry-over scope where applicable).
 
 ---
 

@@ -64,11 +64,16 @@ python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))" &
 # 3. Repo state
 git log --oneline -5
 git status
-# Expected: clean working tree, last commit is 'chore: initial skeleton (v0.1.0-alpha)'
+# Expected: clean working tree. The most recent commits in a
+# fresh clone are the Step 4 hardening commits (2026-05-10):
+# Step 4.4 hosts whitelist · Step 4.3 GitHub Actions CI ·
+# Step 4.2 codename pattern catalog · Step 3.6 showcase gallery
+# (16 PNGs) · Step 3.5 SFX library out-of-scope marker. Run
+# `git log --oneline | head -20` to scan the full Step 1-4 chain.
 
 # 4. Codex CLI sanity (only if user asks for codex work)
 which codex && codex --version
-# Expected: /Users/kevin/.nvm/.../codex, version >= 0.130 (validated 2026-05-09).
+# Expected: /Users/kevin/.nvm/.../codex, version >= 0.130 (validated 2026-05-10).
 ```
 
 If any of these fail, **stop and report**. Don't try to fix the environment by guessing — the user runs codex CLI from a node-version manager, has a private OAuth token, and changes there could be deliberate.
@@ -425,11 +430,11 @@ When you finish a meaningful chunk of work in your session, update HANDOFF.md's 
 ## 12 · Files to read before doing real work, in order
 
 1. **`HANDOFF.md`** (this file) — context and decision tree.
-2. **`PROJECT-PLAN.md`** — what's here, what's next.
-3. **`SKILL.md`** — the skill skeleton itself, especially §0 (fact verification) and §1 (security-first).
-4. **`README.md`** — public-facing summary.
-5. **`CHANGELOG.md`** — version log (currently v0.1.0-alpha only).
-6. The specific reference doc for the section you're working on (e.g., for Step 2.3 iOS frame, read `references/security-config.md §1.5` for the codename rule, then `references/codex-design-workflow.md` if you'll generate test images).
+2. **`PROJECT-PLAN.md`** — what's here, what was done, what's next; the per-step decisions log is canonical.
+3. **`SKILL.md`** — Core Principles #0 / #1 (fact verification, security-first), Figma MCP routing, Codex CLI bridge, plus the body sections shipped in Step 2 (App prototype rules, Slide deck conventions, Anti-AI-slop checklist, Junior Designer workflow, Tweaks live-tuning system, Critique guide).
+4. **`README.md`** — public-facing summary; ships the directory tree and the local guard-chain runner.
+5. **`CHANGELOG.md`** — release log; entries from `[Unreleased]` map back to Step 2 / Step 3 / Step 4 commits (2026-05-09 → 2026-05-10).
+6. The specific reference doc for the section you're working on (e.g., for an animation pass, read `references/animation-engine.md`, `references/animation-best-practices.md`, `references/animation-pitfalls.md`; for a vague design brief, start at `references/design-styles.md`).
 
 Don't read the predecessor fork at `/Users/kevin/work/github/0xmhha/huashu-design` for prose. You can read it for code spec on files that have a maintainer-authored counterpart (e.g., `assets/android_frame.jsx`) — but `SKILL.md` and `references/design-styles.md` and `references/scene-templates.md` etc. **must not be a paraphrase source**. If you find yourself reading them for "inspiration", stop.
 
@@ -440,7 +445,7 @@ Don't read the predecessor fork at `/Users/kevin/work/github/0xmhha/huashu-desig
 - **Predecessor fork** — `0xmhha/huashu-design`, the security-hardened fork of the upstream `huashu-design` skill. Frozen at commit `528539f` on 2026-05-09. Public on GitHub.
 - **Upstream** — `alchaincyf/huashu-design`. The original skill the predecessor forked from. Personal-use license.
 - **Carryover** — files brought from the predecessor fork that are 100% maintainer-authored (Phase 1–4.2 work). License-clean to bring here.
-- **Step 1 / Step 2 / Step 3 / Step 4** — see `PROJECT-PLAN.md`. Step 1 done, Steps 2–4 ahead.
+- **Step 1 / Step 2 / Step 3 / Step 4** — see `PROJECT-PLAN.md`. Steps 1–4 all shipped on 2026-05-10; Step 3.5 SFX library was retired by user instruction (visual-only project). The remaining work is per-fork (real `team-brand-spec.json` values, internal codenames, internal hosts, LICENSE / mirror policy).
 - **Confidentiality gate** — the codename / NDA / unreleased-product check that fires before any external call. Patterns in `references/security-config.md §1.5`.
 - **Strip-then-scan** — the gpt-image-2 import gate: drop non-whitelist PNG chunks (caBX C2PA), then run `scan_assets.py` on the cleaned bytes. If it still fails, hard-block.
 - **caBX** — the C2PA / JUMBF chunk OpenAI auto-injects in every gpt-image-2 PNG (~25 KB of provenance metadata signed by OpenAI). The fork's strip removes it; the fork's PROVENANCE.md replaces it.
@@ -453,8 +458,9 @@ Don't read the predecessor fork at `/Users/kevin/work/github/0xmhha/huashu-desig
 
 You now know:
 - What this project is (clean-room rewrite, MIT, no upstream inheritance).
-- What's done (v0.1.0-alpha skeleton, 47/47 tests green).
-- What's next (Step 2 body author pass, Step 3 design knowledge catalog).
+- What's done (Steps 1–4 all shipped on 2026-05-10; 18 + 13 + 19 + 19 regression tests pass; 16 prebuilt visual showcases; CI on every push and PR).
+- What's retired (Step 3.5 SFX library, by user instruction — visual-only project).
+- What's still per-fork (real `team-brand-spec.json` values, internal codenames added to the pattern list, internal hosts added to the allowlist, LICENSE / mirror policy).
 - How to act (terse, verify before claiming, no co-author, no meta-preamble, license-clean prose).
 - What to avoid (speculation, paraphrasing upstream, hard-fail without strip, sycophancy).
 

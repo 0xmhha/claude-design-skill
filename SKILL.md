@@ -43,11 +43,15 @@ provides:
   generation, with a hard-fail import gate that strips C2PA
   metadata and re-scans the result.
 
-The body — design philosophies, scene templates, slide rules, animation
-rules, prototype scaffolding — is **deliberately empty in this skeleton**
-and will be authored from scratch in subsequent steps. This avoids
-inheriting any prose from an upstream skill and keeps the project
-license-clean.
+Body sections — design philosophies, scene templates, slide rules,
+animation rules, prototype scaffolding — were authored from scratch
+across Step 2 and Step 3 (2026-05-09 → 2026-05-10). They live below
+under their own `##` headings (Junior Designer workflow, Anti-AI-slop
+checklist, App prototype rules, Slide deck conventions, Tweaks
+live-tuning system, Critique guide) and route into
+`references/design-styles.md`, `references/scene-templates.md`, and
+the animation references for the deeper catalogs. No upstream prose
+was inherited.
 
 ## Core Principle #0 · Fact verification before assumptions
 
