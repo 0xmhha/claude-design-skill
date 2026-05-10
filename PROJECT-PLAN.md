@@ -17,7 +17,7 @@ Predecessor work (a security-hardened fork at `0xmhha/huashu-design`) demonstrat
 
 This project takes a different route — option (b) from the fork's `PROJECT-PLAN.md §5.2`: rewrite the design body from scratch and carry over only the maintainer's own work. That keeps the license clean and avoids both the licensing fee and the legal ambiguity of "substantial derivative work".
 
-**Result**: this repo is MIT-licensed, depends on no upstream design skill, and can be migrated to a private internal git host without any inherited obligations.
+**Result**: this repo is **Apache-2.0 licensed** (changed from MIT on 2026-05-10), depends on no upstream design skill, and can be migrated to a private internal git host without any inherited obligations. The upstream `alchaincyf/huashu-design` Personal-Use license is separate and unaffected — this repo does not derive from it.
 
 ---
 
@@ -277,6 +277,13 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - `.github/workflows/sanitizers.yml` ships the reference workflow on this repo's GitHub. Triggers: push to `master` / `main` and any pull request. Steps: SVG sanitizer (18 tests), scan_assets self-check (13), codex-image-import gate (19), animations easing (19, Node), JSON template lint (settings + brand-spec example), advisory asset scan over `assets/`. Pinned `actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`. `permissions: contents: read` so the workflow cannot push back into the repo. No untrusted GitHub-event input is interpolated into `run:` steps — workflow is injection-safe per the standard guidance.
 - `references/ci-template.md` updated: the live workflow path is now named (`.github/workflows/sanitizers.yml`); test counts in the *What the CI does* table reflect Steps 3.3 + 4.2 (18 / 13 / 19 / 19); the GitHub Actions snippet matches the live workflow body. The non-GitHub CI host snippets (GitLab CI, internal Buildkite / Bitbucket migration notes) are preserved as the alternate-platform path.
 - Validated locally: 18/13/19/19 + JSON OK before commit. The first run of the workflow on GitHub will confirm the full chain on Ubuntu / Python 3.10 / Node 22.
+
+### 2026-05-10 · License change — MIT → Apache 2.0
+
+- `LICENSE` replaced with the Apache License 2.0 standard text plus an appendix-style maintainer note. `NOTICE` added (required by Apache §4(d)) — single-author clean-room rewrite, with explicit pointers to `PROJECT-PLAN.md §2` (23 carry-over files inventory) and `PROJECT-PLAN.md §7` (verbatim sections in `references/design-styles.md §15–18` and `references/scene-templates.md §06–09`).
+- **Rationale**: Apache 2.0 adds an explicit patent grant (§3) and trademark / contributor clarity (§6) that MIT does not. The change is unrelated to upstream / predecessor licensing — the upstream `alchaincyf/huashu-design` skill carries a separate Personal-Use license; this repository is a clean-room rewrite that does not derive from it; that upstream license is unaffected by the Apache 2.0 grant recorded here.
+- **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
+- Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
 
 ### 2026-05-10 · Step 4.4 — external asset hosts whitelist boost
 

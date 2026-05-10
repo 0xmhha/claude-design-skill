@@ -1,0 +1,28 @@
+claude-design-skill
+Copyright 2026 0xmhha (Kevin)
+
+This product is licensed under the Apache License, Version 2.0
+(see LICENSE for the full text).
+
+This product is a clean-room rewrite. It does not derive from any
+third-party design skill. All files are authored by the project
+maintainer.
+
+The 23 carry-over files from the maintainer's prior fork-author
+work in `0xmhha/huashu-design` Phase 1–4.2 are enumerated in
+`PROJECT-PLAN.md §2`. The verbatim sections inside
+`references/design-styles.md §15–18` (game / web3 design philosophy
+domain pack) and `references/scene-templates.md §06–09` (game / web3
+scene domain pack) are the maintainer's own original work, also
+documented in `PROJECT-PLAN.md §7`.
+
+The upstream `alchaincyf/huashu-design` skill is not derived from
+by this repository. Its separate Personal-Use license is unaffected
+by the license change recorded here.
+
+Third-party content referenced via external links or pinned-version
+allowlist (Lucide ISC · Phosphor MIT · MDN CC-BY-SA 2.5 · React /
+Babel MIT) retains its original license; this repository does not
+redistribute the third-party Source or Object form, only links to
+it from the configuration in `references/security-config.md §1.1`
+and `examples/dot-claude-settings.json`.

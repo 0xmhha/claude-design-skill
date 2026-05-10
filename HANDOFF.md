@@ -23,7 +23,7 @@ A **Claude Code-based design skill**, license-clean from day one, that turns des
 
 The maintainer previously hardened a fork at `0xmhha/huashu-design`. That fork descends from `alchaincyf/huashu-design`, a personal-use-only design skill (commercial license: USD 1,800–3,500 from the upstream author). The fork is kept as **internal R&D and reference**, but **must not** be used in client deliverables, public products, or revenue-generating contexts.
 
-This repo (`claude-design-skill`) is the **clean-room rewrite** chosen as option (b) from the fork's `PROJECT-PLAN.md §5.2`: rewrite from scratch, carry over only the maintainer's own work from the fork, never inherit upstream prose. **MIT-licensed**. Replaceable per team policy before external publication.
+This repo (`claude-design-skill`) is the **clean-room rewrite** chosen as option (b) from the fork's `PROJECT-PLAN.md §5.2`: rewrite from scratch, carry over only the maintainer's own work from the fork, never inherit upstream prose. **Apache-2.0 licensed** (changed from MIT on 2026-05-10 to gain Apache's explicit patent grant and contributor / trademark clarity). The upstream `alchaincyf/huashu-design` Personal-Use license is unaffected — this repo does not derive from it.
 
 ### What's already done (Step 1 → Step 4, 2026-05-09 → 2026-05-10)
 
@@ -458,7 +458,7 @@ Don't read the predecessor fork at `/Users/kevin/work/github/0xmhha/huashu-desig
 ## 14 · End of briefing
 
 You now know:
-- What this project is (clean-room rewrite, MIT, no upstream inheritance).
+- What this project is (clean-room rewrite, Apache 2.0, no upstream inheritance; the upstream `alchaincyf/huashu-design` Personal-Use license is separate and unaffected).
 - What's done (Steps 1–4 all shipped on 2026-05-10; 18 + 13 + 19 + 19 regression tests pass; 16 prebuilt visual showcases; CI on every push and PR).
 - What's retired (Step 3.5 SFX library, by user instruction — visual-only project).
 - What's still per-fork (real `team-brand-spec.json` values, internal codenames added to the pattern list, internal hosts added to the allowlist, LICENSE / mirror policy).

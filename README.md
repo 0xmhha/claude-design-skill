@@ -23,7 +23,8 @@ claude-design-skill/
 ├── HANDOFF.md                        # ⭐ READ FIRST in a new session — context briefing + anti-patterns
 ├── SKILL.md                          # main agent doc — workflows, App / Slide / Anti-slop / Junior Designer / Tweaks / Critique sections
 ├── README.md                         # this file
-├── LICENSE                           # MIT
+├── LICENSE                           # Apache-2.0
+├── NOTICE                            # required by Apache §4(d) — clean-room rewrite attribution
 ├── CHANGELOG.md                      # release log
 ├── PROJECT-PLAN.md                   # decision log
 ├── .gitignore                        # also names the showcase-pack exception
@@ -126,11 +127,28 @@ Then talk to your agent (Claude Code, Cursor, Trae, or any markdown-skill-capabl
 
 ## License
 
-MIT. See `LICENSE`.
+**Apache License 2.0**, recorded in `LICENSE`. Per Apache §4(d), the
+attribution `NOTICE` file ships alongside.
 
-This repository is a clean-room rewrite. No third-party design skill is inherited — every file is either authored from scratch by this project's maintainer or is the maintainer's own previous work carried over with attribution.
+This repository is a **clean-room rewrite**. No third-party design skill
+is inherited — every file is either authored from scratch by the project
+maintainer or is the maintainer's own prior fork-author work
+(`0xmhha/huashu-design`, Phase 1–4.2). The 23 carry-over files are
+enumerated in `PROJECT-PLAN.md §2`; the verbatim game / web3 domain
+sections inside `references/design-styles.md §15–18` and
+`references/scene-templates.md §06–09` are similarly maintainer-original
+work, documented in `PROJECT-PLAN.md §7`.
 
-If your team needs a different license (internal-only, Apache 2.0, source-available), replace `LICENSE` before any external publication.
+The upstream `alchaincyf/huashu-design` skill carries a separate
+Personal-Use license. This repository does **not derive from** the
+upstream, so the upstream license is unaffected by the Apache 2.0 grant
+recorded here. The license was changed from MIT to Apache 2.0 on
+2026-05-10 to gain the explicit patent grant (Apache §3) and the
+contributor / trademark clarity (Apache §6) that MIT does not provide.
+
+If a fork operator needs a different license (internal-only,
+source-available, etc.), replace `LICENSE` and `NOTICE` before any
+external publication.
 
 ## Roadmap
 
