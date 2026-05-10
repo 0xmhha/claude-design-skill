@@ -28,12 +28,15 @@ claude-design-skill/
 ├── README.md                         # this file
 ├── LICENSE                           # Apache-2.0
 ├── NOTICE                            # required by Apache §4(d) — clean-room rewrite attribution
+├── SECURITY.md                       # vulnerability disclosure policy (private advisories)
+├── CONTRIBUTING.md                   # fork operator / security reporter / rare-PR paths
 ├── CHANGELOG.md                      # release log
 ├── PROJECT-PLAN.md                   # decision log
 ├── .gitignore                        # also names the showcase-pack exception
 ├── .github/
-│   └── workflows/
-│       └── sanitizers.yml            # CI on every push + PR
+│   ├── workflows/
+│   │   └── sanitizers.yml            # CI on every push + PR
+│   └── dependabot.yml                # auto-update pinned GitHub Actions weekly
 ├── .githooks/
 │   └── pre-commit                    # opt-in local equivalent: SVG sanitize + asset scan on staged files
 ├── references/                       # task-specific guides
@@ -163,4 +166,11 @@ external publication.
 
 ## Contributing
 
-Internal R&D. External contributions are not currently accepted. If your team adopts this skill, fork it into your private git host and customize `team-brand-spec.json`, the codename pattern list in `references/security-config.md §1.5`, and the allowlist hosts in `references/security-config.md §1.2`.
+Internal R&D. External contributions are not currently sought. If you
+have a fix or improvement, read [`CONTRIBUTING.md`](CONTRIBUTING.md)
+first — it covers the fork-operator path, the security-reporter path,
+and the rare-PR path.
+
+For security regressions in the sanitizer / scanner / import-gate /
+codename catalog stack, use GitHub's private security advisories
+(see [`SECURITY.md`](SECURITY.md)) rather than opening a public issue.
