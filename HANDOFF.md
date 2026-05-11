@@ -5,8 +5,8 @@
 > and creates rework — the failure mode this document was written to
 > prevent.
 
-**Last updated**: 2026-05-10
-**Active version**: Step 1–4 shipped (2026-05-10)
+**Last updated**: 2026-05-11
+**Active version**: Step 1–4 shipped (2026-05-10) + post-Step-4 doc/policy follow-ups (2026-05-10 → 2026-05-11)
 **Repo**: `/Users/kevin/work/github/0xmhha/claude-design-skill`
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.
@@ -32,6 +32,17 @@ This repo (`claude-design-skill`) is the **clean-room rewrite** chosen as option
 - **Step 3 · Design knowledge (2026-05-10)** — §7.1 `references/design-styles.md` (18 directions, 14 fresh + 4 game/web3 carry-over) · §7.2 `references/scene-templates.md` (9 templates, 5 fresh + 4 carry-over) · §7.3 animation engine (`assets/animations.jsx` + `assets/easing.js` + `references/animation-engine.md` + 19-test regression suite) · §7.4 `references/animation-best-practices.md` + `references/animation-pitfalls.md` · §7.5 SFX library **out of scope per user instruction (visual-only project)** · §7.6 `assets/showcase-brand/generated/` — 16 prebuilt PNG showcases via Codex CLI + gpt-image-2.
 - **Step 4 · Internal-fit hardening (2026-05-10)** — §8.2 codename pattern catalog (conservative-pairing rule, 19/19 test) · §8.3 GitHub Actions CI active (`.github/workflows/sanitizers.yml`) · §8.4 external asset hosts whitelist boost (Lucide / Phosphor / MDN). Internal brand spec values, LICENSE / mirror policy, and internal-host additions remain **per-fork actions** (see §8 below).
 - **Validation today**: 18 + 13 + 19 + 19 regression tests pass; both JSON templates parse; `scan_assets.py --dir assets/` reports clean for every shipped PNG.
+
+### Post-Step-4 follow-ups already in tree (2026-05-10 → 2026-05-11)
+
+These shipped after the original Step-4 close and are part of the *current* tree
+state. They are not new "Steps"; they are doc/policy hygiene around what Steps
+1–4 already produced.
+
+- **License**: MIT → **Apache 2.0** + `NOTICE` per Apache §4(d). The §1 result line and the directory tree reflect this; the upstream `alchaincyf/huashu-design` Personal-Use license remains separate and unaffected.
+- **Fork-bootstrap helper**: `scripts/init-brand.py` (+ `scripts/test_init_brand.py`, 9/9 OK) so adopters can stamp a per-team brand carrier without hand-editing JSON. Verification block now runs 5 test scripts (18 + 13 + 19 + 19 + 9).
+- **Repo hygiene**: `SECURITY.md` (vulnerability disclosure pointer), `CONTRIBUTING.md`, `.github/dependabot.yml` (weekly Actions / pip / npm bumps). Status badges + tweaks-demo pointer added to `README.md`; the showcase gallery has its own `assets/showcase-brand/README.md` (preview catalog) alongside the existing `PROVENANCE.md`.
+- **Stale-references scrub**: every "v0.1.0-alpha skeleton" mention removed; HANDOFF / README / PROJECT-PLAN consistency pass.
 
 ### What's intentionally NOT done
 

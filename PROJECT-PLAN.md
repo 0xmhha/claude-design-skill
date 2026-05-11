@@ -25,7 +25,7 @@ This project takes a different route — option (b) from the fork's `PROJECT-PLA
 
 23 files. Every one of them is authored from scratch by this maintainer in the previous fork's Phase 1–4.2. No upstream prose is included.
 
-### Scripts (7 files, stdlib only)
+### Scripts (7 carry-over + 2 post-Step-4 fork-bootstrap = 9 files, stdlib only)
 
 | File | Origin |
 |---|---|
@@ -36,6 +36,8 @@ This project takes a different route — option (b) from the fork's `PROJECT-PLA
 | `scripts/codex-image-import.py` | Fork v0.2 (new — codex bridge) |
 | `scripts/test_codex_image_import.py` | Fork v0.2 (new — codex bridge tests) |
 | `scripts/install-hooks.sh` | Phase 4.2 (new in fork) |
+| `scripts/init-brand.py` | Post-Step-4 (2026-05-10, `62c0928`) — fork-bootstrap helper |
+| `scripts/test_init_brand.py` | Post-Step-4 (2026-05-10, `62c0928`) — 9/9 OK |
 
 ### References (11 files)
 
@@ -68,16 +70,30 @@ This project takes a different route — option (b) from the fork's `PROJECT-PLA
 | `examples/README.md` | Phase 4.1 (new) |
 | `.githooks/pre-commit` | Phase 4.2 (new) |
 
-### Authored fresh in this repo (5 files)
+### Authored fresh in this repo (6 files at Step 1)
 
 | File | Status |
 |---|---|
 | `SKILL.md` | New skeleton authored 2026-05-09. No upstream prose. |
 | `README.md` | New, authored 2026-05-09. |
-| `LICENSE` | MIT, new. |
-| `CHANGELOG.md` | New, starting at v0.1.0-alpha. |
+| `LICENSE` | MIT at Step 1; replaced with Apache 2.0 on 2026-05-10 (`8dbd325`). |
+| `CHANGELOG.md` | New, starting from Step 1. |
 | `.gitignore` | New, tailored to this layout. |
 | `PROJECT-PLAN.md` (this file) | New. |
+
+### Post-Step-4 additions (2026-05-10 → 2026-05-11)
+
+Not part of the original 23-file carry-over; shipped as doc/policy hygiene
+after Step 4 closed. Listed here so the inventory matches the current tree.
+
+| File | Origin |
+|---|---|
+| `NOTICE` | License change (`8dbd325`) — required by Apache §4(d). |
+| `SECURITY.md` | Repo hygiene (`3cd7e74`) — vulnerability disclosure pointer. |
+| `CONTRIBUTING.md` | Repo hygiene (`3cd7e74`). |
+| `.github/dependabot.yml` | Repo hygiene (`3cd7e74`) — weekly Actions / pip / npm bumps. |
+| `assets/showcase-brand/README.md` | Showcase gallery preview catalog (`ab155f7`). |
+| `assets/showcase-brand/PROVENANCE.md` | Step 3.6 audit trail (16 PNGs, shipped at `22cc9cf`). |
 
 ---
 
@@ -117,14 +133,31 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 
 ---
 
-## 6. Step 4 — Internal brand integration (when team brand is finalized)
+## 6. Step 4 — Internal brand integration
 
-- [ ] Replace placeholder values in `team-brand-spec.json` (logo, colors, typography stack).
-- [ ] Add the team's codename namespace to `references/security-config.md §1.5` and `scripts/codex-image-import.py` `DEFAULT_CODENAME_PATTERNS`.
-- [ ] Decide `watermark.enabled` policy.
-- [ ] Add internal asset hosts to `references/security-config.md §1.2` and `examples/dot-claude-settings.json` permissions.ask.
-- [ ] Mirror to internal git host. Once internal-only, this README and the LICENSE may need replacement per team policy.
-- [ ] Activate `references/ci-template.md` on the internal CI host — sanitizer regression tests + JSON lint as hard-fail; asset scan as advisory.
+Step 4 splits cleanly into **(a) repo-level defaults shipped here** and **(b) per-fork
+actions owned by the adopter team**. (a) is done; (b) is by design left empty in
+this public repo so it carries no team-specific text.
+
+### (a) Shipped in this repo (defaults + bootstrap)
+
+- [x] **Default codename pattern catalog** — `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS` ships 4 conservative-pairing patterns; `references/security-config.md §1.5` mirrors them with the *Conservative-pairing rule* paragraph. (`eb33448`, 2026-05-10)
+- [x] **Default `watermark.enabled` policy** — `assets/team-brand-spec.example.json` ships `enabled: false`; `references/brand-spec-fields.md §watermark` documents the keep-it-off-until-explicitly-approved policy. (2026-05-10)
+- [x] **Default public asset host allowlist** — `examples/dot-claude-settings.json:permissions.ask` and `references/security-config.md §1.1` ship 5 generic-public host entries (Lucide / Phosphor CDN mirrors + MDN). (`2ea3bb8`, 2026-05-10)
+- [x] **GitHub Actions CI activated** — `.github/workflows/sanitizers.yml` runs the full guard chain (18 + 13 + 19 + 19 + JSON + advisory asset scan) on every push to `master` / `main` and every pull request. (`d5dba7b`, 2026-05-10)
+- [x] **Fork-bootstrap helper** — `scripts/init-brand.py` (+ 9/9 tests) stamps a per-team brand carrier from `assets/team-brand-spec.example.json` so adopters can bootstrap without hand-editing JSON. (`62c0928`, 2026-05-10)
+
+### (b) Per-fork actions (adopter team owns)
+
+These are intentionally left as TODO in this repo and become checkboxes for the
+team that adopts the skill into an internal context.
+
+- [ ] Replace placeholder values in `team-brand-spec.json` (logo, colors, typography stack) — use `scripts/init-brand.py` to stamp the carrier file.
+- [ ] Add the team's codename namespace to `references/security-config.md §1.5` and `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS`.
+- [ ] Decide `watermark.enabled` policy for the team (default ships disabled; flip only with explicit approval).
+- [ ] Add internal asset hosts to `references/security-config.md §1.2 Team-extensible additions` and `examples/dot-claude-settings.json:permissions.ask`.
+- [ ] Mirror to the team's internal git host. Once internal-only, this README and the LICENSE may need replacement per team policy.
+- [ ] Port `references/ci-template.md` to the internal CI host (GitLab CI / Bitbucket / Buildkite) — sanitizer regression tests + JSON lint as hard-fail; asset scan as advisory. The reference GitHub Actions workflow is already live for public CI.
 
 ---
 
@@ -285,6 +318,14 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
 
+### 2026-05-11 · Doc sync — HANDOFF / PROJECT-PLAN ↔ tree state
+
+- Triggered by a fresh-session audit comparing `HANDOFF.md` and `PROJECT-PLAN.md` against the actual tree. Eight commits (`e82418d` → `3cd7e74`) had landed after the 2026-05-10 Step-4 close and were not reflected in the briefing docs; PROJECT-PLAN.md §6 Step-4 checkboxes were still all unchecked despite four of the items being shipped.
+- **HANDOFF.md**: `Last updated` bumped to 2026-05-11; `Active version` line names the post-Step-4 follow-ups; §0 gains a *Post-Step-4 follow-ups already in tree* paragraph that lists the license change (MIT → Apache 2.0 + NOTICE), the `scripts/init-brand.py` fork-bootstrap helper, the repo-hygiene additions (`SECURITY.md`, `CONTRIBUTING.md`, `.github/dependabot.yml`, `assets/showcase-brand/README.md`), and the stale-references scrub.
+- **PROJECT-PLAN.md**: §2 Scripts table extended from 7 to 9 rows (init-brand + its test); §2 Authored-fresh table now reflects MIT → Apache 2.0 history on the `LICENSE` row and gains a *Post-Step-4 additions* sub-table covering `NOTICE`, `SECURITY.md`, `CONTRIBUTING.md`, `.github/dependabot.yml`, and the two `assets/showcase-brand/*.md` files. §6 Step 4 split into (a) repo-level defaults shipped (5 items, `[x]`) and (b) per-fork actions (6 items, `[ ]` — adopter-owned by design). §8 Validation block names the team-brand-spec JSON parse alongside the settings JSON, and the closing line records the 2026-05-11 full-chain pass (78 tests).
+- License-clean: doc-only change; no new code, no upstream prose. Tests rerun before this commit: 18 / 13 / 19 / 19 / 9, all OK; both JSON templates parse; `scan_assets.py --dir assets/` reports clean for every showcase PNG.
+- Items deliberately NOT touched in this pass: `HANDOFF.md §0` `Repo` path (still `/Users/kevin/...`) — operational policy decision (preserve original-author path vs abstract). Surfaced as A-2 in the audit for a future session to decide.
+
 ### 2026-05-10 · Step 4.4 — external asset hosts whitelist boost
 
 - `examples/dot-claude-settings.json` `permissions.ask` gains 5 generic-public host entries (3 host families): Lucide icons (`unpkg` + `jsdelivr` mirrors, ISC), Phosphor icons (`unpkg` + `jsdelivr` mirrors, MIT), MDN reference (`developer.mozilla.org/*`, CC-BY-SA 2.5). All pinned to major versions (`@*`) for the package CDNs; MDN is wildcard-path on the documentation host.
@@ -307,6 +348,9 @@ node    scripts/test_animations_easing.js   # must be 19/19 OK
 python3 scripts/test_init_brand.py          # must be  9/9  OK
 python3 scripts/scan_assets.py --dir assets/  # must list 'clean' for every file
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
+python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
 ```
 
-Step 1 validation: all five pass on 2026-05-09.
+Step 1 validation: SVG / scan_assets / codex-image-import / JSON all green on 2026-05-09.
+Step 3.3 added animations-easing (19/19). Post-Step-4 added init_brand (9/9).
+Last full-chain pass: 2026-05-11 (18 + 13 + 19 + 19 + 9 = 78 tests, all OK; advisory asset scan clean for all 16 showcase PNGs).
