@@ -9,6 +9,18 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 
 ## [Unreleased]
 
+### Added — Step 6: Figma support hardening (viewer + MCP setup + image-export + page-organization)
+
+- `scripts/figma-viewer.py` (~360 lines, stdlib only) — Figma file → single self-contained HTML viewer. Reads Figma REST (`X-Figma-Token`) or a local fixture; walks the document tree; renders each CANVAS as a keyboard-navigable section (`←` / `→` / `1..9` / `d` for dark chrome) with FRAME / RECTANGLE / ELLIPSE / TEXT children positioned by `absoluteBoundingBox`. Output HTML has *every* CSS + JS inlined — usable air-gapped, works as an email attachment. Unsupported node types (BOOLEAN_OPERATION, etc.) render as dashed-outline placeholders, not silently dropped.
+- `scripts/fixtures/figma_viewer_sample.json` — 2-page synthetic Figma response covering frames, rects with corner radius, text styles, dark surfaces.
+- `scripts/test_figma_viewer.py` — 15 regression tests: HTML well-formed, every CANVAS becomes a section, RGBA + corner radius rendering, font-family quote-escape defence-in-depth (test pins this against a hostile `Inter"><script>alert(1)</script>` payload), self-containment invariant, every error path, empty document placeholder, unsupported-node placeholder.
+- `references/figma-viewer.md` (8 sections): what it renders, online + offline quick start, keyboard shortcuts, self-containment guarantee, security posture, use cases, out-of-scope boundaries, related tools.
+- `references/figma-mcp-setup.md` — Figma MCP server install + PAT auth + Claude Desktop / Code config example + the detection contract (table of `figma_*` tool names mapped to skill features) + verification smoke + MCP-absent fallback per workflow.
+- `references/figma-image-export.md` — Codex-generated PNG → Figma node placement. Two paths (MCP-aware vs MCP-absent), shared provenance schema (11 fields), naming convention, layered security posture (codename gate + C2PA strip + watermark-bake-before-upload), roadmap notes.
+- `references/figma-page-organization.md` — page / section / folder-slash organization. Distinct from componentization. Three recommended page-layout shapes, section heuristics, folder-slash naming convention, 5-step idempotent workflow, sample MCP-absent rename-plan table.
+- `.github/workflows/sanitizers.yml` gains the `figma-viewer tests` step (Python 3.10). The non-GitHub CI snippets in `references/ci-template.md` (GitLab CI / Bitbucket Pipelines / Buildkite) all gain the same line. The chain becomes 7 suites: 18 + 13 + 19 + 19 + 11 + 13 + 15 = **108 regression tests**.
+- SKILL.md routing table gains rows for `figma-viewer`, `figma-mcp-setup`, `figma-image-export`, `figma-page-organization`. SKILL.md / README / HANDOFF status lines bumped to "Step 1–6 shipped (2026-05-10 → 2026-05-12)".
+
 ### Changed — Default Studio identity + section 6 restructure (Step 5.5)
 
 - `assets/team-brand-spec.default.json` identity fields now describe a fictional **Default Studio** instead of *Example Studios* placeholder text. `team.company = "Default Studio"`, `brand.name = "Default"`, `brand.tagline_short = "Design that ships."`, `brand.tone_keywords` and `brand.forbidden_zones` chosen against the 11-service evidence common ground (precise / expressive / credible; anti-rainbow / anti-cyberpunk-neon / anti-emoji-icon / anti-glassmorphism-reflex / anti-default-Inter-without-intent). `product_assets.*` / `ui_screenshots.*` paths emptied (Default Studio is fictional and has no real product imagery; adopters fill these in for their product). `design_system.tokens_repo_url` / `figma_library_url` emptied as per-fork.

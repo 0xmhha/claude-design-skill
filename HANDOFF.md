@@ -5,8 +5,8 @@
 > and creates rework — the failure mode this document was written to
 > prevent.
 
-**Last updated**: 2026-05-11
-**Active version**: Step 1–5 shipped (2026-05-10 → 2026-05-11). Step 5 closed with operational defaults + Figma ingestion path.
+**Last updated**: 2026-05-12
+**Active version**: Step 1–6 shipped (2026-05-10 → 2026-05-12). Step 5 closed operational defaults + Figma ingestion path; Step 6 closed Figma viewer + MCP setup + image-export + page-organization (4 new references; one new tool `figma-viewer.py` with 15 tests, total 108 regression tests).
 **Repo**: <https://github.com/0xmhha/claude-design-skill> (clone locally; commands in this doc assume `cd <repo-root>` first)
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.
@@ -55,6 +55,17 @@ Step 5 changed `team-brand-spec` from a *placeholder example* into an *operation
 - **5.5** — ✅ shipped: Default Studio identity stamped into `team-brand-spec.default.json` (replaces *Example Studios* placeholder); 4 placeholder SVGs under `assets/default-brand/` (sanitiser-clean); `PROJECT-PLAN §6` restructured into 3 buckets — (a) repo-level defaults shipped · (b) default-ships-here · adopter overrides · (c) repo-external operations — so *what's done* vs *what genuinely cannot have a default* is explicit.
 
 Total: 93 regression tests (18 + 13 + 19 + 19 + 11 + 13).
+
+### Step 6 — Figma support hardening (shipped 2026-05-12)
+
+Step 6 closed four gaps surfaced by an external review comparing this fork to the upstream huashu-design's Figma offering. None added new behaviour to the existing Figma workflow; all four are *enabler* docs / a viewer tool that lets the Figma flow run with or without an MCP server attached.
+
+- **6.1** — ✅ shipped: `scripts/figma-viewer.py` (~360 lines, stdlib only) + `scripts/fixtures/figma_viewer_sample.json` (2-page synthetic) + `scripts/test_figma_viewer.py` (15 tests) + `references/figma-viewer.md`. Reads Figma REST or fixture, renders a *self-contained* HTML page (no external link/script/import) that lays each CANVAS out with FRAME / RECTANGLE / ELLIPSE / TEXT children positioned by `absoluteBoundingBox`. Defence-in-depth: every Figma-supplied string (`fontFamily`, `characters`, `name`) is HTML-escaped before landing in inline-style attributes (test pins the invariant against a hostile `Inter"><script>` payload). Total test count 93 → **108**.
+- **6.2** — ✅ shipped: `references/figma-mcp-setup.md` — Figma MCP server install (framelink / Dev Mode), PAT generation + scope, env wiring example (Claude Desktop / Code config), the *detection contract* (which `figma_*` tool names the skill expects), verification smoke, MCP-absent fallback per workflow.
+- **6.3** — ✅ shipped: `references/figma-image-export.md` — Codex-generated PNG → Figma node placement. Two paths (MCP-aware vs MCP-absent), shared provenance schema (11 fields, last three appended at placement), naming convention, layered security posture (codename gate + C2PA strip + allowlist note + watermark-bake-before-upload), roadmap notes for variant / swap / bulk.
+- **6.4** — ✅ shipped: `references/figma-page-organization.md` — distinct from componentization. 3 levels (page / section / layer-naming), 3 page-layout shapes (single-product / multi-product / design-exploration), section heuristics, folder-slash naming convention, 5-step idempotent workflow, sample MCP-absent rename plan.
+
+Total: **108 regression tests** (18 + 13 + 19 + 19 + 11 + 13 + 15).
 
 ### What's intentionally NOT done
 

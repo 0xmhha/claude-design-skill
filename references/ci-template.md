@@ -21,6 +21,7 @@
 | Animations easing regression tests | **hard-fail** | `node scripts/test_animations_easing.js` — 19 tests, asserts every easing curve is `0→0`, `1→1`, monotonic ordering, frozen pack |
 | `init-brand` bootstrap helper tests | **hard-fail** | `python3 scripts/test_init_brand.py` — 11 tests for the cp + meta-strip + JSON-validate contract + color-token-groups invariant + status-source attribution survival |
 | `figma-to-brand-spec` extractor tests | **hard-fail** | `python3 scripts/test_figma_to_brand_spec.py` — 13 tests covering colour + text mapping, hex rounding, unmapped-style preservation, merge / no-merge, all error paths (fixture-based, network-free) |
+| `figma-viewer` tests | **hard-fail** | `python3 scripts/test_figma_viewer.py` — 15 tests for the HTML viewer (well-formed doctype + title, every CANVAS becomes a section, RGBA + corner radius rendering, font escape against hostile fontFamily, self-containment invariant, all error paths, empty document, unsupported node placeholder) |
 | JSON template lint | **hard-fail** | `examples/dot-claude-settings.json` + `assets/team-brand-spec.default.json` parse cleanly |
 | Asset scan | **advisory** | `python3 scripts/scan_assets.py --dir assets/ --advisory` — reports without blocking |
 
@@ -114,6 +115,7 @@ guards:
     - node    scripts/test_animations_easing.js
     - python3 scripts/test_init_brand.py
     - python3 scripts/test_figma_to_brand_spec.py
+    - python3 scripts/test_figma_viewer.py
     - python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
     - python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
     - python3 scripts/scan_assets.py --dir assets/ --advisory
@@ -147,6 +149,7 @@ definitions:
           - node    scripts/test_animations_easing.js
           - python3 scripts/test_init_brand.py
           - python3 scripts/test_figma_to_brand_spec.py
+          - python3 scripts/test_figma_viewer.py
           - python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
           - python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
           - python3 scripts/scan_assets.py --dir assets/ --advisory
@@ -180,6 +183,7 @@ steps:
       node    scripts/test_animations_easing.js
       python3 scripts/test_init_brand.py
       python3 scripts/test_figma_to_brand_spec.py
+      python3 scripts/test_figma_viewer.py
       python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
       python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
       python3 scripts/scan_assets.py --dir assets/ --advisory

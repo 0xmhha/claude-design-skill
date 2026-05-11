@@ -4,7 +4,7 @@
 [![sanitizers](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml)
 
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
-> **Status: Step 1–5 shipped · 2026-05-10 → 2026-05-11 · clean-room rewrite, no upstream skill inherited.**
+> **Status: Step 1–6 shipped · 2026-05-10 → 2026-05-12 · clean-room rewrite, no upstream skill inherited.**
 > Step 5 promoted `team-brand-spec` from placeholder to operational default (evidence-anchored to an 11-service style sweep) and added a Figma → spec extractor.
 > CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 11 + 13 + 15 = **108 regression tests** across the seven sanitizer / engine / fork-helper / Figma-extractor / Figma-viewer suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
 
@@ -56,7 +56,13 @@ claude-design-skill/
 │   ├── scene-templates.md            # 9 output-type templates (5 fresh + 4 game/web3 carry-over)
 │   ├── animation-engine.md           # <Stage> / <Sprite> reference + worked examples
 │   ├── animation-best-practices.md   # 5-tier timing scale, easing selection, stagger, reduced-motion
-│   └── animation-pitfalls.md         # 14 anti-patterns with why-bad / symptom / fix
+│   ├── animation-pitfalls.md         # 14 anti-patterns with why-bad / symptom / fix
+│   ├── web3-game-style-stats.md      # 11-service evidence sweep behind the default values (Step 5.2)
+│   ├── figma-to-brand-spec.md        # REST → team-brand-spec.json extractor reference
+│   ├── figma-viewer.md               # REST → self-contained HTML viewer reference
+│   ├── figma-mcp-setup.md            # MCP server install + PAT + detection contract
+│   ├── figma-image-export.md         # Codex PNG → Figma placement (MCP-aware + manual fallback)
+│   └── figma-page-organization.md    # page / section / folder organization (sibling of componentization)
 ├── scripts/
 │   ├── svg-sanitize.py               # whitelist-based SVG sanitizer (stdlib only)
 │   ├── test_svg_sanitize.py          # 18 regression tests
@@ -176,6 +182,7 @@ external publication.
 - **Step 3 (2026-05-10)** — Design knowledge catalog: design-styles.md (18 directions) · scene-templates.md (9 templates) · animation engine (animations.jsx + easing.js + 19 regression tests) · animation best-practices + pitfalls · 16 showcase PNGs. (Step 3.5 SFX library retired by user instruction.)
 - **Step 4 (2026-05-10)** — Internal-fit hardening: codename catalog conservative-pairing rule · GitHub Actions CI active · external asset hosts whitelist boost. Internal brand spec values + LICENSE / mirror policy remain per-fork actions.
 - **Step 5 (2026-05-11)** — Operational defaults + Figma ingestion: `team-brand-spec.default.json` replaces the placeholder example with evidence-anchored values from an 11-service style sweep (`references/web3-game-style-stats.md`); `scripts/figma-to-brand-spec.py` lets adopters extract their spec from Figma instead of hand-editing JSON.
+- **Step 6 (2026-05-12)** — Figma support hardening: `scripts/figma-viewer.py` (self-contained HTML viewer for review-without-Figma), `references/figma-mcp-setup.md` (MCP server install + detection contract), `references/figma-image-export.md` (Codex PNG → Figma placement), `references/figma-page-organization.md` (page / section / folder organization, sibling of componentization).
 - **Next** — designer dogfooding pass · per-fork brand integration when a team adopts the skill.
 
 ## Contributing

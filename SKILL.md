@@ -16,7 +16,7 @@ description: |
 
 # claude-design-skill
 
-> Status: **Step 1–5 shipped · 2026-05-10 → 2026-05-11**
+> Status: **Step 1–6 shipped · 2026-05-10 → 2026-05-12**
 > All body sections are authored; the design-knowledge catalog,
 > animation engine, and prebuilt showcases ship alongside. Step 5
 > promotes `team-brand-spec` from placeholder to operational default
@@ -986,7 +986,11 @@ absolute marks.
 | **Brand spec field reference** — what every key in `team-brand-spec.default.json` means | `references/brand-spec-fields.md` |
 | **Web3 + game style stats** — 11-service evidence sweep (color, type, spacing, radius, motion) behind the default values | `references/web3-game-style-stats.md` |
 | **Figma → team-brand-spec extractor** — REST-API tool that pulls named styles from a Figma file into the carrier; fixture mode for offline runs | `references/figma-to-brand-spec.md` + `scripts/figma-to-brand-spec.py` |
-| **CI workflow templates** — GitHub Actions / GitLab CI for sanitizer regression + asset scan | `references/ci-template.md` |
+| **Figma viewer** — REST → self-contained HTML viewer; offline fixture mode; review layouts without opening Figma | `references/figma-viewer.md` + `scripts/figma-viewer.py` |
+| **Figma MCP setup** — server install, PAT auth, tool-name detection contract, MCP-absent fallback | `references/figma-mcp-setup.md` |
+| **Figma image-export** — Codex-generated PNG → Figma node placement (MCP-aware + manual fallback), provenance recording | `references/figma-image-export.md` |
+| **Figma page organization** — page split / section / folder slash naming (sibling of layer-naming + componentization) | `references/figma-page-organization.md` |
+| **CI workflow templates** — GitHub Actions / GitLab CI / Bitbucket / Buildkite for sanitizer regression + asset scan | `references/ci-template.md` |
 | **App prototype rules** — iOS / Android device-frame wrapping, real-image policy, Playwright click-test | `## App prototype rules` (this skill) + `assets/ios_frame.jsx` + `assets/android_frame.jsx` |
 | **Slide deck conventions** — 1920×1080 fixed canvas, colocated speaker notes, print-to-PDF rules, keyboard surface | `## Slide deck conventions` (this skill) + `assets/deck_stage.js` |
 | **Anti-AI-slop checklist** — 12 generated-UI tells (gradients, glassmorphism, emoji icons, default type, cyberpunk-by-reflex, fake HUD detail) with fixes | `## Anti-AI-slop checklist` (this skill) |
