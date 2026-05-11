@@ -4,8 +4,8 @@
 [![sanitizers](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml)
 
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
-> **Status: Step 1–4 shipped · 2026-05-10 · clean-room rewrite, no upstream skill inherited.**
-> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 9 regression tests across the five sanitizer / engine / fork-helper suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
+> **Status: Step 1–4 shipped · 2026-05-10 · Step 5 in progress · 2026-05-11 (operational defaults + Figma ingestion) · clean-room rewrite, no upstream skill inherited.**
+> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 11 + 13 regression tests across the six sanitizer / engine / fork-helper / Figma-extractor suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
 
 > 🟡 **If you're an AI agent picking this repo up in a fresh session, read [`HANDOFF.md`](HANDOFF.md) FIRST.** It contains the project context, the user's working style, the anti-patterns to avoid, and the decision tree for the next move. Skipping it costs tokens.
 
@@ -65,7 +65,10 @@ claude-design-skill/
 │   ├── test_codex_image_import.py    # 19 regression tests
 │   ├── test_animations_easing.js     # 19 regression tests for the Easing pack (Node, stdlib only)
 │   ├── init-brand.py                 # fork-bootstrap helper — stamps a per-team brand-spec carrier
-│   ├── test_init_brand.py            # 9 regression tests
+│   ├── test_init_brand.py            # 11 regression tests
+│   ├── figma-to-brand-spec.py        # Figma → team-brand-spec.json extractor (REST API + offline fixture mode)
+│   ├── test_figma_to_brand_spec.py   # 13 regression tests
+│   ├── fixtures/                     # offline test fixtures (Figma API response shape)
 │   └── install-hooks.sh              # opt-in pre-commit hook installer
 ├── assets/
 │   ├── team-brand-spec.default.json  # operational default spec (Step 5.1, evidence-based)
@@ -92,7 +95,8 @@ python3 scripts/test_svg_sanitize.py        # 18/18
 python3 scripts/test_scan_assets.py         # 13/13
 python3 scripts/test_codex_image_import.py  # 19/19
 node    scripts/test_animations_easing.js   # 19/19
-python3 scripts/test_init_brand.py          #  9/9
+python3 scripts/test_init_brand.py          # 11/11
+python3 scripts/test_figma_to_brand_spec.py # 13/13
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
 python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
 ```

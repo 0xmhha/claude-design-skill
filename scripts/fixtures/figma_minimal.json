@@ -1,0 +1,144 @@
+{
+  "name": "Test Design System",
+  "lastModified": "2026-05-11T00:00:00Z",
+  "version": "1234567890",
+  "thumbnailUrl": "https://example.com/thumb.png",
+  "schemaVersion": 0,
+  "styles": {
+    "S:accent_primary": {
+      "key": "k-accent-primary",
+      "name": "color/accent/primary",
+      "styleType": "FILL",
+      "description": ""
+    },
+    "S:surface_base_light": {
+      "key": "k-surface-base-light",
+      "name": "color/surface/base_light",
+      "styleType": "FILL",
+      "description": ""
+    },
+    "S:surface_base_dark": {
+      "key": "k-surface-base-dark",
+      "name": "color/surface/base_dark",
+      "styleType": "FILL",
+      "description": ""
+    },
+    "S:status_success_light": {
+      "key": "k-status-success-light",
+      "name": "color/status/success_light",
+      "styleType": "FILL",
+      "description": ""
+    },
+    "S:text_display": {
+      "key": "k-text-display",
+      "name": "text/display/family",
+      "styleType": "TEXT",
+      "description": ""
+    },
+    "S:text_body": {
+      "key": "k-text-body",
+      "name": "text/body/family",
+      "styleType": "TEXT",
+      "description": ""
+    },
+    "S:loose_random": {
+      "key": "k-loose-random",
+      "name": "primitives/Loose Random",
+      "styleType": "FILL",
+      "description": "Unmapped — should land in _meta.unmapped_styles"
+    }
+  },
+  "document": {
+    "id": "0:0",
+    "name": "Document",
+    "type": "DOCUMENT",
+    "children": [
+      {
+        "id": "1:0",
+        "name": "Page · Tokens",
+        "type": "CANVAS",
+        "children": [
+          {
+            "id": "2:1",
+            "name": "Accent / Primary swatch",
+            "type": "RECTANGLE",
+            "styles": {"fill": "S:accent_primary"},
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 0.357, "g": 0.486, "b": 0.980, "a": 1}}
+            ]
+          },
+          {
+            "id": "2:2",
+            "name": "Surface / Base light swatch",
+            "type": "RECTANGLE",
+            "styles": {"fill": "S:surface_base_light"},
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 1.0, "g": 1.0, "b": 1.0, "a": 1}}
+            ]
+          },
+          {
+            "id": "2:3",
+            "name": "Surface / Base dark swatch",
+            "type": "RECTANGLE",
+            "styles": {"fill": "S:surface_base_dark"},
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 0.059, "g": 0.067, "b": 0.082, "a": 1}}
+            ]
+          },
+          {
+            "id": "2:4",
+            "name": "Status / Success light swatch",
+            "type": "RECTANGLE",
+            "styles": {"fill": "S:status_success_light"},
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 0.047, "g": 0.537, "b": 0.067, "a": 1}}
+            ]
+          },
+          {
+            "id": "2:5",
+            "name": "Display sample",
+            "type": "TEXT",
+            "styles": {"text": "S:text_display"},
+            "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 700,
+              "fontSize": 48,
+              "lineHeightPx": 56
+            },
+            "characters": "Display"
+          },
+          {
+            "id": "2:6",
+            "name": "Body sample",
+            "type": "TEXT",
+            "styles": {"text": "S:text_body"},
+            "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 16,
+              "lineHeightPx": 24
+            },
+            "characters": "Body"
+          },
+          {
+            "id": "2:7",
+            "name": "Loose random fill",
+            "type": "RECTANGLE",
+            "styles": {"fill": "S:loose_random"},
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 0.5, "g": 0.5, "b": 0.5, "a": 1}}
+            ]
+          },
+          {
+            "id": "2:8",
+            "name": "Unstyled rect — should be ignored",
+            "type": "RECTANGLE",
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 0, "g": 0, "b": 0, "a": 1}}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
