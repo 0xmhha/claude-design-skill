@@ -1,0 +1,20 @@
+{
+  "name": "claude-design-skill",
+  "description": "Claude Code-based design skill for hi-fi prototyping + Figma MCP precision work. Single-skill marketplace; mirror this repo to your internal git host to ship a team-local marketplace.",
+  "owner": {
+    "name": "0xmhha"
+  },
+  "plugins": [
+    {
+      "name": "claude-design-skill",
+      "description": "Visual-only design skill — Junior Designer workflow · Anti-AI-slop checklist · App prototype rules · Slide deck conventions · Tweaks live-tuning · Critique guide · 18-direction design philosophy catalog · 9 scene templates · Stage / Sprite animation engine + 14-curve Easing · 16 prebuilt visual showcases · Figma extractor (`figma-to-brand-spec.py`) · Figma viewer (`figma-viewer.py`) · Codex image-2 bridge with strip-then-scan import gate. 108 regression tests, stdlib-only.",
+      "version": "0.1.0",
+      "source": ".",
+      "author": {
+        "name": "0xmhha"
+      },
+      "license": "Apache-2.0",
+      "homepage": "https://github.com/0xmhha/claude-design-skill"
+    }
+  ]
+}

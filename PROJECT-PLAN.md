@@ -350,6 +350,30 @@ Out of scope for Step 5:
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
 
+### 2026-05-12 · Step 7 — onboarding (`QUICKSTART.md`) + plugin install path (`.claude-plugin/`)
+
+- Triggered by user question: *"huashu-design은 어떻게 설치해서 유저가 사용할 수 있도록 지원하고 있어? 그 방식은 편하다고 생각해? claude-design-skill 을 다수의 멀티 유저가 어떻게 쉽게 설치하고, mcp 까지 쉽게 사용할 수 있어?"* The comparison surfaced two gaps:
+  1. huashu-design ships a 10-minute walkthrough (`QUICKSTART.md`) but assumes single-user, doesn't cover MCP setup, and treats agent-host installation as out-of-scope. Our previous Quick start in README was 5 lines — even less.
+  2. Neither repo offered a `claude plugin install` path, so each teammate had to manually clone + copy files.
+- **7.1 — `QUICKSTART.md`** (~ 320 lines, 9 sections). Three explicit audience paths:
+  - *Individual designer / agent user*: §1 clone + verify (7-suite 108 tests) → §2 viewer smoke (no token / no Figma account) → §3 settings drop-in → §4 brand stamp → §5 first deliverable.
+  - *Team lead onboarding 5-20 designers*: §1–§5 → §6 *Team rollout* — 4 sub-actions (mirror to internal git host with pointer to `CONTRIBUTING.md`, ship a single team-wide `team-brand-spec.json` to the design-project repo not the skill repo, wire the Figma MCP server via `references/figma-mcp-setup.md`, optional plugin install path).
+  - *Read-only reviewer with no Claude Code seat*: §7 — clone, read the four canonical docs in order, run 108 tests, run viewer smoke. Lets a reviewer make a yes/no adoption decision without any agent setup.
+  - §8 troubleshooting table (7 rows mapping symptom → likely cause → fix).
+  - §9 next-steps router into SKILL.md / figma-workflow / codex-design-workflow / CONTRIBUTING / PROJECT-PLAN §7 / web3-game-style-stats.
+- **7.2 — `.claude-plugin/plugin.json`** (root) declares the skill as a Claude Code plugin (`name: "claude-design-skill"`, `version: "0.1.0"`, Apache-2.0, homepage + repository pointers, 10 keywords for marketplace search).
+- **7.2 — `.claude-plugin/marketplace.json`** (root) makes the repo itself a *single-plugin marketplace*. `plugins[0].source: "."` points at the same repo root. Teams add once:
+
+  ```bash
+  claude plugin marketplace add 0xmhha/claude-design-skill  # or internal mirror URL
+  claude plugin install claude-design-skill
+  ```
+
+  After that any teammate runs the second line and the skill lands in their Claude Code config. The marketplace.json schema follows the pattern observed in `buddy` (`~/.claude/plugins/marketplaces/buddy/.claude-plugin/marketplace.json`) and `claude-plugins-official`.
+- **Doc + README propagation**: README directory tree gains `QUICKSTART.md` + `.claude-plugin/` rows. README Quick start section rewritten to point at `QUICKSTART.md` first and include both the `git clone` + `claude plugin marketplace add` paths. HANDOFF.md §0 Active version line bumped + new §0 *Step 7* block mirrors the sub-step ship details.
+- **License-clean**: doc + manifest only. No upstream paraphrase; the QUICKSTART structure (audience splits, verification-first, MCP setup in §6) is original framing — huashu-design's `QUICKSTART.md` is single-audience and does not surface plugin / read-only paths.
+- **Validated**: 108/108 tests still OK (no test-affecting code changed); manifest files parse as valid JSON; `.claude-plugin/` layout mirrors the structure used by `buddy` and the Anthropic-official plugins surveyed.
+
 ### 2026-05-12 · Step 6 — Figma support hardening (viewer + MCP setup + image-export + page-organization)
 
 - Triggered by a user-requested comparison vs the upstream huashu-design that surfaced four gaps in our Figma offering:

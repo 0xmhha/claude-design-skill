@@ -9,6 +9,15 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 
 ## [Unreleased]
 
+### Added — Step 7: onboarding (`QUICKSTART.md`) + Claude Code plugin install
+
+- `QUICKSTART.md` — 15-minute walkthrough with three audience-aware paths: individual designer, team lead onboarding 5-20 designers (covers mirror + per-team `team-brand-spec.json` + Figma MCP wiring + plugin install), and read-only reviewer with no Claude Code seat (clone, read docs, run 108 tests, run viewer smoke). 9 sections including prerequisites, env verification, viewer smoke without a token, settings drop-in, brand stamp, first deliverable, team rollout, read-only path, troubleshooting (7-row table), and a next-steps router into the other docs.
+- `.claude-plugin/plugin.json` — Claude Code plugin manifest (name `claude-design-skill` · version `0.1.0` · Apache-2.0 · homepage + repository + 10 keywords). Makes the skill installable via `claude plugin install` once a teammate has added the marketplace.
+- `.claude-plugin/marketplace.json` — single-plugin marketplace declaration so the repo *is* its own marketplace. Teams add once via `claude plugin marketplace add 0xmhha/claude-design-skill` (or their internal mirror URL); any teammate then installs with one line.
+- README directory tree gains `QUICKSTART.md` + `.claude-plugin/` rows. README Quick start section rewritten to point at `QUICKSTART.md` first and include both the `git clone` + `claude plugin marketplace add` paths.
+- HANDOFF.md § Active version + new § Step 7 block summarise the onboarding + plugin work.
+- No test-affecting code changes — 108/108 still pass.
+
 ### Added — Step 6: Figma support hardening (viewer + MCP setup + image-export + page-organization)
 
 - `scripts/figma-viewer.py` (~360 lines, stdlib only) — Figma file → single self-contained HTML viewer. Reads Figma REST (`X-Figma-Token`) or a local fixture; walks the document tree; renders each CANVAS as a keyboard-navigable section (`←` / `→` / `1..9` / `d` for dark chrome) with FRAME / RECTANGLE / ELLIPSE / TEXT children positioned by `absoluteBoundingBox`. Output HTML has *every* CSS + JS inlined — usable air-gapped, works as an email attachment. Unsupported node types (BOOLEAN_OPERATION, etc.) render as dashed-outline placeholders, not silently dropped.

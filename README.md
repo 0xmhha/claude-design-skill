@@ -25,6 +25,7 @@ Three load-bearing rules govern every external call:
 ```
 claude-design-skill/
 ├── HANDOFF.md                        # ⭐ READ FIRST in a new session — context briefing + anti-patterns
+├── QUICKSTART.md                     # 🚀 15-minute walkthrough — individual / team / read-only paths
 ├── SKILL.md                          # main agent doc — workflows, App / Slide / Anti-slop / Junior Designer / Tweaks / Critique sections
 ├── README.md                         # this file
 ├── LICENSE                           # Apache-2.0
@@ -34,6 +35,9 @@ claude-design-skill/
 ├── CHANGELOG.md                      # release log
 ├── PROJECT-PLAN.md                   # decision log
 ├── .gitignore                        # also names the showcase-pack exception
+├── .claude-plugin/
+│   ├── plugin.json                   # Claude Code plugin manifest
+│   └── marketplace.json              # single-plugin marketplace (mirror for team-local marketplace)
 ├── .github/
 │   ├── workflows/
 │   │   └── sanitizers.yml            # CI on every push + PR
@@ -116,17 +120,43 @@ GitHub Actions runs the same chain on every push and PR.
 
 ## Quick start
 
+For a **15-minute walkthrough** with individual / team / read-only paths, see [`QUICKSTART.md`](QUICKSTART.md). The short version:
+
 ```bash
-# Clone (replace URL with your internal git host once mirrored)
-git clone <repo-url> claude-design-skill
-cd claude-design-skill
+# Clone (or fork-mirror to your internal git host)
+git clone https://github.com/0xmhha/claude-design-skill ~/skills/claude-design-skill
+cd ~/skills/claude-design-skill
 
-# Wire the settings.json baseline into your project
-cp examples/dot-claude-settings.json /path/to/your-project/.claude/settings.json
-# then remove the _template_meta block from settings.json
+# Verify your env can run every gate the CI runs (108 tests, ≈30s)
+python3 scripts/test_svg_sanitize.py && \
+python3 scripts/test_scan_assets.py && \
+python3 scripts/test_codex_image_import.py && \
+node    scripts/test_animations_easing.js && \
+python3 scripts/test_init_brand.py && \
+python3 scripts/test_figma_to_brand_spec.py && \
+python3 scripts/test_figma_viewer.py
 
-# (optional) install the pre-commit hook so staged SVGs / PNGs are gated locally
-./scripts/install-hooks.sh
+# Smoke the Figma viewer without any token / account
+python3 scripts/figma-viewer.py --fixture scripts/fixtures/figma_viewer_sample.json --output /tmp/viewer.html
+open /tmp/viewer.html
+
+# Drop the skill into your design project (NOT into the skill repo)
+cd /path/to/your-design-project
+mkdir -p .claude
+cp ~/skills/claude-design-skill/examples/dot-claude-settings.json .claude/settings.json
+$EDITOR .claude/settings.json   # remove the _template_meta block
+
+# Stamp the operational default brand spec into your project root
+python3 ~/skills/claude-design-skill/scripts/init-brand.py
+$EDITOR team-brand-spec.json   # override identity slots
+```
+
+**Plugin install** (Claude Code marketplace path):
+
+```bash
+# Adds the skill as a one-line install when running from any directory
+claude plugin marketplace add 0xmhha/claude-design-skill
+claude plugin install claude-design-skill
 ```
 
 Then talk to your agent (Claude Code, Cursor, Trae, or any markdown-skill-capable host):

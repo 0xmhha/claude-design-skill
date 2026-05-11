@@ -6,7 +6,7 @@
 > prevent.
 
 **Last updated**: 2026-05-12
-**Active version**: Step 1–6 shipped (2026-05-10 → 2026-05-12). Step 5 closed operational defaults + Figma ingestion path; Step 6 closed Figma viewer + MCP setup + image-export + page-organization (4 new references; one new tool `figma-viewer.py` with 15 tests, total 108 regression tests).
+**Active version**: Step 1–7 shipped (2026-05-10 → 2026-05-12). Step 5 closed operational defaults + Figma ingestion path; Step 6 closed Figma viewer + MCP setup + image-export + page-organization; Step 7 added the 15-minute QUICKSTART.md walkthrough + Claude Code plugin manifest (`.claude-plugin/plugin.json` + `marketplace.json`) so teams can install with `claude plugin marketplace add` instead of clone-and-copy. 108 regression tests unchanged.
 **Repo**: <https://github.com/0xmhha/claude-design-skill> (clone locally; commands in this doc assume `cd <repo-root>` first)
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.
@@ -66,6 +66,15 @@ Step 6 closed four gaps surfaced by an external review comparing this fork to th
 - **6.4** — ✅ shipped: `references/figma-page-organization.md` — distinct from componentization. 3 levels (page / section / layer-naming), 3 page-layout shapes (single-product / multi-product / design-exploration), section heuristics, folder-slash naming convention, 5-step idempotent workflow, sample MCP-absent rename plan.
 
 Total: **108 regression tests** (18 + 13 + 19 + 19 + 11 + 13 + 15).
+
+### Step 7 — onboarding + plugin install (shipped 2026-05-12)
+
+User question 2026-05-12 surfaced two gaps: (a) the install flow was a 5-line README block with no team-rollout / verification path, (b) Claude Code's plugin marketplace was not configured for `claude plugin install`.
+
+- **7.1** — ✅ shipped: `QUICKSTART.md` (≈ 320 lines · 9 sections). Three audience-aware paths: individual designer (§1–§5), team lead onboarding 5–20 designers (§1–§5 → §6), and read-only reviewer with no Claude Code seat (§7). Prerequisites (§0), clone-and-verify (§1), Figma viewer smoke without a token (§2), settings drop-in (§3), brand spec stamp (§4), first deliverable (§5), team rollout (§6), read-only path (§7), troubleshooting table (§8), next-steps router (§9). The team-rollout section names the 4 distinct actions (mirror, ship `team-brand-spec.json`, wire Figma MCP, plugin install) and points at the relevant references for each. README's Quick start section rewritten to point at `QUICKSTART.md` first and to include both `git clone` + `claude plugin marketplace add` paths.
+- **7.2** — ✅ shipped: `.claude-plugin/plugin.json` (root) declares the skill as a Claude Code plugin (name `claude-design-skill` · version `0.1.0` · Apache-2.0 · homepage + repository + 10 keywords). `.claude-plugin/marketplace.json` (root) declares a single-plugin marketplace pointing at `.` so the repo *itself* is a marketplace — teams add it once via `claude plugin marketplace add <git-url>` and any teammate installs via `claude plugin install claude-design-skill`. README directory tree gains the `.claude-plugin/` row.
+
+The 108 regression tests are unchanged in Step 7 — the work is onboarding / packaging, not new logic.
 
 ### What's intentionally NOT done
 

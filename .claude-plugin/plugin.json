@@ -1,0 +1,26 @@
+{
+  "name": "claude-design-skill",
+  "version": "0.1.0",
+  "description": "Claude Code-based design skill for hi-fi prototyping + Figma MCP precision work. Visual-only (audio/video out-of-scope), evidence-anchored Default Studio identity, Figma extractor + offline-capable viewer, 108-test guard chain on every push.",
+  "author": {
+    "name": "0xmhha"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/0xmhha/claude-design-skill",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xmhha/claude-design-skill.git"
+  },
+  "keywords": [
+    "design",
+    "figma",
+    "mcp",
+    "codex",
+    "gpt-image-2",
+    "brand-spec",
+    "web3",
+    "game",
+    "anti-ai-slop",
+    "sanitiser"
+  ]
+}
