@@ -1,12 +1,14 @@
 {
   "_meta": {
-    "description": "Operational default brand spec — used by the skill when no per-team `team-brand-spec.json` is provided. Values are evidence-anchored to a public 11-service style sweep (web3 6 + game 5) so generated design output is not LLM-imagined.",
-    "evidence_source": "references/web3-game-style-stats.md (Step 5.2)",
+    "description": "Operational default brand spec — used by the skill when no per-team `team-brand-spec.json` is provided. Token values (color / typography / spacing / radius / motion / iconography) are evidence-anchored to an 11-service style sweep; identity values (team name, brand, logos) describe a fictional Default Studio so the skill renders coherent output out of the box.",
+    "evidence_source": "references/web3-game-style-stats.md (Step 5.2 aggregate decisions)",
+    "default_team": "Default Studio — a fictional web3 / game studio used as a starting point. Replace every identity field below (team.*, brand.*, logo.*, product_assets.*, ui_screenshots.*, design_system.tokens_repo_url, design_system.figma_library_url) with your team's real values before publishing anything.",
     "how_to_use": [
       "1. Run `python3 scripts/init-brand.py` to stamp this file into `team-brand-spec.json` at your repo root.",
-      "2. Replace placeholder values with real team / product values (logo path, brand name, custom typography if any).",
-      "3. Commit `team-brand-spec.json` to your project repo (no secrets — this is shared, version-controlled).",
-      "4. The skill auto-loads `<project>/team-brand-spec.json` when present and falls back to this default when absent."
+      "2. Replace identity values with your team / product values (logo path, brand name, custom typography if any).",
+      "3. Optional: run `python3 scripts/figma-to-brand-spec.py <file-key>` to pull token values from a Figma library.",
+      "4. Commit `team-brand-spec.json` to your project repo (no secrets — this is shared, version-controlled).",
+      "5. The skill auto-loads `<project>/team-brand-spec.json` when present and falls back to this default when absent."
     ],
     "safety": [
       "DO NOT put personal info (real name, personal email, WeChat ID).",
@@ -16,20 +18,24 @@
   },
 
   "team": {
-    "company": "Example Studios",
-    "division": "Game / Web3 product",
+    "_note": "Identity slots — replace every value with your team's real values before shipping.",
+    "company": "Default Studio",
+    "division": "Game / Web3 product (fictional default)",
     "primary_contact_role": "Design Platform",
-    "design_repo_url": "https://github.com/example-corp/design-system"
+    "design_repo_url": ""
   },
 
   "brand": {
-    "name": "Example",
-    "tagline_short": "One-line product tagline",
-    "tone_keywords": ["confident", "playful", "technical"],
+    "_note": "Identity slots. tone_keywords + forbidden_zones are evidence-anchored choices that pair with the token defaults below; replace `name` / `tagline_short` with your real brand.",
+    "name": "Default",
+    "tagline_short": "Design that ships.",
+    "tone_keywords": ["precise", "expressive", "credible"],
     "forbidden_zones": [
-      "No purple gradients",
-      "No emoji icons in product UI",
-      "No cyber-neon dark blue (#0D1117)"
+      "Rainbow / sunset gradients as primary identity",
+      "Cyberpunk-neon palette by reflex on any web3 brief",
+      "Emoji used as a product icon",
+      "Generic glassmorphism on hero panels",
+      "Default Inter + 16px body + 1.5 line-height applied without intent"
     ]
   },
 
@@ -37,18 +43,18 @@
     "_note": "OPT-IN ONLY. Default is `enabled: false`. Set `enabled: true` only if your studio explicitly wants one on animation exports.",
     "enabled": false,
     "format": "{teamName} · {year}",
-    "text": "Made at Example Studios",
+    "text": "Default Studio · {year}",
     "position": "bottom-right",
     "opacity": 0.5,
     "exclude_for_third_party_brand_work": true
   },
 
   "logo": {
-    "_note": "Defaults assume an abstract 1:1 mark and a 4:1 wordmark — the median aspect ratios observed across the 11-service sweep. Replace `primary` with your real logo path before shipping.",
-    "primary": "assets/example-brand/logo.svg",
-    "primary_inverse": "assets/example-brand/logo-white.svg",
-    "wordmark": "assets/example-brand/wordmark.svg",
-    "icon": "assets/example-brand/icon.svg",
+    "_note": "Placeholder SVGs ship under `assets/default-brand/`. They use the `accent.primary` colour from the colour token below so the mark is visually consistent with the rest of the default. Mark aspect 1:1, wordmark aspect 4:1 (median across the 11-service sweep).",
+    "primary": "assets/default-brand/logo.svg",
+    "primary_inverse": "assets/default-brand/logo-white.svg",
+    "wordmark": "assets/default-brand/wordmark.svg",
+    "icon": "assets/default-brand/icon.svg",
     "mark_aspect_ratio": "1:1",
     "wordmark_aspect_ratio": "4:1",
     "minimum_size_px": 24,
@@ -161,27 +167,22 @@
   },
 
   "product_assets": {
-    "_note": "Required for physical products. For digital products use ui_screenshots instead.",
-    "hero_image": "assets/example-brand/product-hero.png",
-    "detail_images": [
-      "assets/example-brand/product-detail-1.png",
-      "assets/example-brand/product-detail-2.png"
-    ],
-    "scene_image": "assets/example-brand/product-scene.png"
+    "_note": "Required for physical products. Default Studio is fictional, so all paths are empty — fill in when you have real product imagery, or delete this block if the team only ships digital products.",
+    "hero_image": "",
+    "detail_images": [],
+    "scene_image": ""
   },
 
   "ui_screenshots": {
-    "_note": "Required for digital products (apps / sites / SaaS).",
-    "home": "assets/example-brand/ui-home.png",
-    "feature_pages": {
-      "feature_a": "assets/example-brand/ui-feature-a.png",
-      "feature_b": "assets/example-brand/ui-feature-b.png"
-    }
+    "_note": "Required for digital products (apps / sites / SaaS). Default Studio is fictional — fill in paths to your product screenshots before shipping.",
+    "home": "",
+    "feature_pages": {}
   },
 
   "design_system": {
-    "tokens_repo_url": "https://github.com/example-corp/design-tokens",
-    "figma_library_url": "https://www.figma.com/file/REPLACE_ME/Example-Design-System",
+    "_note": "tokens_repo_url + figma_library_url are per-fork placeholders. Spacing / radius / shadow values are evidence-anchored Step 5.2 defaults.",
+    "tokens_repo_url": "",
+    "figma_library_url": "",
     "spacing_scale": [0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96],
     "spacing_base_px": 4,
     "spacing_section_px": 64,
@@ -214,8 +215,8 @@
 
   "current_project": {
     "_note": "Optional — narrows the scope for this run.",
-    "name": "Replace with project name",
-    "brief_path": "docs/project-brief.md",
+    "name": "",
+    "brief_path": "",
     "figma_url": "",
     "deadline": ""
   }

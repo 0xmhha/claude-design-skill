@@ -9,6 +9,14 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 
 ## [Unreleased]
 
+### Changed — Default Studio identity + section 6 restructure (Step 5.5)
+
+- `assets/team-brand-spec.default.json` identity fields now describe a fictional **Default Studio** instead of *Example Studios* placeholder text. `team.company = "Default Studio"`, `brand.name = "Default"`, `brand.tagline_short = "Design that ships."`, `brand.tone_keywords` and `brand.forbidden_zones` chosen against the 11-service evidence common ground (precise / expressive / credible; anti-rainbow / anti-cyberpunk-neon / anti-emoji-icon / anti-glassmorphism-reflex / anti-default-Inter-without-intent). `product_assets.*` / `ui_screenshots.*` paths emptied (Default Studio is fictional and has no real product imagery; adopters fill these in for their product). `design_system.tokens_repo_url` / `figma_library_url` emptied as per-fork.
+- `assets/default-brand/` ships 4 placeholder SVGs (mark `logo.svg` 24×24, inverse `logo-white.svg`, wordmark `wordmark.svg` 96×24 = 4:1 aspect, small icon `icon.svg` 16×16). All 4 pass `scripts/svg-sanitize.py` clean (only `rect` + `path` + `text` + `tspan` with safe attributes) and `scripts/scan_assets.py` verdict `clean`.
+- `PROJECT-PLAN.md §6` restructured from 2 buckets → 3 buckets: **(a)** repo-level defaults shipped (unchanged), **(b)** *default-ships-here · adopter overrides* — slots where a default value does exist (identity, codename patterns, watermark, public asset hosts) and the only adopter action is to override toward their brand (all `[x]`), **(c)** repo-external operations (mirror to internal git host, port CI workflow — `[ ]` by design). The prior framing called everything in (b) "per-fork actions owned by the adopter team," which read like the repo was missing functionality.
+- `scripts/init-brand.py` placeholder hint text bumped (`'Example Studios'` → `'Default Studio'`).
+- README directory tree gains `assets/default-brand/`. Tests 93/93 OK.
+
 ### Added — Step 5 closing pass (5.2 / 5.3 / 5.4)
 
 - `references/web3-game-style-stats.md` (316 lines, 5 batch commits) — evidence sweep across 11 production services (web3 6: Uniswap · OpenSea · Phantom · Lens Protocol · Farcaster · Coinbase / game 5: Valorant · Genshin Impact · Destiny 2 · Hades · Clash Royale). Each service contributes per-dimension observations (color tokens · typography · spacing · radius · motion · iconography · logo aspect · asset hosts) sourced from open design systems (Uniswap Spore on GPL-3.0), official brand pages, font case studies, or named-color references. The aggregate analysis section decides the values that feed `team-brand-spec.default.json` — including the deliberately-neutral `#5B7CFA` accent, the Uniswap-Spore-attributed status colours, and the two-slot typography pattern. This file is the *why* behind every default the skill ships.

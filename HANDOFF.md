@@ -52,6 +52,7 @@ Step 5 changed `team-brand-spec` from a *placeholder example* into an *operation
 - **5.1** — ✅ shipped: `assets/team-brand-spec.example.json` removed; `assets/team-brand-spec.default.json` is the operational default with evidence-based values. `scripts/init-brand.py` stamps from `.default.json` (`--example` preserved as alias). Tests 9 → 11.
 - **5.3** — ✅ shipped: `scripts/figma-to-brand-spec.py` (~280 lines, stdlib only) + `scripts/fixtures/figma_minimal.json` + `scripts/test_figma_to_brand_spec.py` (13 tests) + `references/figma-to-brand-spec.md`. Reads Figma file via REST API (`X-Figma-Token`), walks tree, resolves named styles into spec slots via `color/<group>/<token>` slash convention. Fixture mode for offline / CI runs.
 - **5.4** — ✅ shipped: SKILL.md routing table gains rows for `web3-game-style-stats.md` and `figma-to-brand-spec.md`; SKILL.md status header bumped to "Step 1–5 shipped"; HANDOFF this block flipped to "shipped"; CHANGELOG `[Unreleased]` gets a Step 5 entry; README status line + guard chain reflect 93-test total.
+- **5.5** — ✅ shipped: Default Studio identity stamped into `team-brand-spec.default.json` (replaces *Example Studios* placeholder); 4 placeholder SVGs under `assets/default-brand/` (sanitiser-clean); `PROJECT-PLAN §6` restructured into 3 buckets — (a) repo-level defaults shipped · (b) default-ships-here · adopter overrides · (c) repo-external operations — so *what's done* vs *what genuinely cannot have a default* is explicit.
 
 Total: 93 regression tests (18 + 13 + 19 + 19 + 11 + 13).
 

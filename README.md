@@ -79,6 +79,7 @@ claude-design-skill/
 │   ├── tweaks.js                     # <tweak-panel> live design-tuning controls
 │   ├── animations.jsx                # Stage / Sprite timeline engine
 │   ├── easing.js                     # 14-curve frozen Easing pack (CommonJS + window)
+│   ├── default-brand/                # Default Studio placeholder SVGs — mark · inverse · wordmark · icon (sanitiser-clean)
 │   └── showcase-brand/
 │       ├── README.md                 # 16-cell preview catalog (scene × philosophy matrix)
 │       ├── PROVENANCE.md             # 213-line audit trail for the 16 showcase PNGs

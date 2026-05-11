@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 24" width="96" height="24" role="img" aria-label="Default Studio wordmark">
+  <title>Default Studio</title>
+  <desc>Placeholder wordmark (mark + DEFAULT text). Replace with your team's logo + wordmark.</desc>
+  <rect width="24" height="24" rx="4" fill="#5B7CFA"/>
+  <path d="M7 6h6a6 6 0 1 1 0 12H7V6zm3 3v6h3a3 3 0 1 0 0-6h-3z" fill="#FFFFFF"/>
+  <text x="32" y="17" fill="#0F1115" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14" letter-spacing="0.6">DEFAULT</text>
+</svg>

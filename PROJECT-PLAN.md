@@ -135,9 +135,13 @@ Goal: author the design philosophy and scene template catalogs. This is where th
 
 ## 6. Step 4 — Internal brand integration
 
-Step 4 splits cleanly into **(a) repo-level defaults shipped here** and **(b) per-fork
-actions owned by the adopter team**. (a) is done; (b) is by design left empty in
-this public repo so it carries no team-specific text.
+Step 4 + Step 5 split cleanly into three buckets:
+
+- **(a) Repo-level defaults shipped here** — automation + bootstrap. Done.
+- **(b) Default-ships-here · adopter overrides** — values that *do* have a default value (identity, codenames, watermark, asset hosts) and where the only adopter action is to override toward their brand. Done.
+- **(c) Repo-external operations** — actions that *cannot* have a default because they happen outside this repo (mirror to internal git host, port the CI workflow to another host). Adopter-only.
+
+The earlier "per-fork actions" framing collapsed (b) and (c) into one bucket and read like the repo was incomplete; the split clarifies that *nothing functional is missing* — adopters edit values, not implement features.
 
 ### (a) Shipped in this repo (defaults + bootstrap)
 
@@ -147,17 +151,21 @@ this public repo so it carries no team-specific text.
 - [x] **GitHub Actions CI activated** — `.github/workflows/sanitizers.yml` runs the full guard chain (18 + 13 + 19 + 19 + JSON + advisory asset scan) on every push to `master` / `main` and every pull request. (`d5dba7b`, 2026-05-10)
 - [x] **Fork-bootstrap helper** — `scripts/init-brand.py` (+ 11/11 tests as of Step 5.1) stamps a per-team brand carrier from `assets/team-brand-spec.default.json` (was `*.example.json` until Step 5.1 promotion) so adopters can bootstrap without hand-editing JSON. (`62c0928`, 2026-05-10; rewired in Step 5.1, 2026-05-11)
 
-### (b) Per-fork actions (adopter team owns)
+### (b) Default-ships-here · adopter overrides (override-only slots)
 
-These are intentionally left as TODO in this repo and become checkboxes for the
-team that adopts the skill into an internal context.
+These items already have a default value shipped in this repo (via Step 4 + Step 5). Adopters use them as-is until they want to customise; the only *adopter action* is to override toward their own brand. None of these are missing functionality.
 
-- [ ] Replace placeholder values in `team-brand-spec.json` (logo, colors, typography stack) — use `scripts/init-brand.py` to stamp the carrier file.
-- [ ] Add the team's codename namespace to `references/security-config.md §1.5` and `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS`.
-- [ ] Decide `watermark.enabled` policy for the team (default ships disabled; flip only with explicit approval).
-- [ ] Add internal asset hosts to `references/security-config.md §1.2 Team-extensible additions` and `examples/dot-claude-settings.json:permissions.ask`.
-- [ ] Mirror to the team's internal git host. Once internal-only, this README and the LICENSE may need replacement per team policy.
-- [ ] Port `references/ci-template.md` to the internal CI host (GitLab CI / Bitbucket / Buildkite) — sanitizer regression tests + JSON lint as hard-fail; asset scan as advisory. The reference GitHub Actions workflow is already live for public CI.
+- [x] **Identity defaults in `team-brand-spec.default.json`** — `team.company = "Default Studio"`, `brand.name = "Default"`, `brand.tagline_short = "Design that ships."`, `brand.tone_keywords = ["precise", "expressive", "credible"]`, `brand.forbidden_zones` evidence-anchored. Logos under `assets/default-brand/*.svg` (mark + inverse + wordmark + icon, all sanitiser-clean). Token values (colour / type / spacing / radius / motion / iconography) all evidence-anchored to `references/web3-game-style-stats.md`. *Adopter override*: edit `team-brand-spec.json` (or stamp via `init-brand.py` / `figma-to-brand-spec.py`).
+- [x] **Codename pattern catalog** — `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS` ships 4 conservative-pairing patterns; `references/security-config.md §1.5` mirrors. *Adopter override*: append team-specific patterns alongside the defaults.
+- [x] **Watermark policy** — `assets/team-brand-spec.default.json:watermark.enabled = false`; `references/brand-spec-fields.md §watermark` documents *keep-it-off-until-explicitly-approved*. *Adopter override*: flip to `true` and set `watermark.text` after explicit approval.
+- [x] **Public asset host allowlist** — `examples/dot-claude-settings.json:permissions.ask` + `references/security-config.md §1.1` ship 5 generic-public hosts (Lucide / Phosphor / MDN). *Adopter override*: add team-internal hosts under `approved_asset_hosts.internal` + `security-config.md §1.2 Team-extensible additions`.
+
+### (c) Repo-external operations (no default possible)
+
+These actions happen *outside* this repo and there is no default value to ship. The reference docs explain *how*; the *doing* is the adopter team's operations work.
+
+- [ ] **Mirror to the team's internal git host.** Once internal-only, this README and the LICENSE may need replacement per team policy. See `CONTRIBUTING.md` for the mirror pattern.
+- [ ] **Port `references/ci-template.md` to the internal CI host** (GitLab CI / Bitbucket / Buildkite) — sanitizer regression tests + JSON lint as hard-fail; asset scan as advisory. The reference GitHub Actions workflow is already live for public CI.
 
 ---
 
@@ -341,6 +349,30 @@ Out of scope for Step 5:
 - **Rationale**: Apache 2.0 adds an explicit patent grant (§3) and trademark / contributor clarity (§6) that MIT does not. The change is unrelated to upstream / predecessor licensing — the upstream `alchaincyf/huashu-design` skill carries a separate Personal-Use license; this repository is a clean-room rewrite that does not derive from it; that upstream license is unaffected by the Apache 2.0 grant recorded here.
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
+
+### 2026-05-11 · Step 5.5 — Default Studio identity + section 6 restructure
+
+- User flagged that the §6 (b) framing read like the repo was incomplete on Step 5.1's identity slots — *"P3 의 내용 모두 필요한데… 이것이 default 같은것으로 사용되는것"*. The token-side defaults from Step 5.1 / 5.2 were correct, but `team.*` / `brand.*` / `logo.*` were still placeholders ("Example Studios"), which made the *whole* spec look incomplete at a glance.
+- **Default Studio identity** stamped into `assets/team-brand-spec.default.json`:
+  - `team.company = "Default Studio"`, `team.division = "Game / Web3 product (fictional default)"`, `team.design_repo_url = ""` (per-fork).
+  - `brand.name = "Default"`, `brand.tagline_short = "Design that ships."`, `brand.tone_keywords = ["precise", "expressive", "credible"]` (anchored to the 11-service evidence common ground: Uniswap's utility / Coinbase's trust / Phantom's expressiveness).
+  - `brand.forbidden_zones` rewritten as evidence-anchored anti-slop guards (rainbow gradients, cyberpunk-neon reflex, emoji-as-icon, generic glassmorphism, default Inter-16-1.5 typography applied without intent) — pulled from the SKILL.md anti-AI-slop checklist.
+  - `watermark.text = "Default Studio · {year}"` (matches `format`).
+  - `logo.primary` / `logo.primary_inverse` / `logo.wordmark` / `logo.icon` point at real SVG files under `assets/default-brand/` (see below).
+  - `product_assets.*` and `ui_screenshots.*` paths are now `""` empty — Default Studio is fictional, so it has no real product imagery; adopters fill these in for their real product, or delete the block.
+  - `design_system.tokens_repo_url` / `figma_library_url` set to `""` empty (per-fork URLs).
+- **Logo SVG placeholders** at `assets/default-brand/`:
+  - `logo.svg` — 24×24 square mark, accent-coloured fill with a stylised `D` glyph.
+  - `logo-white.svg` — inverse for dark backgrounds.
+  - `wordmark.svg` — 96×24 (4:1 aspect, matching the median across the 11-service sweep) with mark + `DEFAULT` text.
+  - `icon.svg` — 16×16 small mark variant.
+  - All 4 files pass `scripts/svg-sanitize.py` clean (no scripts, no foreignObject, no external refs; only `rect` / `path` / `text` / `tspan` with stripe-safe attributes). All 4 pass `scripts/scan_assets.py --dir assets/default-brand/` with verdict `clean`.
+- **§6 restructure** — the old `(a) shipped here / (b) per-fork actions owned by the adopter team` split collapsed two distinct categories. Replaced with three buckets:
+  - `(a) Repo-level defaults shipped here` (automation + bootstrap — unchanged).
+  - `(b) Default-ships-here · adopter overrides` — *new* bucket for slots where a default value *does* exist (identity, codename patterns, watermark policy, public asset hosts) and the only adopter action is to override toward their brand. All `[x]`.
+  - `(c) Repo-external operations` — items that *cannot* have a default because the action happens outside the repo (mirror to internal git host, port CI to another host). Still `[ ]`, by design — adopter-owned.
+- This restructuring is the substantive answer to the user's question. Nothing functional is missing in the repo; the prior framing made it *read* like something was missing.
+- Validated: 18 + 13 + 19 + 19 + 11 + 13 = 93 tests OK; `assets/team-brand-spec.default.json` parses cleanly with the new structure; `scan_assets.py --dir assets/default-brand/` reports clean for all 4 new SVGs; `svg-sanitize.py` accepts each without stripping.
 
 ### 2026-05-11 · Step 5.4 — verify + doc consistency pass (Step 5 complete)
 

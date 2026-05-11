@@ -41,7 +41,7 @@ DEFAULT_TARGET = REPO_ROOT / "team-brand-spec.json"
 # spec is project-specific. The list is intentionally a hint, not an
 # exhaustive schema — references/brand-spec-fields.md is canonical.
 PLACEHOLDER_FIELDS = [
-    ("team.company", "Real company name (replaces 'Example Studios')"),
+    ("team.company", "Real company name (replaces 'Default Studio')"),
     ("team.division", "Studio / division name"),
     ("brand.name", "Brand name as it appears on output"),
     ("brand.tagline_short", "One-line product tagline (<= 8 words)"),

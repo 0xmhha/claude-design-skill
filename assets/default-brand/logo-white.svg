@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-label="Default Studio mark (inverse)">
+  <title>Default Studio (inverse)</title>
+  <desc>Placeholder mark — inverse variant for dark backgrounds. Replace with your team's logo SVG.</desc>
+  <rect width="24" height="24" rx="4" fill="#FFFFFF"/>
+  <path d="M7 6h6a6 6 0 1 1 0 12H7V6zm3 3v6h3a3 3 0 1 0 0-6h-3z" fill="#0F1115"/>
+</svg>
