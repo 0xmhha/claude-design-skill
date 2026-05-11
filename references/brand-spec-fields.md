@@ -1,6 +1,6 @@
 # Brand spec fields · reference
 
-> Companion doc for `assets/team-brand-spec.example.json`.
+> Companion doc for `assets/team-brand-spec.default.json`.
 >
 > Each field below explains **what** the field is, **why** it exists, and **what value to put in**. The skill reads `<project-root>/team-brand-spec.json` (not the `.example.json` template) at runtime. See also `references/security-config.md §4` and `references/figma-brand-spec-import.md`.
 
@@ -213,13 +213,13 @@ Before committing, validate JSON with:
 python3 -c "import json; json.load(open('team-brand-spec.json')); print('OK')"
 ```
 
-CI runs the same check on `assets/team-brand-spec.example.json`. If you add new top-level keys to your project's `team-brand-spec.json`, document them in this file and update the example template too.
+CI runs the same check on `assets/team-brand-spec.default.json`. If you add new top-level keys to your project's `team-brand-spec.json`, document them in this file and update the example template too.
 
 ---
 
 ## Related
 
-- `assets/team-brand-spec.example.json` — the template to copy.
+- `assets/team-brand-spec.default.json` — the template to copy.
 - `references/security-config.md §4` — how the skill loads the spec.
 - `references/figma-brand-spec-import.md` — populating the spec from Figma.
 - `QUICKSTART.md` Step 2 — designer-facing walkthrough.

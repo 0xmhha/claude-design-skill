@@ -292,4 +292,4 @@ Don't bypass sanitize. Sanitize is the line.
 
 **Owner**: Internal design platform team
 **Last reviewed**: 2026-05-08
-**Related**: `figma-workflow.md` · `team-brand-spec.example.json` · `svg-sanitize.md` (mandatory for SVG exports) · `security-config.md` (allowlist if Figma exports point at S3 hosts)
+**Related**: `figma-workflow.md` · `team-brand-spec.default.json` · `svg-sanitize.md` (mandatory for SVG exports) · `security-config.md` (allowlist if Figma exports point at S3 hosts)

@@ -119,4 +119,4 @@ Sub-guide details follow in their own files. Read this hub doc first, then jump 
 
 **Owner**: Internal design platform team
 **Last reviewed**: 2026-05-08
-**Related**: `PROJECT-PLAN.md` Phase 3 · `team-brand-spec.example.json` · `security-config.md` (allowlist for Figma asset hosts)
+**Related**: `PROJECT-PLAN.md` Phase 3 · `team-brand-spec.default.json` · `security-config.md` (allowlist for Figma asset hosts)

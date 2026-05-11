@@ -49,7 +49,7 @@ claude-design-skill/
 │   ├── figma-layer-naming.md         # rename Frame 47 → semantic
 │   ├── figma-component-grouping.md   # detect repeats and promote to components
 │   ├── figma-brand-spec-import.md    # Figma → team-brand-spec.json
-│   ├── brand-spec-fields.md          # field reference for team-brand-spec.example.json
+│   ├── brand-spec-fields.md          # field reference for team-brand-spec.default.json
 │   ├── ci-template.md                # live GitHub workflow + alternate-platform snippets
 │   ├── design-styles.md              # 18-direction design philosophy catalog (14 fresh + 4 game/web3 carry-over)
 │   ├── scene-templates.md            # 9 output-type templates (5 fresh + 4 game/web3 carry-over)
@@ -68,7 +68,7 @@ claude-design-skill/
 │   ├── test_init_brand.py            # 9 regression tests
 │   └── install-hooks.sh              # opt-in pre-commit hook installer
 ├── assets/
-│   ├── team-brand-spec.example.json  # team brand-spec template
+│   ├── team-brand-spec.default.json  # operational default spec (Step 5.1, evidence-based)
 │   ├── ios_frame.jsx                 # iPhone 15 Pro / Pro Max device frame
 │   ├── android_frame.jsx             # Pixel 8 / 8 Pro device frame
 │   ├── deck_stage.js                 # <deck-stage> 1920×1080 web component
@@ -94,7 +94,7 @@ python3 scripts/test_codex_image_import.py  # 19/19
 node    scripts/test_animations_easing.js   # 19/19
 python3 scripts/test_init_brand.py          #  9/9
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
-python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
+python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
 ```
 
 GitHub Actions runs the same chain on every push and PR.

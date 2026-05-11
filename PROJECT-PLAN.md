@@ -59,7 +59,7 @@ This project takes a different route — option (b) from the fork's `PROJECT-PLA
 
 | File | Origin |
 |---|---|
-| `assets/team-brand-spec.example.json` | Phase 1 Group A (replaces upstream `personal-asset-index`) |
+| `assets/team-brand-spec.default.json` | Phase 1 Group A as `*.example.json`; promoted to `*.default.json` operational defaults in Step 5.1 (2026-05-11) |
 | `assets/android_frame.jsx` | Phase 2 (rewritten from scratch to Pixel 8 / 8 Pro spec) |
 
 ### Examples + git hooks (3 files)
@@ -142,10 +142,10 @@ this public repo so it carries no team-specific text.
 ### (a) Shipped in this repo (defaults + bootstrap)
 
 - [x] **Default codename pattern catalog** — `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS` ships 4 conservative-pairing patterns; `references/security-config.md §1.5` mirrors them with the *Conservative-pairing rule* paragraph. (`eb33448`, 2026-05-10)
-- [x] **Default `watermark.enabled` policy** — `assets/team-brand-spec.example.json` ships `enabled: false`; `references/brand-spec-fields.md §watermark` documents the keep-it-off-until-explicitly-approved policy. (2026-05-10)
+- [x] **Default `watermark.enabled` policy** — `assets/team-brand-spec.default.json` ships `enabled: false` (file was `*.example.json` until Step 5.1 2026-05-11 promoted it); `references/brand-spec-fields.md §watermark` documents the keep-it-off-until-explicitly-approved policy. (2026-05-10)
 - [x] **Default public asset host allowlist** — `examples/dot-claude-settings.json:permissions.ask` and `references/security-config.md §1.1` ship 5 generic-public host entries (Lucide / Phosphor CDN mirrors + MDN). (`2ea3bb8`, 2026-05-10)
 - [x] **GitHub Actions CI activated** — `.github/workflows/sanitizers.yml` runs the full guard chain (18 + 13 + 19 + 19 + JSON + advisory asset scan) on every push to `master` / `main` and every pull request. (`d5dba7b`, 2026-05-10)
-- [x] **Fork-bootstrap helper** — `scripts/init-brand.py` (+ 9/9 tests) stamps a per-team brand carrier from `assets/team-brand-spec.example.json` so adopters can bootstrap without hand-editing JSON. (`62c0928`, 2026-05-10)
+- [x] **Fork-bootstrap helper** — `scripts/init-brand.py` (+ 11/11 tests as of Step 5.1) stamps a per-team brand carrier from `assets/team-brand-spec.default.json` (was `*.example.json` until Step 5.1 promotion) so adopters can bootstrap without hand-editing JSON. (`62c0928`, 2026-05-10; rewired in Step 5.1, 2026-05-11)
 
 ### (b) Per-fork actions (adopter team owns)
 
@@ -342,6 +342,27 @@ Out of scope for Step 5:
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
 
+### 2026-05-11 · Step 5.1 — team-brand-spec.default.json + init-brand rewire
+
+- `assets/team-brand-spec.example.json` removed; `assets/team-brand-spec.default.json` is the new operational default. Values pulled from `references/web3-game-style-stats.md` *Aggregate analysis* (Step 5.2):
+  - **Color**: nested `surface` / `text` / `accent` / `status` groups for light + dark, plus flat aliases (`primary`, `background`, `ink`, `muted`, `hairline`) preserved for backwards compatibility with old skill code. `accent.primary` is `#5B7CFA` — deliberately not anyone's brand color from the 11-set. `status.*` cites Uniswap Spore in a `_source` field that survives the meta-strip.
+  - **Typography**: two-slot pattern — `display` and `body` each carry `family` / `weights` / `system_stack`. Inter (OFL) is the default `family`; the system stack matches Uniswap's web fallback verbatim (cited via `_source` on `body`). `mono.system_stack` directly cites Uniswap's mono stack. Legacy flat `_legacy.display` / `_legacy.body` / `_legacy.mono` aliases preserved so old skill code that read the flat shape still works.
+  - **New top-level groups**: `iconography` (Lucide primary, Phosphor fallback, 1.75 px stroke, 12 / 16 / 20 / 24 / 32 size scale) and `motion` (100 / 200 / 300 / 500 ms duration + Material standard / emphasized / decelerated easing curves).
+  - **Spacing**: `[0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96]` — pruned Uniswap-style scale.
+  - **Radius**: `[0, 4, 8, 12, 16, 24]` + `pill 9999` + semantic shortcuts (`button 8`, `input 8`, `card 12`, `modal 16`).
+  - **Asset hosts**: `public` array matches `examples/dot-claude-settings.json:permissions.ask` exactly (Lucide / Phosphor / MDN); `internal` is `[]` (per-fork slot); legacy `hosts` retained for the older shape.
+- `scripts/init-brand.py`: `DEFAULT_EXAMPLE` renamed to `DEFAULT_SOURCE`; CLI gets `--source` as the canonical flag with `--example` preserved as an alias so pre-Step-5.1 invocations still work. Help text and error messages updated to say "source" instead of "example". `PLACEHOLDER_FIELDS` reshaped for the new nested structure — `colors.accent.primary` replaces flat `colors.primary` / `colors.background`; `typography.display.family` / `typography.body.family` replace flat aliases; `approved_asset_hosts.internal` added as the per-fork onboarding hint.
+- `scripts/test_init_brand.py`: 9 → 11 tests. Two new cases: `test_color_token_groups_present` asserts both nested groups (`surface` / `text` / `accent` / `status`) and the flat legacy aliases are preserved, plus pins `accent.primary == #5B7CFA` so the deliberate-neutral choice can't drift back to a brand color. `test_status_source_attribution_preserved` asserts the `colors.status._source` Uniswap attribution survives the meta-strip (the strip targets `_meta` / `_note`; `_source` is an attribution field, not a guidance field). Existing `test_actual_fields_preserved` extended to require the four new top-level groups (`iconography`, `motion`, `design_system`, `approved_asset_hosts`).
+- Doc + workflow propagation: every `team-brand-spec.example.json` reference in *active state* docs swapped to `*.default.json`:
+  - `.github/workflows/sanitizers.yml` — JSON lint step.
+  - `README.md` — directory tree + guard-chain command list.
+  - `HANDOFF.md` — Step 5 in-progress block (marked ✅ shipped) + Step 4 per-fork action references + watermark policy reference.
+  - `SKILL.md` — references routing table.
+  - `references/brand-spec-fields.md` (header + 3 mentions), `references/security-config.md` (template note), `references/ci-template.md` (JSON-lint description + 2 snippets), `references/figma-brand-spec-import.md` (Related list), `references/figma-workflow.md` (Related list).
+- Historical entries left as-is on purpose: `CHANGELOG.md` Unreleased + earlier sections describe the file at the time of writing (`*.example.json`); `PROJECT-PLAN.md §7 2026-05-10 Step 4.2 / Step 4.3 / Step 4.4` decisions-log entries similarly describe state at the time. The 2026-05-11 doc-path normalization policy (append-only with cross-link) applies — this entry above is the cross-link to the rename.
+- License-clean: the new default carries `_source` attributions for any value lifted from a public design system (Uniswap Spore for status colors and the system / mono font stacks). Values originated as *facts* about a published system, not as code copies; the `_source` lines make the lineage auditable in the JSON itself.
+- Validated: `python3 scripts/test_init_brand.py` 11/11 OK; full guard chain (18 + 13 + 19 + 19 + 11) all OK; both JSON templates parse; init-brand smoke test (`--target $TMP/team-brand-spec.json`) writes a parseable file with the new 4-group color block and the updated PLACEHOLDER_FIELDS guidance.
+
 ### 2026-05-11 · Step 5 plan sealed
 
 - User decision (2026-05-11): elevate `team-brand-spec` from placeholder to operational default, source default values from evidence-based style analysis of trusted web3 + game services, and add a Figma → spec extraction path. Rationale: anti-AI-slop posture — defaults must reflect real production design, not LLM-imagined values; Figma is the actual day-to-day surface for adopter teams, so JSON hand-editing is a friction point.
@@ -400,7 +421,7 @@ node    scripts/test_animations_easing.js   # must be 19/19 OK
 python3 scripts/test_init_brand.py          # must be  9/9  OK
 python3 scripts/scan_assets.py --dir assets/  # must list 'clean' for every file
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
-python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
+python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
 ```
 
 Step 1 validation: SVG / scan_assets / codex-image-import / JSON all green on 2026-05-09.

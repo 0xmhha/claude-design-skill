@@ -20,7 +20,7 @@
 | Codex-image-import gate tests | **hard-fail** | `python3 scripts/test_codex_image_import.py` — 19 tests, including the conservative-pairing codename catalog |
 | Animations easing regression tests | **hard-fail** | `node scripts/test_animations_easing.js` — 19 tests, asserts every easing curve is `0→0`, `1→1`, monotonic ordering, frozen pack |
 | `init-brand` bootstrap helper tests | **hard-fail** | `python3 scripts/test_init_brand.py` — 9 tests for the cp + meta-strip + JSON-validate contract used by per-fork operators |
-| JSON template lint | **hard-fail** | `examples/dot-claude-settings.json` + `assets/team-brand-spec.example.json` parse cleanly |
+| JSON template lint | **hard-fail** | `examples/dot-claude-settings.json` + `assets/team-brand-spec.default.json` parse cleanly |
 | Asset scan | **advisory** | `python3 scripts/scan_assets.py --dir assets/ --advisory` — reports without blocking |
 
 Promote the asset scan from advisory to hard-fail (drop `--advisory`) once the catalog is clean.
@@ -74,7 +74,7 @@ jobs:
       - name: JSON template lint
         run: |
           python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
-          python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
+          python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
 
       - name: Image asset scan (advisory)
         run: python3 scripts/scan_assets.py --dir assets/ --advisory
@@ -101,7 +101,7 @@ guards:
   script:
     - python3 scripts/test_svg_sanitize.py
     - python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
-    - python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
+    - python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
     - python3 scripts/scan_assets.py --dir assets/ --advisory
     - python3 scripts/test_scan_assets.py
   rules:

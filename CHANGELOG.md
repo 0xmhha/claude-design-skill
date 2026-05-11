@@ -9,6 +9,14 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 
 ## [Unreleased]
 
+### Changed — `team-brand-spec` policy: example → operational default (Step 5.1)
+
+- `assets/team-brand-spec.example.json` (placeholder template) removed; replaced by `assets/team-brand-spec.default.json` (operational default with evidence-based values from the 11-service style sweep in `references/web3-game-style-stats.md`). The carrier now ships with values the skill can actually run against, not placeholders that imply "fill me first or I'll generate AI-slop."
+- New top-level groups in the spec: `iconography` (Lucide primary / Phosphor fallback, 1.75 px stroke, 12 / 16 / 20 / 24 / 32 size scale), `motion` (100 / 200 / 300 / 500 ms duration + Material standard / emphasized / decelerated easing curves), and nested `colors` (`surface` / `text` / `accent` / `status` groups for light + dark, in addition to the original flat aliases). `colors.accent.primary` = `#5B7CFA` — deliberately placed in the gap between blue and purple so it doesn't mimic Coinbase, OpenSea, Farcaster, or Phantom. `colors.status._source` cites Uniswap Spore (GPL-3.0 fact citation, no code copied).
+- Typography: two-slot pattern (`display` + `body`), each with `family` / `weights` / `system_stack`. Defaults to Inter (OFL) with Uniswap's verbatim system stack as fallback. `mono.system_stack` directly cites Uniswap's mono stack. Legacy flat aliases preserved under `typography._legacy` for backwards compatibility.
+- `scripts/init-brand.py` rewired: stamps the carrier from `.default.json` (was `.example.json`). CLI gains `--source` as the canonical flag with `--example` preserved as an alias so old invocations don't break. `PLACEHOLDER_FIELDS` reshaped for the new structure. `scripts/test_init_brand.py` 9 → 11 tests (color-token-groups coverage + status-source-attribution preservation).
+- Doc + workflow propagation: README directory tree + guard chain; HANDOFF.md; SKILL.md; PROJECT-PLAN.md; `.github/workflows/sanitizers.yml`; `references/brand-spec-fields.md`, `references/security-config.md`, `references/ci-template.md`, `references/figma-brand-spec-import.md`, `references/figma-workflow.md`. CHANGELOG historical entries describing the file as `*.example.json` are *not* rewritten — they describe the file at the time of writing.
+
 ### Added — session-handoff briefing
 
 - `HANDOFF.md` — context briefing for fresh AI sessions. Covers project history, user's working style, anti-patterns observed in the predecessor session, decision tree, and a glossary. Read this before doing real work.

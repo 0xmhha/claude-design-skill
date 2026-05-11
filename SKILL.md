@@ -980,7 +980,7 @@ absolute marks.
 | **Figma component grouping** — detect repeats, promote to components | `references/figma-component-grouping.md` |
 | **Figma brand-spec import** — design tokens / typography / logo into `team-brand-spec.json` | `references/figma-brand-spec-import.md` |
 | **Codex CLI design workflow** — GPT-5.5 reasoning + auto gpt-image-2, with import gate | `references/codex-design-workflow.md` + `scripts/codex-image-import.py` |
-| **Brand spec field reference** — what every key in `team-brand-spec.example.json` means | `references/brand-spec-fields.md` |
+| **Brand spec field reference** — what every key in `team-brand-spec.default.json` means | `references/brand-spec-fields.md` |
 | **CI workflow templates** — GitHub Actions / GitLab CI for sanitizer regression + asset scan | `references/ci-template.md` |
 | **App prototype rules** — iOS / Android device-frame wrapping, real-image policy, Playwright click-test | `## App prototype rules` (this skill) + `assets/ios_frame.jsx` + `assets/android_frame.jsx` |
 | **Slide deck conventions** — 1920×1080 fixed canvas, colocated speaker notes, print-to-PDF rules, keyboard surface | `## Slide deck conventions` (this skill) + `assets/deck_stage.js` |

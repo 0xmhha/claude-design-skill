@@ -41,7 +41,7 @@ jobs:
       - name: JSON template lint
         run: |
           python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
-          python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
+          python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
 
       - name: Image asset scan (advisory)
         run: python3 scripts/scan_assets.py --dir assets/ --advisory

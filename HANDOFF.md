@@ -48,7 +48,7 @@ state. They are not new "Steps"; they are doc/policy hygiene around what Steps
 
 Step 5 changes `team-brand-spec` from a *placeholder example* into an *operational default* with evidence-based values, and adds a Figma → spec extraction path. Plan and sub-steps live in `PROJECT-PLAN.md §6.5`; per-step ship entries go to `PROJECT-PLAN.md §7`.
 
-- **5.1** — `assets/team-brand-spec.example.json` → `team-brand-spec.default.json` (policy rename); `scripts/init-brand.py` and its 9 tests updated.
+- **5.1** — ✅ shipped: `assets/team-brand-spec.example.json` removed; `assets/team-brand-spec.default.json` is now the operational default with evidence-based values from Step 5.2. `scripts/init-brand.py` stamps the carrier from `.default.json` (and keeps `--example` as an alias). Tests grew 9 → 11 (color-token-groups + status-source-attribution coverage).
 - **5.2** — `references/web3-game-style-stats.md`: 11-service evidence + aggregated defaults (web3 6: Uniswap, OpenSea, Phantom, Lens, Farcaster, Coinbase / game 5: Valorant, Genshin Impact, Destiny 2, Hades, Clash Royale). Full field coverage.
 - **5.3** — `scripts/figma-to-brand-spec.py` + tests: reads Figma file via REST API, emits spec. Reference inputs: Material 3 Design Kit (Android) + iOS Design Resources.
 - **5.4** — verify-and-doc.
@@ -365,9 +365,9 @@ not a sourcing commitment.
 
 When the team brand is finalized:
 
-- ⏳ **Per-fork action**: Replace placeholder values in `team-brand-spec.json` (logo, colors, typography stack). The template (`assets/team-brand-spec.example.json`) and the field reference (`references/brand-spec-fields.md`, 195 lines) are in this repo and ready to copy.
+- ⏳ **Per-fork action**: Replace placeholder values in `team-brand-spec.json` (logo, brand name, custom typography if any). The operational default (`assets/team-brand-spec.default.json`, evidence-anchored to `references/web3-game-style-stats.md` Step 5.2) and the field reference (`references/brand-spec-fields.md`) are in this repo and ready to copy via `scripts/init-brand.py`.
 - ✓ shipped 2026-05-10 @ `eb33448` (default catalog) / ⏳ **per-fork action** (team-specific additions): `scripts/codex-image-import.py:DEFAULT_CODENAME_PATTERNS` ships 4 conservative-pairing patterns (project / internal-NDA-confidential / stealth-skunkworks-moonshot × asset-noun / `v\d+`× phase-keyword); `references/security-config.md §1.5` mirrors them with the *Conservative-pairing rule* paragraph that names the trade-off. Per-fork additions go through the same edit point.
-- ✓ shipped — default `enabled: false` in `assets/team-brand-spec.example.json`; `references/brand-spec-fields.md §watermark` documents the keep-it-off-until-explicitly-approved policy.
+- ✓ shipped — default `enabled: false` in `assets/team-brand-spec.default.json`; `references/brand-spec-fields.md §watermark` documents the keep-it-off-until-explicitly-approved policy.
 - ✓ shipped 2026-05-10 @ `2ea3bb8` (public asset hosts) / ⏳ **per-fork action** (internal hosts): `examples/dot-claude-settings.json:permissions.ask` and `references/security-config.md §1.1` ship 5 generic-public host entries (Lucide / Phosphor CDN mirrors + MDN). Internal hosts go in `references/security-config.md §1.2 Team-extensible additions`.
 - ⏳ **Per-fork action**: **Mirror to the team's private git host.** While the repo is on public GitHub (`0xmhha/claude-design-skill`), keep all team-specific text out of commits. Once internal-only, this README and the LICENSE may need replacement per team policy.
 - ✓ shipped 2026-05-10 @ `d5dba7b`: `.github/workflows/sanitizers.yml` runs the full guard chain (SVG sanitizer 18 + scan_assets 13 + codex-image-import 19 + animations easing 19 + JSON template lint + advisory asset scan) on every push to `master` / `main` and every pull request. Translating to an internal CI host (GitLab / Bitbucket / Buildkite) is documented in `references/ci-template.md` *Internal GH Enterprise / Bitbucket / Buildkite* section.

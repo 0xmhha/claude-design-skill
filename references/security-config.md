@@ -250,7 +250,7 @@ Drop-in configuration that enforces the rules above at the harness level (the sk
 
 The team-shared, version-controlled equivalent of the upstream personal asset file. Lives in the **project repo** (not in `~/.claude/memory/`), so it's auditable and shared across designers.
 
-**Template**: `assets/team-brand-spec.example.json` — copy to your project root as `team-brand-spec.json`, fill in real values, commit.
+**Template**: `assets/team-brand-spec.default.json` — copy to your project root as `team-brand-spec.json`, fill in real values, commit.
 
 **Lookup order** (when the skill needs brand assets):
 1. `<project>/team-brand-spec.json` — primary source

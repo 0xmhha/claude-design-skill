@@ -24,7 +24,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = REPO_ROOT / "scripts" / "init-brand.py"
-EXAMPLE = REPO_ROOT / "assets" / "team-brand-spec.example.json"
+SOURCE = REPO_ROOT / "assets" / "team-brand-spec.default.json"
 
 
 class InitBrandCase(unittest.TestCase):
@@ -71,8 +71,44 @@ class InitBrandCase(unittest.TestCase):
     def test_actual_fields_preserved(self) -> None:
         self._run()
         data = json.loads(self.target.read_text(encoding="utf-8"))
-        for required_top in ("team", "brand", "watermark", "logo", "colors", "typography"):
+        for required_top in (
+            "team", "brand", "watermark", "logo", "colors", "typography",
+            "iconography", "motion", "design_system", "approved_asset_hosts",
+        ):
             self.assertIn(required_top, data, f"top-level field missing: {required_top}")
+
+    def test_color_token_groups_present(self) -> None:
+        """Step 5.1 widened the color block from flat keys to grouped tokens.
+
+        The shipped default has both shapes: nested (surface / text / accent /
+        status) for new code and flat aliases (primary / background / ink /
+        muted / hairline) for backwards compatibility with old skill code.
+        """
+        self._run()
+        data = json.loads(self.target.read_text(encoding="utf-8"))
+        colors = data["colors"]
+        for group in ("surface", "text", "accent", "status"):
+            self.assertIn(group, colors, f"colors.{group} grouped token missing")
+        for legacy in ("primary", "background", "ink", "muted", "hairline"):
+            self.assertIn(legacy, colors, f"colors.{legacy} legacy alias missing")
+        self.assertEqual(
+            colors["accent"]["primary"],
+            "#5B7CFA",
+            "accent.primary should remain the deliberately-neutral mid-indigo "
+            "(see references/web3-game-style-stats.md Aggregate analysis)",
+        )
+
+    def test_status_source_attribution_preserved(self) -> None:
+        """Status colors cite Uniswap Spore (GPL-3.0). The _source field must
+        survive the meta-strip because it's an attribution field, not a
+        guidance field. Conventionally _source is preserved while _note /
+        _meta are stripped."""
+        self._run()
+        data = json.loads(self.target.read_text(encoding="utf-8"))
+        status = data["colors"]["status"]
+        self.assertIn("_source", status,
+                      "colors.status._source attribution must survive meta-strip")
+        self.assertIn("Uniswap", status["_source"])
 
     # 2 — flag behavior
 

@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
-init-brand.py — bootstrap a per-fork team-brand-spec.json from the example.
+init-brand.py — bootstrap a per-fork team-brand-spec.json from the default.
 
-Copies `assets/team-brand-spec.example.json` to `team-brand-spec.json` (or
+Copies `assets/team-brand-spec.default.json` to `team-brand-spec.json` (or
 a user-specified target path), strips the `_meta` / `_note` guidance keys
-that the example carries inline as documentation, and re-validates the
+that the default carries inline as documentation, and re-validates the
 result is parseable JSON. Prints a reminder list of the fields the team
 needs to fill in.
+
+The `.default.json` file ships *operational* values (evidence-anchored to
+the 11-service style sweep in `references/web3-game-style-stats.md`), so
+the stamped carrier is immediately usable as a fallback while the adopter
+replaces placeholder fields (logo path, brand name, custom typography).
 
 Usage:
     python3 scripts/init-brand.py
@@ -29,7 +34,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_EXAMPLE = REPO_ROOT / "assets" / "team-brand-spec.example.json"
+DEFAULT_SOURCE = REPO_ROOT / "assets" / "team-brand-spec.default.json"
 DEFAULT_TARGET = REPO_ROOT / "team-brand-spec.json"
 
 # Most-common fields a fork operator will need to replace before the
@@ -42,10 +47,10 @@ PLACEHOLDER_FIELDS = [
     ("brand.tagline_short", "One-line product tagline (<= 8 words)"),
     ("brand.tone_keywords", "Voice descriptors, 3-5 entries"),
     ("logo.primary", "Path to primary logo SVG inside the repo"),
-    ("colors.primary", "Brand primary color (hex)"),
-    ("colors.background", "Default canvas color (hex)"),
-    ("typography.display", "Heading / hero font stack"),
-    ("typography.body", "Body copy font stack"),
+    ("colors.accent.primary", "Brand accent color (hex) — overrides the neutral default #5B7CFA"),
+    ("typography.display.family", "Heading / hero typeface (default ships Inter)"),
+    ("typography.body.family", "Body copy typeface (default ships Inter)"),
+    ("approved_asset_hosts.internal", "Team-internal asset host allowlist (per-fork)"),
 ]
 
 
@@ -76,10 +81,13 @@ def main(argv: list[str] | None = None) -> int:
         description="Bootstrap a per-fork team-brand-spec.json from the example template.",
     )
     ap.add_argument(
+        "--source",
         "--example",
+        dest="source",
         type=Path,
-        default=DEFAULT_EXAMPLE,
-        help="path to the example template (default: assets/team-brand-spec.example.json)",
+        default=DEFAULT_SOURCE,
+        help="path to the default-spec source (default: assets/team-brand-spec.default.json). "
+        "The `--example` alias is preserved for callers from the pre-Step-5.1 layout.",
     )
     ap.add_argument(
         "--target",
@@ -99,8 +107,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = ap.parse_args(argv)
 
-    if not args.example.exists():
-        sys.stderr.write(f"ERROR: example file not found at {args.example}\n")
+    if not args.source.exists():
+        sys.stderr.write(f"ERROR: source file not found at {args.source}\n")
         return 1
 
     if args.target.exists() and not args.force:
@@ -109,10 +117,10 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     try:
-        raw = args.example.read_text(encoding="utf-8")
+        raw = args.source.read_text(encoding="utf-8")
         data = json.loads(raw)
     except (OSError, json.JSONDecodeError) as e:
-        sys.stderr.write(f"ERROR: example file is not valid JSON: {e}\n")
+        sys.stderr.write(f"ERROR: source file is not valid JSON: {e}\n")
         return 1
 
     if not args.keep_meta:

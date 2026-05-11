@@ -1,0 +1,222 @@
+{
+  "_meta": {
+    "description": "Operational default brand spec — used by the skill when no per-team `team-brand-spec.json` is provided. Values are evidence-anchored to a public 11-service style sweep (web3 6 + game 5) so generated design output is not LLM-imagined.",
+    "evidence_source": "references/web3-game-style-stats.md (Step 5.2)",
+    "how_to_use": [
+      "1. Run `python3 scripts/init-brand.py` to stamp this file into `team-brand-spec.json` at your repo root.",
+      "2. Replace placeholder values with real team / product values (logo path, brand name, custom typography if any).",
+      "3. Commit `team-brand-spec.json` to your project repo (no secrets — this is shared, version-controlled).",
+      "4. The skill auto-loads `<project>/team-brand-spec.json` when present and falls back to this default when absent."
+    ],
+    "safety": [
+      "DO NOT put personal info (real name, personal email, WeChat ID).",
+      "DO NOT put secrets (API keys, tokens, signed URLs).",
+      "Use absolute paths only for assets inside the project repo, or use URLs to the allowlisted asset host."
+    ]
+  },
+
+  "team": {
+    "company": "Example Studios",
+    "division": "Game / Web3 product",
+    "primary_contact_role": "Design Platform",
+    "design_repo_url": "https://github.com/example-corp/design-system"
+  },
+
+  "brand": {
+    "name": "Example",
+    "tagline_short": "One-line product tagline",
+    "tone_keywords": ["confident", "playful", "technical"],
+    "forbidden_zones": [
+      "No purple gradients",
+      "No emoji icons in product UI",
+      "No cyber-neon dark blue (#0D1117)"
+    ]
+  },
+
+  "watermark": {
+    "_note": "OPT-IN ONLY. Default is `enabled: false`. Set `enabled: true` only if your studio explicitly wants one on animation exports.",
+    "enabled": false,
+    "format": "{teamName} · {year}",
+    "text": "Made at Example Studios",
+    "position": "bottom-right",
+    "opacity": 0.5,
+    "exclude_for_third_party_brand_work": true
+  },
+
+  "logo": {
+    "_note": "Defaults assume an abstract 1:1 mark and a 4:1 wordmark — the median aspect ratios observed across the 11-service sweep. Replace `primary` with your real logo path before shipping.",
+    "primary": "assets/example-brand/logo.svg",
+    "primary_inverse": "assets/example-brand/logo-white.svg",
+    "wordmark": "assets/example-brand/wordmark.svg",
+    "icon": "assets/example-brand/icon.svg",
+    "mark_aspect_ratio": "1:1",
+    "wordmark_aspect_ratio": "4:1",
+    "minimum_size_px": 24,
+    "clear_space_rule": "1× icon height around all sides",
+    "forbidden_distortions": ["no stretch", "no recolor", "no outline added"]
+  },
+
+  "colors": {
+    "_note": "Surface + text + accent + status tokens with explicit light/dark variants. `accent.primary` is deliberately placed in the gap between blue and purple (#5B7CFA) so it does NOT mimic any of the 11 evidence-set brands (Coinbase #1652F0, OpenSea #2081E2, Farcaster #8A63D2, Phantom violet). Status tokens cite Uniswap's GPL-3.0 Spore design system — see `_source` field.",
+
+    "surface": {
+      "base_dark": "#0F1115",
+      "raised_dark": "#1A1D24",
+      "muted_dark": "rgba(255,255,255,0.08)",
+      "base_light": "#FFFFFF",
+      "raised_light": "#F7F8FA",
+      "muted_light": "rgba(15,17,21,0.06)"
+    },
+
+    "text": {
+      "primary_dark": "#F2F4F8",
+      "secondary_dark": "rgba(242,244,248,0.68)",
+      "tertiary_dark": "rgba(242,244,248,0.42)",
+      "primary_light": "#0F1115",
+      "secondary_light": "rgba(15,17,21,0.66)",
+      "tertiary_light": "rgba(15,17,21,0.40)"
+    },
+
+    "accent": {
+      "primary": "#5B7CFA",
+      "contrast": "#FFFFFF",
+      "_source": "decided neutrally — see references/web3-game-style-stats.md §Aggregate analysis / Color decisions"
+    },
+
+    "status": {
+      "_source": "Uniswap Spore (GPL-3.0) — see https://github.com/Uniswap/interface/blob/main/packages/ui/src/theme/color/colors.ts and references/web3-game-style-stats.md web3-01",
+      "success_light": "#0C8911",
+      "success_dark": "#21C95E",
+      "warning_light": "#996F01",
+      "warning_dark": "#FFBF17",
+      "critical_light": "#E10F0F",
+      "critical_dark": "#FF593C"
+    },
+
+    "primary": "#5B7CFA",
+    "background": "#FFFFFF",
+    "ink": "#0F1115",
+    "muted": "#6B7280",
+    "hairline": "#E5E7EB",
+    "forbidden": ["#0D1117", "linear-gradient(purple → pink)"]
+  },
+
+  "typography": {
+    "_note": "Two-slot pattern: `display` and `body`. 8 of 11 evidence-set services use a custom or commissioned typeface — adopters typically swap `display.family` for their custom face. `Inter` (OFL) + the Uniswap system-stack fallback is the open-source-safe default.",
+
+    "display": {
+      "family": "Inter",
+      "weights": [500, 600, 700],
+      "system_stack": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    },
+    "body": {
+      "family": "Inter",
+      "weights": [400, 500],
+      "system_stack": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      "_source": "system_stack matches Uniswap Spore body fallback (web3-01 evidence)"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "weights": [400, 500],
+      "system_stack": "JetBrains Mono, ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Courier New', monospace",
+      "_source": "mono system_stack directly cites Uniswap Spore mono fallback (web3-01)"
+    },
+    "size_scale_px": [12, 14, 16, 18, 20, 24, 32, 40, 48, 64],
+    "line_height": {
+      "tight": 1.2,
+      "body": 1.5,
+      "loose": 1.6
+    },
+
+    "_legacy": {
+      "_note": "Flat aliases kept for backwards compatibility with skill code that read the old shape.",
+      "display": "Inter, -apple-system, sans-serif",
+      "body": "Inter, -apple-system, sans-serif",
+      "mono": "JetBrains Mono, ui-monospace"
+    }
+  },
+
+  "iconography": {
+    "_note": "Lucide is in the default public asset-host allowlist (examples/dot-claude-settings.json). Phosphor is the fallback when an icon doesn't exist in Lucide.",
+    "family": "Lucide",
+    "fallback_family": "Phosphor",
+    "stroke_width_px": 1.75,
+    "size_scale_px": [12, 16, 20, 24, 32],
+    "weight": "regular"
+  },
+
+  "motion": {
+    "_note": "No service in the 11-set publishes an enumerated ms scale; values follow Material Motion + Apple HIG spec defaults, already cited in references/animation-best-practices.md.",
+    "duration_ms": {
+      "instant": 100,
+      "fast": 200,
+      "medium": 300,
+      "slow": 500
+    },
+    "easing": {
+      "standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "emphasized": "cubic-bezier(0.2, 0, 0, 1)",
+      "decelerated": "cubic-bezier(0, 0, 0.2, 1)"
+    }
+  },
+
+  "product_assets": {
+    "_note": "Required for physical products. For digital products use ui_screenshots instead.",
+    "hero_image": "assets/example-brand/product-hero.png",
+    "detail_images": [
+      "assets/example-brand/product-detail-1.png",
+      "assets/example-brand/product-detail-2.png"
+    ],
+    "scene_image": "assets/example-brand/product-scene.png"
+  },
+
+  "ui_screenshots": {
+    "_note": "Required for digital products (apps / sites / SaaS).",
+    "home": "assets/example-brand/ui-home.png",
+    "feature_pages": {
+      "feature_a": "assets/example-brand/ui-feature-a.png",
+      "feature_b": "assets/example-brand/ui-feature-b.png"
+    }
+  },
+
+  "design_system": {
+    "tokens_repo_url": "https://github.com/example-corp/design-tokens",
+    "figma_library_url": "https://www.figma.com/file/REPLACE_ME/Example-Design-System",
+    "spacing_scale": [0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96],
+    "spacing_base_px": 4,
+    "spacing_section_px": 64,
+    "border_radius_scale": [0, 4, 8, 12, 16, 24],
+    "border_radius_pill": 9999,
+    "border_radius_semantic": {
+      "button": 8,
+      "input": 8,
+      "card": 12,
+      "modal": 16
+    },
+    "shadow_tokens": {
+      "subtle": "0 1px 2px rgba(0,0,0,0.04)",
+      "elevated": "0 10px 40px rgba(0,0,0,0.10)"
+    }
+  },
+
+  "approved_asset_hosts": {
+    "_note": "Mirrors references/security-config.md §1.1 (public) + §1.2 (internal). Public defaults match examples/dot-claude-settings.json:permissions.ask.",
+    "public": [
+      "unpkg.com/lucide-static@*",
+      "cdn.jsdelivr.net/npm/lucide@*",
+      "unpkg.com/@phosphor-icons/web@*",
+      "cdn.jsdelivr.net/npm/@phosphor-icons/web@*",
+      "developer.mozilla.org/*"
+    ],
+    "internal": [],
+    "hosts": []
+  },
+
+  "current_project": {
+    "_note": "Optional — narrows the scope for this run.",
+    "name": "Replace with project name",
+    "brief_path": "docs/project-brief.md",
+    "figma_url": "",
+    "deadline": ""
+  }
+}
