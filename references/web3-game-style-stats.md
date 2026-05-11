@@ -177,7 +177,135 @@ Source: <https://swelltype.com/custom-fonts/clash-royale/> (Swell Type case stud
 - [x] Destiny 2 (Futura logo + Neue Haas Grotesk UI; class-color axis qualitative)
 - [x] Hades (Mrs Eaves Bold poster type + distressed treatment; color palette qualitative)
 - [x] Clash Royale (Supercell-Magic 2016 custom + named-color palette)
-- [ ] Aggregate decision values — Batch 5
+- [x] Aggregate decision values — Batch 5 (color / typography / spacing / radius / motion / iconography / watermark / logo / asset hosts all decided)
+
+---
+
+## Aggregate analysis + decision values (Batch 5)
+
+This section turns the per-service evidence into the values that feed `assets/team-brand-spec.default.json` in Step 5.1. The principle: *no single service's brand identity is mimicked* — defaults sit at a neutral point that lets adopters override toward their own brand without inheriting another company's recognizability.
+
+### Color decisions
+
+**Brand-color distribution across the 11 services** (where a hex is enumerated, it's a hard data point; where it's qualitative, it's a tone observation):
+
+| Hue band | Services in this band |
+|---|---|
+| Pink / magenta | Uniswap (`#FF37C7`), Hades (wine/purple secondary) |
+| Red / vermillion | Valorant (`#FF4655`), Hades (deep red primary) |
+| Purple / violet | Phantom (qualitative), Farcaster (`#8A63D2`), Hades secondary |
+| Blue | OpenSea (`#2081E2`), Coinbase (`#1652F0`), Clash Royale French Blue (named, ≈ `#0072BB`), Genshin master-brand ring, Destiny 2 UI chrome |
+| Green | Lens (PDF-locked qualitative) |
+| Gold / amber | Genshin UI accent (`~#E6CDA0` obs.), Clash Royale Selective Yellow (named, ≈ `#FFBA00`), Hades original-game gold |
+| Pure black / dark base | Genshin wordmark, Destiny 2 chrome, Hades base, plus all dark-mode surfaces in web3 |
+
+Observations:
+
+1. *No single hue dominates*; blue has the most occurrences (5/11) and is therefore the *least safe* primary for a neutral default because choosing blue would visually align with Coinbase + OpenSea + Clash Royale at once.
+2. *Dark surface backgrounds are near-universal* (10/11 services support a dark mode or use dark base UI).
+3. *Status color hex codes* are only explicitly enumerated by one source (Uniswap's `Spore` system, GPL-3.0). All other services either omit a public status palette or describe it qualitatively.
+
+**Decisions:**
+
+- **Surface tokens (default = dark base, with explicit light variant):**
+  - `surface.base` (dark): `#0F1115` — near-black with a slight cool tint; doesn't match any of the 11 surface bases verbatim (Uniswap dark is `#131313`, Destiny 2 is `~#0C1216`) — sits at the *median* without copying either.
+  - `surface.raised` (dark): `#1A1D24` — one tier up.
+  - `surface.muted` (dark): `rgba(255,255,255,0.08)` — translucent (Uniswap-style technique, generic enough to be neutral).
+  - `surface.base` (light): `#FFFFFF`
+  - `surface.raised` (light): `#F7F8FA`
+  - `surface.muted` (light): `rgba(15,17,21,0.06)`
+- **Text tokens:**
+  - `text.primary` (dark): `#F2F4F8` (near-white, slightly cool)
+  - `text.secondary` (dark): `rgba(242,244,248,0.68)`
+  - `text.tertiary` (dark): `rgba(242,244,248,0.42)`
+  - `text.primary` (light): `#0F1115`
+  - `text.secondary` (light): `rgba(15,17,21,0.66)`
+  - `text.tertiary` (light): `rgba(15,17,21,0.40)`
+- **Brand accent (deliberately neutral, not anyone's brand):**
+  - `accent.primary`: `#5B7CFA` — mid-saturation indigo; **not** Coinbase `#1652F0`, **not** OpenSea `#2081E2`, **not** Farcaster `#8A63D2`, **not** Phantom violet. Sits in the gap between blue and purple bands so adopters can flip to either pole.
+  - `accent.contrast`: `#FFFFFF` — text on accent.
+- **Status tokens (Uniswap-attributed evidence, single-source):**
+  - `status.success` (light): `#0C8911` · (dark): `#21C95E`
+  - `status.warning` (light): `#996F01` · (dark): `#FFBF17`
+  - `status.critical` (light): `#E10F0F` · (dark): `#FF593C`
+  - These mirror Uniswap's Spore system exactly — credited in `team-brand-spec.default.json` with a `_source` field pointing back to this section so the lineage is auditable and adopters know what they're overriding when they change them.
+
+### Typography decisions
+
+8/11 services use a custom or commissioned typeface; only system-stack and open-source fallbacks are universally redistributable. The default therefore carries a **two-slot pattern**: a *display* slot (placeholder + open-source fallback) and a *body* slot (open-source stack).
+
+- `typography.display.family`: `"Inter"` — single most-used web sans in 2026; freely redistributable (OFL); covers ~38 scripts. *Placeholder*: adopters typically swap this for their custom display face.
+- `typography.display.weights`: `[500, 600, 700]`
+- `typography.body.family`: `"Inter"` (same family used as body for stack simplicity, distinct weights distinguish)
+- `typography.body.weights`: `[400, 500]`
+- `typography.body.system_stack`: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif` — *post-Inter fallback*. Matches Uniswap's stack pattern exactly (evidence-anchored).
+- `typography.mono.family`: `"JetBrains Mono"` (OFL, freely redistributable)
+- `typography.mono.system_stack`: `ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Courier New", monospace` — direct citation of Uniswap's mono stack.
+- `typography.size_scale` (px): `12, 14, 16, 18, 20, 24, 32, 40, 48, 64` — 1.25× ratio biased, matches Uniswap iconography rhythm and Material 3 baseline scale.
+- `typography.line_height`: `body 1.5`, `tight 1.2`, `loose 1.6`.
+
+### Spacing decisions
+
+Uniswap's `0, 1, 2, 4, 6, 8, 12, 16, 18, 20, 24, 28, 32, 36, 40, 48, 60` is the only enumerated scale in the 11-service set. Other services use 4-/8-px-grid biased values without publishing a flat scale. Default prunes Uniswap's granular low end (1, 2) — too fine for layout — and rounds the high end:
+
+- `spacing.scale` (px): `0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96`
+- `spacing.base`: `4` (the underlying grid unit)
+- `spacing.section`: `64` (large-gap default)
+
+### Radius decisions
+
+Uniswap's `0, 4, 6, 8, 12, 16, 20, 24, 32, full` is again the most enumerated; OpenSea observation is 12–16 px card radii; Coinbase / Phantom production approximates 8–16 px. Default consolidates:
+
+- `radius.scale` (px): `0, 4, 8, 12, 16, 24`
+- `radius.pill`: `9999`
+- `radius.button`: `8` · `radius.input`: `8` · `radius.card`: `12` · `radius.modal`: `16` (semantic shortcuts)
+
+### Motion timing decisions
+
+No service in the 11-set ships an enumerated ms scale publicly. Default is derived from **Material Motion + Apple HIG spec defaults** (already cited externally in `references/animation-best-practices.md`):
+
+- `motion.duration.instant`: `100` ms — micro-feedback (button-press, focus-ring).
+- `motion.duration.fast`: `200` ms — small UI transitions (hover, tooltip).
+- `motion.duration.medium`: `300` ms — page-region entrances, sheet open.
+- `motion.duration.slow`: `500` ms — full-route transitions, hero reveals.
+- `motion.easing.standard`: `cubic-bezier(0.4, 0, 0.2, 1)` — Material standard curve.
+- `motion.easing.emphasized`: `cubic-bezier(0.2, 0, 0, 1)` — Material emphasized.
+- `motion.easing.decelerated`: `cubic-bezier(0, 0, 0.2, 1)` — entrance.
+
+### Iconography decisions
+
+The 11-set is dominated by custom in-product icons. The most-used **open-source** icon kit for similar web3/dashboard product surfaces is Lucide (already in the public asset-host allowlist at `examples/dot-claude-settings.json`).
+
+- `iconography.family`: `"Lucide"` (Lucide React / Vue / vanilla SVG; ISC license)
+- `iconography.fallback`: `"Phosphor"` (MIT; also in the asset-host allowlist)
+- `iconography.stroke_width`: `1.75` (px) — Lucide default.
+- `iconography.size_scale` (px): `12, 16, 20, 24, 32` — five sizes, matching Uniswap's icon-size scale subset.
+- `iconography.weight`: `"regular"` (Lucide has a single weight by default; Phosphor offers thin / light / regular / bold / fill).
+
+### Watermark decisions
+
+(Carried over from Step 4 default policy, unchanged.)
+
+- `watermark.enabled`: `false`
+- `watermark.format`: `"{teamName} · {year}"` — Latin neutral; only rendered when `enabled = true`.
+- `watermark.position`: `"bottom-right"`
+- `watermark.opacity`: `0.5`
+
+### Logo default decisions
+
+Aspect-ratio observation across the 11-set: mark-only ≈ 1:1 (universal); mark + wordmark ≈ 3:1 to 5:1 (cluster median at 4:1).
+
+- `logo.mark.aspect`: `"1:1"` (square mark slot)
+- `logo.mark.placeholder`: an abstract geometric `<svg viewBox="0 0 24 24">` rectangle (drop-in until adopter replaces)
+- `logo.wordmark.aspect`: `"4:1"` (median across the set)
+- `logo.wordmark.placeholder`: text `"TEAM"` rendered in `Inter 700` — neutral, immediately recognizable as a placeholder.
+
+### Asset host hints
+
+The default ships with public-CDN allowlist matching `examples/dot-claude-settings.json` (Lucide / Phosphor / MDN). Per-fork additions belong in the carrier file, not the default:
+
+- `asset_hosts.public`: `["unpkg.com/lucide-static@*", "cdn.jsdelivr.net/npm/lucide@*", "unpkg.com/@phosphor-icons/web@*", "cdn.jsdelivr.net/npm/@phosphor-icons/web@*", "developer.mozilla.org/*"]`
+- `asset_hosts.internal`: `[]` (per-fork)
 
 ---
 
