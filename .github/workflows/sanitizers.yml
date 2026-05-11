@@ -41,6 +41,9 @@ jobs:
       - name: figma-to-brand-spec extractor tests
         run: python3 scripts/test_figma_to_brand_spec.py
 
+      - name: figma-viewer tests
+        run: python3 scripts/test_figma_viewer.py
+
       - name: JSON template lint
         run: |
           python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"

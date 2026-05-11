@@ -6,7 +6,7 @@
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
 > **Status: Step 1–5 shipped · 2026-05-10 → 2026-05-11 · clean-room rewrite, no upstream skill inherited.**
 > Step 5 promoted `team-brand-spec` from placeholder to operational default (evidence-anchored to an 11-service style sweep) and added a Figma → spec extractor.
-> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 11 + 13 = **93 regression tests** across the six sanitizer / engine / fork-helper / Figma-extractor suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
+> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 11 + 13 + 15 = **108 regression tests** across the seven sanitizer / engine / fork-helper / Figma-extractor / Figma-viewer suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
 
 > 🟡 **If you're an AI agent picking this repo up in a fresh session, read [`HANDOFF.md`](HANDOFF.md) FIRST.** It contains the project context, the user's working style, the anti-patterns to avoid, and the decision tree for the next move. Skipping it costs tokens.
 
@@ -69,6 +69,8 @@ claude-design-skill/
 │   ├── test_init_brand.py            # 11 regression tests
 │   ├── figma-to-brand-spec.py        # Figma → team-brand-spec.json extractor (REST API + offline fixture mode)
 │   ├── test_figma_to_brand_spec.py   # 13 regression tests
+│   ├── figma-viewer.py               # Figma file → self-contained HTML viewer (offline-capable)
+│   ├── test_figma_viewer.py          # 15 regression tests
 │   ├── fixtures/                     # offline test fixtures (Figma API response shape)
 │   └── install-hooks.sh              # opt-in pre-commit hook installer
 ├── assets/
@@ -99,6 +101,7 @@ python3 scripts/test_codex_image_import.py  # 19/19
 node    scripts/test_animations_easing.js   # 19/19
 python3 scripts/test_init_brand.py          # 11/11
 python3 scripts/test_figma_to_brand_spec.py # 13/13
+python3 scripts/test_figma_viewer.py        # 15/15
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
 python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
 ```

@@ -1,0 +1,145 @@
+{
+  "name": "Default Studio · Sample Design",
+  "lastModified": "2026-05-11T08:00:00Z",
+  "version": "9876543210",
+  "schemaVersion": 0,
+  "styles": {
+    "S:accent_primary": {"key": "k1", "name": "color/accent/primary", "styleType": "FILL"},
+    "S:surface_base_light": {"key": "k2", "name": "color/surface/base_light", "styleType": "FILL"},
+    "S:text_display": {"key": "k3", "name": "text/display/family", "styleType": "TEXT"},
+    "S:text_body": {"key": "k4", "name": "text/body/family", "styleType": "TEXT"}
+  },
+  "document": {
+    "id": "0:0",
+    "name": "Document",
+    "type": "DOCUMENT",
+    "children": [
+      {
+        "id": "1:0",
+        "name": "Page · Cover",
+        "type": "CANVAS",
+        "backgroundColor": {"r": 0.96, "g": 0.97, "b": 0.98, "a": 1},
+        "children": [
+          {
+            "id": "2:1",
+            "name": "Cover Hero",
+            "type": "FRAME",
+            "absoluteBoundingBox": {"x": 0, "y": 0, "width": 1200, "height": 800},
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 0.059, "g": 0.067, "b": 0.082, "a": 1}}
+            ],
+            "cornerRadius": 0,
+            "children": [
+              {
+                "id": "3:1",
+                "name": "Brand mark",
+                "type": "RECTANGLE",
+                "absoluteBoundingBox": {"x": 80, "y": 80, "width": 64, "height": 64},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.357, "g": 0.486, "b": 0.980, "a": 1}}
+                ],
+                "cornerRadius": 16
+              },
+              {
+                "id": "3:2",
+                "name": "Headline",
+                "type": "TEXT",
+                "absoluteBoundingBox": {"x": 80, "y": 320, "width": 800, "height": 96},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.949, "g": 0.957, "b": 0.972, "a": 1}}
+                ],
+                "style": {"fontFamily": "Inter", "fontWeight": 700, "fontSize": 72, "lineHeightPx": 80},
+                "characters": "Design that ships."
+              },
+              {
+                "id": "3:3",
+                "name": "Subhead",
+                "type": "TEXT",
+                "absoluteBoundingBox": {"x": 80, "y": 440, "width": 720, "height": 48},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.949, "g": 0.957, "b": 0.972, "a": 0.68}}
+                ],
+                "style": {"fontFamily": "Inter", "fontWeight": 400, "fontSize": 22, "lineHeightPx": 30},
+                "characters": "A fictional web3 / game studio used as the operational default for the claude-design-skill."
+              },
+              {
+                "id": "3:4",
+                "name": "CTA",
+                "type": "RECTANGLE",
+                "absoluteBoundingBox": {"x": 80, "y": 540, "width": 180, "height": 56},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.357, "g": 0.486, "b": 0.980, "a": 1}}
+                ],
+                "cornerRadius": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1:1",
+        "name": "Page · Tokens",
+        "type": "CANVAS",
+        "backgroundColor": {"r": 1, "g": 1, "b": 1, "a": 1},
+        "children": [
+          {
+            "id": "2:2",
+            "name": "Token swatches",
+            "type": "FRAME",
+            "absoluteBoundingBox": {"x": 0, "y": 0, "width": 1200, "height": 400},
+            "fills": [
+              {"type": "SOLID", "visible": true, "color": {"r": 1, "g": 1, "b": 1, "a": 1}}
+            ],
+            "cornerRadius": 0,
+            "children": [
+              {
+                "id": "4:1",
+                "name": "Accent / Primary swatch",
+                "type": "RECTANGLE",
+                "absoluteBoundingBox": {"x": 80, "y": 80, "width": 200, "height": 200},
+                "styles": {"fill": "S:accent_primary"},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.357, "g": 0.486, "b": 0.980, "a": 1}}
+                ],
+                "cornerRadius": 12
+              },
+              {
+                "id": "4:2",
+                "name": "Surface / Base light swatch",
+                "type": "RECTANGLE",
+                "absoluteBoundingBox": {"x": 320, "y": 80, "width": 200, "height": 200},
+                "styles": {"fill": "S:surface_base_light"},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.969, "g": 0.973, "b": 0.980, "a": 1}}
+                ],
+                "cornerRadius": 12
+              },
+              {
+                "id": "4:3",
+                "name": "Surface / Base dark swatch",
+                "type": "RECTANGLE",
+                "absoluteBoundingBox": {"x": 560, "y": 80, "width": 200, "height": 200},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.059, "g": 0.067, "b": 0.082, "a": 1}}
+                ],
+                "cornerRadius": 12
+              },
+              {
+                "id": "4:4",
+                "name": "Display sample",
+                "type": "TEXT",
+                "absoluteBoundingBox": {"x": 80, "y": 320, "width": 600, "height": 60},
+                "styles": {"text": "S:text_display"},
+                "fills": [
+                  {"type": "SOLID", "visible": true, "color": {"r": 0.059, "g": 0.067, "b": 0.082, "a": 1}}
+                ],
+                "style": {"fontFamily": "Inter", "fontWeight": 700, "fontSize": 48, "lineHeightPx": 56},
+                "characters": "Display Aa"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
