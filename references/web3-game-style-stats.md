@@ -139,6 +139,29 @@ Source: <https://dwsn3ee3.wordpress.com/2014/09/16/destiny-futura-and-helvetica/
 - **Asset host**: `www.bungie.net`, `www.destinythegame.com`.
 - **Logo aspect**: wordmark ≈ 5:1.
 
+### game-04 · Supergiant Games · Hades
+
+Source: <https://build.typogram.co/p/a-deep-dive-into-hades-iis-branding> (Typogram designer deep dive into the Hades II ligature work) + <https://fontmeme.com/fonts/hades-font/> (poster font identification) + production observation from Supergiant's promotional art (Greg Kasavin / Jen Zee design direction).
+
+- **Typography — display / poster**: `Mrs Eaves Bold` (Zuzana Licko, Emigre Fonts) — paired with custom HA-ligature work. Distressed / hand-treated treatment applied per asset, not a flat font swap.
+- **Typography — wordmark refinement (Hades II)**: HA-ligature redesigned so "the H extends its right serif and curves up to form a swash" while "the A shortens its left leg"; treatment described as "gore and elegance."
+- **Color — game-side identity (Hades 2020)**: deep wine red + smoky black surface, gold/warm yellow accent for legendary tier and rune chrome, purple/violet secondary; specific hex codes not enumerated in public sources.
+- **Color — Hades II (2024-2025) shift**: same dark base with witchcraft-aligned green/cyan secondary replacing the original gold-forward warmth (observation; hex not enumerated).
+- **Logo**: distressed wordmark (Mrs Eaves Bold derivative); strong illustration-driven identity by Jen Zee.
+- **Asset host**: `www.supergiantgames.com`, Steam / Epic / Switch eShop pages.
+- **Logo aspect**: wordmark ≈ 3.5:1.
+
+### game-05 · Supercell · Clash Royale
+
+Source: <https://swelltype.com/custom-fonts/clash-royale/> (Swell Type case study, 2016) + <https://fontsinuse.com/uses/66357/clash-royale-mobile-game> (Fonts In Use catalog entry) + <https://fankit.supercell.com/d/BmehSDJrZNff/font> (official Supercell fan kit, link-only).
+
+- **Typography — display / logo / UI**: `Supercell-Magic` (also referred to in design press as the *Clash Royale custom font*), designed 2016 by Swell Type as a Supercell-commissioned redraw of Comicraft's *You Blockhead*. Multiple weights, art-directed by Lauri Warsta. Used across the Clash family (Clash of Clans, Clash Royale, Brawl Stars share the lineage).
+- **Typography — secondary / inline UI**: `CC Back Beat` (Comicraft) — narrower comic-style face used for in-game text.
+- **Color — Clash Royale palette (named tokens, public sources)**: French Blue, Gingerbread, Selective Yellow, Black, Spanish Gray. Specific hex values not centrally enumerated in the public press / fan-kit text as of 2026-05-11; observed in-product approximations follow the named-color industry standards (French Blue ≈ `#0072BB`, Gingerbread ≈ `#B25B00`, Selective Yellow ≈ `#FFBA00`, Spanish Gray ≈ `#989898`).
+- **Logo**: golden crown mark + Supercell-Magic wordmark; saturated cartoony aesthetic.
+- **Asset host**: `supercell.com`, `fankit.supercell.com`.
+- **Logo aspect**: mark + wordmark ≈ 3:1.
+
 ---
 
 ## Sub-step status
@@ -152,8 +175,8 @@ Source: <https://dwsn3ee3.wordpress.com/2014/09/16/destiny-futura-and-helvetica/
 - [x] Valorant (primary `#FF4655` + DIN Next UI typography)
 - [x] Genshin Impact (HYWenHei-85W proprietary; UI gold accent observation)
 - [x] Destiny 2 (Futura logo + Neue Haas Grotesk UI; class-color axis qualitative)
-- [ ] Hades — Batch 4
-- [ ] Clash Royale — Batch 4
+- [x] Hades (Mrs Eaves Bold poster type + distressed treatment; color palette qualitative)
+- [x] Clash Royale (Supercell-Magic 2016 custom + named-color palette)
 - [ ] Aggregate decision values — Batch 5
 
 ---
