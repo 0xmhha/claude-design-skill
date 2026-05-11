@@ -4,8 +4,9 @@
 [![sanitizers](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml)
 
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
-> **Status: Step 1–4 shipped · 2026-05-10 · Step 5 in progress · 2026-05-11 (operational defaults + Figma ingestion) · clean-room rewrite, no upstream skill inherited.**
-> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 11 + 13 regression tests across the six sanitizer / engine / fork-helper / Figma-extractor suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
+> **Status: Step 1–5 shipped · 2026-05-10 → 2026-05-11 · clean-room rewrite, no upstream skill inherited.**
+> Step 5 promoted `team-brand-spec` from placeholder to operational default (evidence-anchored to an 11-service style sweep) and added a Figma → spec extractor.
+> CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 11 + 13 = **93 regression tests** across the six sanitizer / engine / fork-helper / Figma-extractor suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
 
 > 🟡 **If you're an AI agent picking this repo up in a fresh session, read [`HANDOFF.md`](HANDOFF.md) FIRST.** It contains the project context, the user's working style, the anti-patterns to avoid, and the decision tree for the next move. Skipping it costs tokens.
 
@@ -170,6 +171,7 @@ external publication.
 - **Step 2 (2026-05-09 → 05-10)** — SKILL.md body authored: Junior Designer workflow · Anti-AI-slop checklist · App prototype rules + IosFrame · Slide deck conventions + deck_stage.js · Tweaks live-tuning system + tweaks.js + worked example · Critique guide.
 - **Step 3 (2026-05-10)** — Design knowledge catalog: design-styles.md (18 directions) · scene-templates.md (9 templates) · animation engine (animations.jsx + easing.js + 19 regression tests) · animation best-practices + pitfalls · 16 showcase PNGs. (Step 3.5 SFX library retired by user instruction.)
 - **Step 4 (2026-05-10)** — Internal-fit hardening: codename catalog conservative-pairing rule · GitHub Actions CI active · external asset hosts whitelist boost. Internal brand spec values + LICENSE / mirror policy remain per-fork actions.
+- **Step 5 (2026-05-11)** — Operational defaults + Figma ingestion: `team-brand-spec.default.json` replaces the placeholder example with evidence-anchored values from an 11-service style sweep (`references/web3-game-style-stats.md`); `scripts/figma-to-brand-spec.py` lets adopters extract their spec from Figma instead of hand-editing JSON.
 - **Next** — designer dogfooding pass · per-fork brand integration when a team adopts the skill.
 
 ## Contributing

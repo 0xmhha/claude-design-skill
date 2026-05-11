@@ -16,12 +16,15 @@ description: |
 
 # claude-design-skill
 
-> Status: **Step 1–4 shipped · 2026-05-10**
+> Status: **Step 1–5 shipped · 2026-05-10 → 2026-05-11**
 > All body sections are authored; the design-knowledge catalog,
-> animation engine, and prebuilt showcases ship alongside. Security
-> and routing rules are load-bearing and govern every external call
-> this skill can make. See `PROJECT-PLAN.md §7` for the per-step
-> decisions log and license-clean evidence.
+> animation engine, and prebuilt showcases ship alongside. Step 5
+> promotes `team-brand-spec` from placeholder to operational default
+> (evidence-anchored to an 11-service style sweep) and adds a
+> Figma → spec extractor for adopters who manage brand in Figma.
+> Security and routing rules are load-bearing and govern every
+> external call this skill can make. See `PROJECT-PLAN.md §7` for
+> the per-step decisions log and license-clean evidence.
 >
 > **For AI agents in a fresh session**: read `HANDOFF.md` at the repo root
 > first. It contains the working-style briefing and anti-pattern list
@@ -981,6 +984,8 @@ absolute marks.
 | **Figma brand-spec import** — design tokens / typography / logo into `team-brand-spec.json` | `references/figma-brand-spec-import.md` |
 | **Codex CLI design workflow** — GPT-5.5 reasoning + auto gpt-image-2, with import gate | `references/codex-design-workflow.md` + `scripts/codex-image-import.py` |
 | **Brand spec field reference** — what every key in `team-brand-spec.default.json` means | `references/brand-spec-fields.md` |
+| **Web3 + game style stats** — 11-service evidence sweep (color, type, spacing, radius, motion) behind the default values | `references/web3-game-style-stats.md` |
+| **Figma → team-brand-spec extractor** — REST-API tool that pulls named styles from a Figma file into the carrier; fixture mode for offline runs | `references/figma-to-brand-spec.md` + `scripts/figma-to-brand-spec.py` |
 | **CI workflow templates** — GitHub Actions / GitLab CI for sanitizer regression + asset scan | `references/ci-template.md` |
 | **App prototype rules** — iOS / Android device-frame wrapping, real-image policy, Playwright click-test | `## App prototype rules` (this skill) + `assets/ios_frame.jsx` + `assets/android_frame.jsx` |
 | **Slide deck conventions** — 1920×1080 fixed canvas, colocated speaker notes, print-to-PDF rules, keyboard surface | `## Slide deck conventions` (this skill) + `assets/deck_stage.js` |

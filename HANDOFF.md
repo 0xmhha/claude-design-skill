@@ -6,7 +6,7 @@
 > prevent.
 
 **Last updated**: 2026-05-11
-**Active version**: Step 1–4 shipped (2026-05-10) + post-Step-4 doc/policy follow-ups (2026-05-10 → 2026-05-11) + **Step 5 in progress** (2026-05-11 →)
+**Active version**: Step 1–5 shipped (2026-05-10 → 2026-05-11). Step 5 closed with operational defaults + Figma ingestion path.
 **Repo**: <https://github.com/0xmhha/claude-design-skill> (clone locally; commands in this doc assume `cd <repo-root>` first)
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.
@@ -44,16 +44,16 @@ state. They are not new "Steps"; they are doc/policy hygiene around what Steps
 - **Repo hygiene**: `SECURITY.md` (vulnerability disclosure pointer), `CONTRIBUTING.md`, `.github/dependabot.yml` (weekly Actions / pip / npm bumps). Status badges + tweaks-demo pointer added to `README.md`; the showcase gallery has its own `assets/showcase-brand/README.md` (preview catalog) alongside the existing `PROVENANCE.md`.
 - **Stale-references scrub**: every "v0.1.0-alpha skeleton" mention removed; HANDOFF / README / PROJECT-PLAN consistency pass.
 
-### Step 5 — in progress as of 2026-05-11
+### Step 5 — shipped 2026-05-11
 
-Step 5 changes `team-brand-spec` from a *placeholder example* into an *operational default* with evidence-based values, and adds a Figma → spec extraction path. Plan and sub-steps live in `PROJECT-PLAN.md §6.5`; per-step ship entries go to `PROJECT-PLAN.md §7`.
+Step 5 changed `team-brand-spec` from a *placeholder example* into an *operational default* with evidence-based values, and added a Figma → spec extraction path. All four sub-steps closed on 2026-05-11. Plan and sub-steps live in `PROJECT-PLAN.md §6.5`; ship entries in `PROJECT-PLAN.md §7`.
 
-- **5.1** — ✅ shipped: `assets/team-brand-spec.example.json` removed; `assets/team-brand-spec.default.json` is now the operational default with evidence-based values from Step 5.2. `scripts/init-brand.py` stamps the carrier from `.default.json` (and keeps `--example` as an alias). Tests grew 9 → 11 (color-token-groups + status-source-attribution coverage).
-- **5.2** — `references/web3-game-style-stats.md`: 11-service evidence + aggregated defaults (web3 6: Uniswap, OpenSea, Phantom, Lens, Farcaster, Coinbase / game 5: Valorant, Genshin Impact, Destiny 2, Hades, Clash Royale). Full field coverage.
-- **5.3** — `scripts/figma-to-brand-spec.py` + tests: reads Figma file via REST API, emits spec. Reference inputs: Material 3 Design Kit (Android) + iOS Design Resources.
-- **5.4** — verify-and-doc.
+- **5.2** — ✅ shipped: `references/web3-game-style-stats.md` (316 lines · 11-service evidence sweep + aggregate decision values). Coverage: web3 6 (Uniswap, OpenSea, Phantom, Lens, Farcaster, Coinbase) · game 5 (Valorant, Genshin Impact, Destiny 2, Hades, Clash Royale).
+- **5.1** — ✅ shipped: `assets/team-brand-spec.example.json` removed; `assets/team-brand-spec.default.json` is the operational default with evidence-based values. `scripts/init-brand.py` stamps from `.default.json` (`--example` preserved as alias). Tests 9 → 11.
+- **5.3** — ✅ shipped: `scripts/figma-to-brand-spec.py` (~280 lines, stdlib only) + `scripts/fixtures/figma_minimal.json` + `scripts/test_figma_to_brand_spec.py` (13 tests) + `references/figma-to-brand-spec.md`. Reads Figma file via REST API (`X-Figma-Token`), walks tree, resolves named styles into spec slots via `color/<group>/<token>` slash convention. Fixture mode for offline / CI runs.
+- **5.4** — ✅ shipped: SKILL.md routing table gains rows for `web3-game-style-stats.md` and `figma-to-brand-spec.md`; SKILL.md status header bumped to "Step 1–5 shipped"; HANDOFF this block flipped to "shipped"; CHANGELOG `[Unreleased]` gets a Step 5 entry; README status line + guard chain reflect 93-test total.
 
-Order chosen: 5.2 → 5.1 → 5.3 → 5.4 so the default file has citations behind every value before the Figma tool starts overwriting them.
+Total: 93 regression tests (18 + 13 + 19 + 19 + 11 + 13).
 
 ### What's intentionally NOT done
 

@@ -161,7 +161,7 @@ team that adopts the skill into an internal context.
 
 ---
 
-## 6.5. Step 5 — operational defaults + Figma ingestion (in progress 2026-05-11)
+## 6.5. Step 5 — operational defaults + Figma ingestion (complete 2026-05-11)
 
 Step 5 changes the contract of `team-brand-spec`: from *placeholder example* to *operational default*. The default values are evidence-based — pulled from style analysis of trusted web3 + game services — so that an agent producing design output without any team override still ships **non-AI-slop** results. A second path lets adopters extract their own spec from Figma instead of hand-editing JSON.
 
@@ -173,10 +173,10 @@ User decisions (2026-05-11):
 
 Sub-steps:
 
-- [ ] **5.2** — `references/web3-game-style-stats.md`: per-service evidence rows (color tokens · typography · spacing · radius · motion · iconography · logo aspect · asset hosts) for 11 services, then aggregated mode / median values per dimension. Sources: official design system docs, public brand pages, production sites. WebSearch + WebFetch evidence-gated; every value carries a source attribution line.
-- [ ] **5.1** — `assets/team-brand-spec.default.json` (`.example` → `.default` policy change): renamed to signal *operational default, not placeholder*. Values pulled from 5.2 aggregate. `scripts/init-brand.py` updated to stamp from `.default`; tests updated to match. `references/brand-spec-fields.md` cross-link to 5.2 evidence.
-- [ ] **5.3** — `scripts/figma-to-brand-spec.py` + `scripts/test_figma_to_brand_spec.py`: reads a Figma file (REST API, Personal Access Token via env var `FIGMA_TOKEN`), extracts styles + variables, emits `team-brand-spec.json`. Reference Figma files: Google's Material 3 Design Kit (Android) + Apple's iOS Design Resources (or community equivalent). Fixture-based tests so the suite runs without network in CI.
-- [ ] **5.4** — verify-and-doc: SKILL.md / README / HANDOFF / PROJECT-PLAN consistency pass; CI workflow gains the Figma tool test step; CHANGELOG entry.
+- [x] **5.2** — `references/web3-game-style-stats.md` (316 lines): per-service evidence rows for 11 services, then aggregated decision values per dimension. Shipped across 5 batch commits.
+- [x] **5.1** — `assets/team-brand-spec.default.json` operational default; `scripts/init-brand.py` rewired; tests 9 → 11. (`4c3d7ef`)
+- [x] **5.3** — `scripts/figma-to-brand-spec.py` (REST + fixture) + 13 tests + `references/figma-to-brand-spec.md` + CI step. (`de2b3f2`)
+- [x] **5.4** — verify-and-doc consistency pass; SKILL.md routing rows added; status headers bumped; CHANGELOG entry; 93-test full guard chain re-validated.
 
 Out of scope for Step 5:
 
@@ -341,6 +341,21 @@ Out of scope for Step 5:
 - **Rationale**: Apache 2.0 adds an explicit patent grant (§3) and trademark / contributor clarity (§6) that MIT does not. The change is unrelated to upstream / predecessor licensing — the upstream `alchaincyf/huashu-design` skill carries a separate Personal-Use license; this repository is a clean-room rewrite that does not derive from it; that upstream license is unaffected by the Apache 2.0 grant recorded here.
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
+
+### 2026-05-11 · Step 5.4 — verify + doc consistency pass (Step 5 complete)
+
+- **SKILL.md routing table** gains two rows: *Web3 + game style stats* pointing at `references/web3-game-style-stats.md` (the evidence behind the default values), and *Figma → team-brand-spec extractor* pointing at `references/figma-to-brand-spec.md` + `scripts/figma-to-brand-spec.py`. Placed right after the *Brand spec field reference* row so the three Step 5 docs cluster together in the routing table.
+- **SKILL.md status header** bumped from "Step 1–4 shipped" to "Step 1–5 shipped (2026-05-10 → 2026-05-11)" with a one-line summary of what Step 5 added (operational defaults from evidence sweep + Figma ingestion path).
+- **HANDOFF.md §0 Active version** flipped to "Step 1–5 shipped"; the §0 *Step 5 — in progress* block rewritten as *Step 5 — shipped 2026-05-11* with each sub-step marked ✅ and the total test count (93) stated. Section name change makes the *shipped* status the first thing a fresh-session agent reads in HANDOFF after the briefing.
+- **PROJECT-PLAN.md §6.5** title changed from "in progress" to "complete"; sub-step checkboxes all marked `[x]` with commit references (`4c3d7ef`, `de2b3f2`).
+- **CHANGELOG.md `[Unreleased]`** gets the Step 5 entry (Step 5.1 already had its own; Step 5.2 / 5.3 / 5.4 entries added under one *Step 5* changelog header for release-log clarity).
+- **Validation**: full guard chain re-run before this commit — 18 + 13 + 19 + 19 + 11 + 13 = **93 tests OK**; all JSON templates parse (`assets/team-brand-spec.default.json`, `examples/dot-claude-settings.json`, `scripts/fixtures/figma_minimal.json`); `scan_assets.py --dir assets/` clean for every showcase PNG.
+- **Step 5 retrospective** (so the next session has the design rationale at hand):
+  - The decision *not to mimic any single service's brand color* was the highest-leverage call. Without it, every default-mode generation would have looked like Coinbase, OpenSea, or Phantom by reflex. `#5B7CFA` sits in a deliberate gap.
+  - Two-slot typography (display + body) + the `_legacy` aliases preserved backwards compatibility *and* enabled the new nested layout — a pure rename would have broken every skill-internal reader of the flat keys.
+  - Fixture-based tests for the Figma extractor are the difference between "CI gates the contract" and "tests run only when someone has a token." That choice multiplied the value of the 13 tests.
+  - `_source` attribution as a *first-class field* in the JSON (not just a comment) lets adopters trace any value back to its origin — Uniswap Spore for status tokens, the 11-service sweep for the accent decision, etc. Future strip rules must continue to preserve `_source` (the test `test_status_source_attribution_preserved` pins this invariant).
+- **What's next** (post-Step-5): no further repo-side Step is planned. Per-fork adopter actions (§6 (b)) remain `[ ]` by design. The skill is ready for adopter use; the next milestone is real-world usage feedback.
 
 ### 2026-05-11 · Step 5.3 — figma-to-brand-spec extractor
 
