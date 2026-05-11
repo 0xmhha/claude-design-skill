@@ -68,6 +68,40 @@ Source: <https://phantom.com/learn/blog/introducing-phantom-s-new-brand-identity
 - **Asset host**: `phantom.com`, asset zip in developer docs.
 - **Logo aspect**: ghost mark ≈ 1:1; with wordmark ≈ 3.5:1.
 
+### web3-04 · Lens Protocol
+
+Source: <https://github.com/lpolt/lens-brand-kit> (community-mirrored brand kit; the official `lens.xyz/brand` page is bot-gated and returns HTTP 403 to non-browser fetch). Color values themselves are distributed only as a PDF inside the brand-kit repo (`Colours/Lens Protocol_Colours.pdf`), so concrete hex codes are not text-extractable without downloading the PDF — recorded here as a known limitation.
+
+- **Color**: green-led identity ("vibrant universe of plant-like characters and expressions borrowed from the world of flora"). Specific hex values reside inside the brand-kit PDF; commonly observed in product UI as a lime/sage green primary plus monochrome (black/white) base. Concrete hex codes deferred to a future evidence pass that resolves the PDF.
+- **Typography**: not publicly enumerated in text-accessible sources as of 2026-05-11; brand-kit ships logo SVGs only, not type specimens.
+- **Logo**: "Lens" wordmark (custom geometric) + symbol; assets in SVG + PNG, black / white / colour variants.
+- **Asset host**: `lens.xyz` (production), brand-kit repo on GitHub.
+- **Logo aspect**: wordmark ≈ 3:1.
+
+### web3-05 · Farcaster (Warpcast)
+
+Source: <https://github.com/vrypan/farcaster-brand> (official brand assets repo, CC0 license).
+
+- **Color — primary**: `Farcaster Purple #8A63D2` (single token; CC0 release by Merkle Manufactory).
+- **Color — secondary**: black + white (logo + wordmark variants ship in all three).
+- **Typography — body/UI**: Warpcast (the dominant client) uses a system-sans stack; specific typeface name not centrally documented. Farcaster ships a *fonticon webfont* of the logo for inline use, not a body typeface.
+- **Logo**: rounded square mark + wordmark variants; assets in SVG + PNG.
+- **License**: assets under CC0 — directly reusable.
+- **Asset host**: `warpcast.com`, asset repo on GitHub.
+- **Logo aspect**: rounded mark ≈ 1:1; wordmark ≈ 3:1.
+
+### web3-06 · Coinbase
+
+Source: <https://www.coinbase.com/press> (official press kit; bot-gated on direct fetch — values triangulated through Moniker rebrand coverage and a Coinbase Sans font review).
+
+- **Color — primary**: `Coinbase Blue #1652F0`.
+- **Color — secondary**: white + black (contextual on light vs dark surfaces).
+- **Color — extended palette**: Moniker introduced a secondary palette for sub-brand flexibility; specific hex codes not centrally enumerated in the public press kit text.
+- **Typography — primary**: `Coinbase Sans` (custom, designed by Moniker) — 36 styles across Optical / Display / Text / Micro / Mono, 29,000+ glyphs, 200+ Latin languages. Licensed for Coinbase use only (not redistributable).
+- **Typography — open-source fallback** (recommended by HipFonts review): `Public Sans` 500.
+- **Asset host**: `www.coinbase.com`, `assets.coinbase.com`.
+- **Logo aspect**: mark ≈ 1:1; wordmark ≈ 4:1.
+
 ---
 
 ## Sub-step status
@@ -75,9 +109,9 @@ Source: <https://phantom.com/learn/blog/introducing-phantom-s-new-brand-identity
 - [x] Uniswap (full token evidence)
 - [x] OpenSea (brand palette + partial typography)
 - [x] Phantom (brand description; hex not publicly enumerated)
-- [ ] Lens Protocol — Batch 2
-- [ ] Farcaster (Warpcast) — Batch 2
-- [ ] Coinbase — Batch 2
+- [x] Lens Protocol (color values are PDF-only in brand-kit; recorded as known limitation)
+- [x] Farcaster / Warpcast (single-token CC0 brand: `#8A63D2`)
+- [x] Coinbase (primary `#1652F0` + Coinbase Sans + Public Sans 500 open fallback)
 - [ ] Valorant — Batch 3
 - [ ] Genshin Impact — Batch 3
 - [ ] Destiny 2 — Batch 3
