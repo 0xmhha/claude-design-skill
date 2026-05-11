@@ -99,7 +99,7 @@ after Step 4 closed. Listed here so the inventory matches the current tree.
 
 ## 3. What was deliberately empty at Step 1, and how it was filled
 
-The skill body — design knowledge, scenes, workflows — was deliberately empty in the v0.1.0-alpha skeleton. Rationale: those sections in the upstream skill are the parts that risk being "substantial derivative" if copied or paraphrased. Authoring them from scratch with our own voice and our own taxonomy keeps the project license-clean and lets us tailor the body to game / web3 design needs.
+The skill body — design knowledge, scenes, workflows — was deliberately empty at the end of Step 1 (the initial skeleton). Rationale: those sections in the upstream skill are the parts that risk being "substantial derivative" if copied or paraphrased. Authoring them from scratch with our own voice and our own taxonomy keeps the project license-clean and lets us tailor the body to game / web3 design needs.
 
 Step 2 (SKILL.md body) and Step 3 (design-knowledge catalog) covered this in 2026-05-09 → 2026-05-10. See the per-step decisions log entries below for the license-clean evidence each section recorded (predecessor read scope, fresh-author scope, verbatim carry-over scope where applicable).
 
@@ -317,6 +317,18 @@ team that adopts the skill into an internal context.
 - **Rationale**: Apache 2.0 adds an explicit patent grant (§3) and trademark / contributor clarity (§6) that MIT does not. The change is unrelated to upstream / predecessor licensing — the upstream `alchaincyf/huashu-design` skill carries a separate Personal-Use license; this repository is a clean-room rewrite that does not derive from it; that upstream license is unaffected by the Apache 2.0 grant recorded here.
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
+
+### 2026-05-11 · README / SKILL drift sweep
+
+- Audit pass on `README.md` against the tree state (post-Step-4 additions had not all propagated). Findings:
+  - `README.md §What's in here` directory tree missing `scripts/init-brand.py` + `scripts/test_init_brand.py` and `assets/showcase-brand/README.md`. Added.
+  - `README.md` *Run the full guard chain locally* command list missing `python3 scripts/test_init_brand.py # 9/9`, contradicting the headline "five suites · 18 + 13 + 19 + 19 + 9" on the status line. Added.
+  - `README.md §License` short-form repo names (`0xmhha/huashu-design`, `alchaincyf/huashu-design`) replaced with Full URL (`<https://github.com/...>`) at the *location-identifier* slots, matching the 2026-05-11 doc-path normalization policy.
+  - `README.md §Roadmap` first bullet still read *"v0.1.0-alpha (2026-05-09) — skeleton"* despite earlier scrub (`e82418d`). Relabeled to *"Step 1 (2026-05-09) — skeleton"* for consistency with the rest of the Roadmap.
+- `SKILL.md` Status header still read *"v0.1.0-alpha · skeleton · 2026-05-09"* despite Step 1–4 being shipped. Replaced with *"Step 1–4 shipped · 2026-05-10"* + a short summary line that names the design-knowledge catalog, animation engine, and prebuilt showcases.
+- `PROJECT-PLAN.md §3` opening sentence rewritten — *"deliberately empty in the v0.1.0-alpha skeleton"* → *"deliberately empty at the end of Step 1 (the initial skeleton)"* — same fact, no release-tag noise.
+- Out of scope: `HANDOFF.md §0 Post-Step-4 follow-ups` line that names the *v0.1.0-alpha skeleton scrub* — that's a historical reference to commit `e82418d`'s scope, not an active claim about the current state, so it stays.
+- License-clean: doc-only change. Tests rerun before commit: 18 / 13 / 19 / 19 / 9, all OK.
 
 ### 2026-05-11 · Doc path normalization (A-2 resolved)
 

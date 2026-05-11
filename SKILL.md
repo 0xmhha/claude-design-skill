@@ -16,11 +16,12 @@ description: |
 
 # claude-design-skill
 
-> Status: **v0.1.0-alpha · skeleton · 2026-05-09**
-> Body sections marked TBD are filled in Step 2 / Step 3 of the project
-> plan (see PROJECT-PLAN.md). Security and routing rules are already
-> live and load-bearing — they govern every external call this skill
-> can make.
+> Status: **Step 1–4 shipped · 2026-05-10**
+> All body sections are authored; the design-knowledge catalog,
+> animation engine, and prebuilt showcases ship alongside. Security
+> and routing rules are load-bearing and govern every external call
+> this skill can make. See `PROJECT-PLAN.md §7` for the per-step
+> decisions log and license-clean evidence.
 >
 > **For AI agents in a fresh session**: read `HANDOFF.md` at the repo root
 > first. It contains the working-style briefing and anti-pattern list

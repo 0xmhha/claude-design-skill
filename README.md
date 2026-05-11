@@ -64,6 +64,8 @@ claude-design-skill/
 │   ├── codex-image-import.py         # Codex PNG → strip caBX → scan → import (with conservative-pairing codename catalog)
 │   ├── test_codex_image_import.py    # 19 regression tests
 │   ├── test_animations_easing.js     # 19 regression tests for the Easing pack (Node, stdlib only)
+│   ├── init-brand.py                 # fork-bootstrap helper — stamps a per-team brand-spec carrier
+│   ├── test_init_brand.py            # 9 regression tests
 │   └── install-hooks.sh              # opt-in pre-commit hook installer
 ├── assets/
 │   ├── team-brand-spec.example.json  # team brand-spec template
@@ -74,6 +76,7 @@ claude-design-skill/
 │   ├── animations.jsx                # Stage / Sprite timeline engine
 │   ├── easing.js                     # 14-curve frozen Easing pack (CommonJS + window)
 │   └── showcase-brand/
+│       ├── README.md                 # 16-cell preview catalog (scene × philosophy matrix)
 │       ├── PROVENANCE.md             # 213-line audit trail for the 16 showcase PNGs
 │       └── generated/                # 16 prebuilt visual demos (gpt-image-2)
 └── examples/
@@ -89,6 +92,7 @@ python3 scripts/test_svg_sanitize.py        # 18/18
 python3 scripts/test_scan_assets.py         # 13/13
 python3 scripts/test_codex_image_import.py  # 19/19
 node    scripts/test_animations_easing.js   # 19/19
+python3 scripts/test_init_brand.py          #  9/9
 python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
 python3 -c "import json; json.load(open('assets/team-brand-spec.example.json'))"
 ```
@@ -139,13 +143,13 @@ attribution `NOTICE` file ships alongside.
 This repository is a **clean-room rewrite**. No third-party design skill
 is inherited — every file is either authored from scratch by the project
 maintainer or is the maintainer's own prior fork-author work
-(`0xmhha/huashu-design`, Phase 1–4.2). The 23 carry-over files are
+(<https://github.com/0xmhha/huashu-design>, Phase 1–4.2). The 23 carry-over files are
 enumerated in `PROJECT-PLAN.md §2`; the verbatim game / web3 domain
 sections inside `references/design-styles.md §15–18` and
 `references/scene-templates.md §06–09` are similarly maintainer-original
 work, documented in `PROJECT-PLAN.md §7`.
 
-The upstream `alchaincyf/huashu-design` skill carries a separate
+The upstream <https://github.com/alchaincyf/huashu-design> skill carries a separate
 Personal-Use license. This repository does **not derive from** the
 upstream, so the upstream license is unaffected by the Apache 2.0 grant
 recorded here. The license was changed from MIT to Apache 2.0 on
@@ -158,7 +162,7 @@ external publication.
 
 ## Roadmap
 
-- **v0.1.0-alpha (2026-05-09)** — skeleton: security gates, sanitizers, Figma MCP routing, Codex bridge, Android frame.
+- **Step 1 (2026-05-09)** — skeleton: security gates, sanitizers, Figma MCP routing, Codex bridge, Android frame.
 - **Step 2 (2026-05-09 → 05-10)** — SKILL.md body authored: Junior Designer workflow · Anti-AI-slop checklist · App prototype rules + IosFrame · Slide deck conventions + deck_stage.js · Tweaks live-tuning system + tweaks.js + worked example · Critique guide.
 - **Step 3 (2026-05-10)** — Design knowledge catalog: design-styles.md (18 directions) · scene-templates.md (9 templates) · animation engine (animations.jsx + easing.js + 19 regression tests) · animation best-practices + pitfalls · 16 showcase PNGs. (Step 3.5 SFX library retired by user instruction.)
 - **Step 4 (2026-05-10)** — Internal-fit hardening: codename catalog conservative-pairing rule · GitHub Actions CI active · external asset hosts whitelist boost. Internal brand spec values + LICENSE / mirror policy remain per-fork actions.
