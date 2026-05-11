@@ -19,7 +19,8 @@
 | `scan_assets` self-tests | **hard-fail** | `python3 scripts/test_scan_assets.py` — 13 tests, sanity-checks the scanner against synthetic adversarial input |
 | Codex-image-import gate tests | **hard-fail** | `python3 scripts/test_codex_image_import.py` — 19 tests, including the conservative-pairing codename catalog |
 | Animations easing regression tests | **hard-fail** | `node scripts/test_animations_easing.js` — 19 tests, asserts every easing curve is `0→0`, `1→1`, monotonic ordering, frozen pack |
-| `init-brand` bootstrap helper tests | **hard-fail** | `python3 scripts/test_init_brand.py` — 9 tests for the cp + meta-strip + JSON-validate contract used by per-fork operators |
+| `init-brand` bootstrap helper tests | **hard-fail** | `python3 scripts/test_init_brand.py` — 11 tests for the cp + meta-strip + JSON-validate contract + color-token-groups invariant + status-source attribution survival |
+| `figma-to-brand-spec` extractor tests | **hard-fail** | `python3 scripts/test_figma_to_brand_spec.py` — 13 tests covering colour + text mapping, hex rounding, unmapped-style preservation, merge / no-merge, all error paths (fixture-based, network-free) |
 | JSON template lint | **hard-fail** | `examples/dot-claude-settings.json` + `assets/team-brand-spec.default.json` parse cleanly |
 | Asset scan | **advisory** | `python3 scripts/scan_assets.py --dir assets/ --advisory` — reports without blocking |
 
@@ -96,14 +97,26 @@ default:
 
 stages: [test]
 
+variables:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
 guards:
   stage: test
+  before_script:
+    - apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+    - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+    - apt-get install -y nodejs
+    - node --version && python3 --version
   script:
     - python3 scripts/test_svg_sanitize.py
+    - python3 scripts/test_scan_assets.py
+    - python3 scripts/test_codex_image_import.py
+    - node    scripts/test_animations_easing.js
+    - python3 scripts/test_init_brand.py
+    - python3 scripts/test_figma_to_brand_spec.py
     - python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
     - python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
     - python3 scripts/scan_assets.py --dir assets/ --advisory
-    - python3 scripts/test_scan_assets.py
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -111,9 +124,85 @@ guards:
 
 ---
 
-## Internal GH Enterprise / Bitbucket / Buildkite
+## Bitbucket Pipelines (`bitbucket-pipelines.yml`)
 
-The guards are stdlib-Python only — they run on any container with Python 3.10+. Translate the four steps to your CI's native syntax. The shell commands are identical.
+```yaml
+image: python:3.10
+
+definitions:
+  steps:
+    - step: &guards
+        name: Sanitizer / JSON / asset-scan / easing / init-brand / figma-extractor
+        caches:
+          - pip
+        script:
+          # Node 22 for the easing regression suite
+          - apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+          - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+          - apt-get install -y nodejs
+          # Guard chain (mirrors .github/workflows/sanitizers.yml)
+          - python3 scripts/test_svg_sanitize.py
+          - python3 scripts/test_scan_assets.py
+          - python3 scripts/test_codex_image_import.py
+          - node    scripts/test_animations_easing.js
+          - python3 scripts/test_init_brand.py
+          - python3 scripts/test_figma_to_brand_spec.py
+          - python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
+          - python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
+          - python3 scripts/scan_assets.py --dir assets/ --advisory
+
+pipelines:
+  default:
+    - step: *guards
+  pull-requests:
+    "**":
+      - step: *guards
+```
+
+---
+
+## Buildkite (`.buildkite/pipeline.yml`)
+
+```yaml
+steps:
+  - label: ":lock: Sanitizer guards"
+    plugins:
+      - docker#v5.11.0:
+          image: "python:3.10"
+          shell: ["/bin/bash", "-e", "-c"]
+    command: |
+      apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+      curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+      apt-get install -y nodejs
+      python3 scripts/test_svg_sanitize.py
+      python3 scripts/test_scan_assets.py
+      python3 scripts/test_codex_image_import.py
+      node    scripts/test_animations_easing.js
+      python3 scripts/test_init_brand.py
+      python3 scripts/test_figma_to_brand_spec.py
+      python3 -c "import json; json.load(open('examples/dot-claude-settings.json'))"
+      python3 -c "import json; json.load(open('assets/team-brand-spec.default.json'))"
+      python3 scripts/scan_assets.py --dir assets/ --advisory
+```
+
+---
+
+## Translation notes
+
+All three pipelines run the **identical 6-suite guard chain** (93 tests + 2 JSON parses + 1 advisory scan). The shell commands never differ between hosts; only the surrounding YAML syntax does. The guards are stdlib-only — they need *only* Python 3.10+ and Node 22+, no `pip install` step, no `npm install` step.
+
+**GitHub Enterprise**: identical to `.github/workflows/sanitizers.yml`; the workflow runs on self-hosted runners or GitHub-hosted runners with no change.
+
+**Jenkins**: wrap the same shell block in a `pipeline { stages { stage('guards') { steps { sh '...' } } } }` `Jenkinsfile` declarative pipeline. Use the `python3.10` Docker agent image.
+
+**CircleCI / Drone / Other**: same shell commands, same exit-code semantics (non-zero on any failure). Translate the wrapping YAML to the host's syntax.
+
+When porting:
+
+1. **Pin tool versions**: Python `3.10`, Node `22`. The guards work on newer versions but pin so the audit trail is reproducible.
+2. **Hard-fail on test exit codes**: every test script exits non-zero on failure; do not wrap them in `|| true` or similar.
+3. **Asset scan stays advisory** until your catalog is curated; flip to hard-fail (drop `--advisory`) once you control every PNG / SVG in `assets/`.
+4. **Codex CLI integration is out of scope for CI**: `scripts/codex-image-import.py` is run locally during PNG ingestion, not in the CI pipeline.
 
 ---
 

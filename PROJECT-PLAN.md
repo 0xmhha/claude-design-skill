@@ -160,12 +160,12 @@ These items already have a default value shipped in this repo (via Step 4 + Step
 - [x] **Watermark policy** — `assets/team-brand-spec.default.json:watermark.enabled = false`; `references/brand-spec-fields.md §watermark` documents *keep-it-off-until-explicitly-approved*. *Adopter override*: flip to `true` and set `watermark.text` after explicit approval.
 - [x] **Public asset host allowlist** — `examples/dot-claude-settings.json:permissions.ask` + `references/security-config.md §1.1` ship 5 generic-public hosts (Lucide / Phosphor / MDN). *Adopter override*: add team-internal hosts under `approved_asset_hosts.internal` + `security-config.md §1.2 Team-extensible additions`.
 
-### (c) Repo-external operations (no default possible)
+### (c) Repo-external operations (no default possible · guides ship here)
 
-These actions happen *outside* this repo and there is no default value to ship. The reference docs explain *how*; the *doing* is the adopter team's operations work.
+These actions happen *outside* this repo (different git host, different CI system). The repo cannot run the *doing* for the adopter; what it can do — and now does — is ship **concrete, copy-paste-ready** guides for each step. The `[ ]` boxes below stay open by design: the *adopter* checks them once their internal infrastructure is up.
 
-- [ ] **Mirror to the team's internal git host.** Once internal-only, this README and the LICENSE may need replacement per team policy. See `CONTRIBUTING.md` for the mirror pattern.
-- [ ] **Port `references/ci-template.md` to the internal CI host** (GitLab CI / Bitbucket / Buildkite) — sanitizer regression tests + JSON lint as hard-fail; asset scan as advisory. The reference GitHub Actions workflow is already live for public CI.
+- [ ] **Mirror to the team's internal git host.** Adopter-only action. `CONTRIBUTING.md §For fork operators / Mirror to your internal git host` ships the 5-step bash recipe (create empty private repo → `git remote add internal` → push branches + tags → verify ls-remote → tag the divergence point), plus the *which-stays-public* policy (Default Studio identity in `team-brand-spec.json`, team-internal hosts in `approved_asset_hosts.internal`).
+- [ ] **Port the CI workflow to a non-GitHub host.** Adopter-only action. `references/ci-template.md` ships ready-to-paste templates for **GitLab CI**, **Bitbucket Pipelines**, and **Buildkite** — each runs the identical 6-suite guard chain (93 tests + 2 JSON parses + 1 advisory scan); only the wrapping YAML differs. Translation notes cover GitHub Enterprise (identical to the reference workflow), Jenkins (declarative pipeline pattern), and CircleCI / Drone. License / replacement of `LICENSE` + `NOTICE` is a sub-step of the mirror action above and ships as item 10 in the same CONTRIBUTING list.
 
 ---
 
@@ -349,6 +349,24 @@ Out of scope for Step 5:
 - **Rationale**: Apache 2.0 adds an explicit patent grant (§3) and trademark / contributor clarity (§6) that MIT does not. The change is unrelated to upstream / predecessor licensing — the upstream `alchaincyf/huashu-design` skill carries a separate Personal-Use license; this repository is a clean-room rewrite that does not derive from it; that upstream license is unaffected by the Apache 2.0 grant recorded here.
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
+
+### 2026-05-11 · Step 5.6 — §6 (c) guides shipped (mirror + non-GitHub CI templates)
+
+- After §6 restructured into 3 buckets in Step 5.5, the (c) bucket ("repo-external operations") still read as bare TODOs. This entry fills the *guide-ships-here* side so adopters have copy-paste-ready instructions even though the doing happens outside the repo.
+- **`references/ci-template.md`** updated:
+  - *What the CI does* table grew `init-brand` row from 9 → 11 tests (was stale since Step 5.1) and gained a new `figma-to-brand-spec extractor tests` row covering the 13-test fixture suite.
+  - **GitLab CI snippet** rewritten — was a 4-step demo missing every Step 5 test. Now runs the full 6-suite chain (svg-sanitize · scan_assets · codex-image-import · animations-easing · init-brand · figma-to-brand-spec) plus both JSON parses and the advisory asset scan. Includes the `nodesource setup_22.x` install so `node scripts/test_animations_easing.js` runs on the default `python:3.10` image.
+  - **Bitbucket Pipelines snippet** added — uses YAML anchors (`&guards` / `*guards`) so both the `default` push pipeline and `pull-requests` run the same step block.
+  - **Buildkite snippet** added — uses the `docker#v5.11.0` plugin with the same `python:3.10` image and the identical command list.
+  - **Translation notes** section added at the bottom: GitHub Enterprise (identical to the reference workflow), Jenkins (declarative pipeline pattern), CircleCI / Drone / Other (same shell, different YAML). Plus four porting principles (pin Python 3.10 + Node 22, hard-fail on test exit codes, asset scan stays advisory until catalog is curated, Codex CLI integration is out of scope for CI).
+- **`CONTRIBUTING.md §For fork operators`** rewritten:
+  - Acknowledges the Step 5 state ("Default Studio identity ships out of the box, adopters override").
+  - Numbered checklist 1 → 11 covering: identity overrides (1-5), security extensions (6-8), mirror to internal git host (9 — full bash recipe), LICENSE / NOTICE replacement (10), CI port (11 — pointer to the new `ci-template.md` templates).
+  - Mirror recipe is concrete and complete: create empty private repo → `git remote add internal …` → `git push internal master --tags` → `git ls-remote internal | head -5` → tag divergence point with the date.
+  - Test count corrected `78 → 93` in the PR-rules block.
+- **`PROJECT-PLAN.md §6 (c)`** rewritten to acknowledge guides-ship-here; checkboxes stay `[ ]` because they are *adopter actions*, not repo work.
+- License-clean: doc-only change; no code, no upstream prose. New CI snippets are written from the running GitHub Actions workflow + each CI host's public docs (GitLab CI / Bitbucket Pipelines / Buildkite reference). Mirror recipe is generic git semantics — no upstream paraphrase.
+- Validated: 93 tests OK after the edits; `ci-template.md` snippets manually verified shell-syntax-valid; CONTRIBUTING `mirror` snippet manually traced (dry-run `git remote add` wording).
 
 ### 2026-05-11 · Step 5.5 — Default Studio identity + section 6 restructure
 
