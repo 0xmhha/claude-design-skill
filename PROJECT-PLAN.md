@@ -161,6 +161,30 @@ team that adopts the skill into an internal context.
 
 ---
 
+## 6.5. Step 5 — operational defaults + Figma ingestion (in progress 2026-05-11)
+
+Step 5 changes the contract of `team-brand-spec`: from *placeholder example* to *operational default*. The default values are evidence-based — pulled from style analysis of trusted web3 + game services — so that an agent producing design output without any team override still ships **non-AI-slop** results. A second path lets adopters extract their own spec from Figma instead of hand-editing JSON.
+
+User decisions (2026-05-11):
+
+- **Reference service set (11 services)** — web3 (6): Uniswap, OpenSea, Phantom, Lens Protocol, Farcaster (Warpcast), Coinbase; game (5): Riot Valorant, miHoYo Genshin Impact, Bungie Destiny 2, Supergiant Hades, Supercell Clash Royale. All have publicly observable design language (official design system docs, brand pages, or production sites).
+- **Field scope** — full spec coverage: core (color tokens, typography stack, spacing, radius, motion timing) + iconography (family, stroke, weight) + watermark + logo defaults (shape, aspect ratio) + asset host hints.
+- **Sequence** — 5.2 stats → 5.1 default file → 5.3 Figma tool → 5.4 verify-and-doc. Each sub-step ships as its own commit.
+
+Sub-steps:
+
+- [ ] **5.2** — `references/web3-game-style-stats.md`: per-service evidence rows (color tokens · typography · spacing · radius · motion · iconography · logo aspect · asset hosts) for 11 services, then aggregated mode / median values per dimension. Sources: official design system docs, public brand pages, production sites. WebSearch + WebFetch evidence-gated; every value carries a source attribution line.
+- [ ] **5.1** — `assets/team-brand-spec.default.json` (`.example` → `.default` policy change): renamed to signal *operational default, not placeholder*. Values pulled from 5.2 aggregate. `scripts/init-brand.py` updated to stamp from `.default`; tests updated to match. `references/brand-spec-fields.md` cross-link to 5.2 evidence.
+- [ ] **5.3** — `scripts/figma-to-brand-spec.py` + `scripts/test_figma_to_brand_spec.py`: reads a Figma file (REST API, Personal Access Token via env var `FIGMA_TOKEN`), extracts styles + variables, emits `team-brand-spec.json`. Reference Figma files: Google's Material 3 Design Kit (Android) + Apple's iOS Design Resources (or community equivalent). Fixture-based tests so the suite runs without network in CI.
+- [ ] **5.4** — verify-and-doc: SKILL.md / README / HANDOFF / PROJECT-PLAN consistency pass; CI workflow gains the Figma tool test step; CHANGELOG entry.
+
+Out of scope for Step 5:
+
+- Round-trip (spec → Figma write-back) — extraction only.
+- Auto-update from production sites (CSS scraping) — too volatile; 5.2 is a one-time research snapshot, refreshable on user instruction.
+
+---
+
 ## 7. Decisions log
 
 ### 2026-05-09 · Step 1 complete
@@ -317,6 +341,14 @@ team that adopts the skill into an internal context.
 - **Rationale**: Apache 2.0 adds an explicit patent grant (§3) and trademark / contributor clarity (§6) that MIT does not. The change is unrelated to upstream / predecessor licensing — the upstream `alchaincyf/huashu-design` skill carries a separate Personal-Use license; this repository is a clean-room rewrite that does not derive from it; that upstream license is unaffected by the Apache 2.0 grant recorded here.
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
+
+### 2026-05-11 · Step 5 plan sealed
+
+- User decision (2026-05-11): elevate `team-brand-spec` from placeholder to operational default, source default values from evidence-based style analysis of trusted web3 + game services, and add a Figma → spec extraction path. Rationale: anti-AI-slop posture — defaults must reflect real production design, not LLM-imagined values; Figma is the actual day-to-day surface for adopter teams, so JSON hand-editing is a friction point.
+- Reference service set fixed at 11 (web3 6 + game 5). Coinbase added on user request to widen the web3 sample beyond DEX / NFT / wallet / social — gives a CEX data point with strong trust-oriented design.
+- Field scope: full spec coverage (core + iconography + watermark + logo defaults + asset host hints). Larger surface than minimum-viable; user picked completeness over speed because partial defaults invite the same "fill in the gaps with imagination" failure mode as no defaults.
+- Sequence: 5.2 → 5.1 → 5.3 → 5.4. Evidence first, default file second so the default has citations behind every value; Figma tool third so it can validate against the same field shape; verify-and-doc last.
+- This entry seals the plan in §6.5. Each sub-step gets its own decisions-log entry when it ships, recording evidence sources, aggregate methodology, and license-clean evidence.
 
 ### 2026-05-11 · README / SKILL drift sweep
 

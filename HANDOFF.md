@@ -6,7 +6,7 @@
 > prevent.
 
 **Last updated**: 2026-05-11
-**Active version**: Step 1–4 shipped (2026-05-10) + post-Step-4 doc/policy follow-ups (2026-05-10 → 2026-05-11)
+**Active version**: Step 1–4 shipped (2026-05-10) + post-Step-4 doc/policy follow-ups (2026-05-10 → 2026-05-11) + **Step 5 in progress** (2026-05-11 →)
 **Repo**: <https://github.com/0xmhha/claude-design-skill> (clone locally; commands in this doc assume `cd <repo-root>` first)
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.
@@ -43,6 +43,17 @@ state. They are not new "Steps"; they are doc/policy hygiene around what Steps
 - **Fork-bootstrap helper**: `scripts/init-brand.py` (+ `scripts/test_init_brand.py`, 9/9 OK) so adopters can stamp a per-team brand carrier without hand-editing JSON. Verification block now runs 5 test scripts (18 + 13 + 19 + 19 + 9).
 - **Repo hygiene**: `SECURITY.md` (vulnerability disclosure pointer), `CONTRIBUTING.md`, `.github/dependabot.yml` (weekly Actions / pip / npm bumps). Status badges + tweaks-demo pointer added to `README.md`; the showcase gallery has its own `assets/showcase-brand/README.md` (preview catalog) alongside the existing `PROVENANCE.md`.
 - **Stale-references scrub**: every "v0.1.0-alpha skeleton" mention removed; HANDOFF / README / PROJECT-PLAN consistency pass.
+
+### Step 5 — in progress as of 2026-05-11
+
+Step 5 changes `team-brand-spec` from a *placeholder example* into an *operational default* with evidence-based values, and adds a Figma → spec extraction path. Plan and sub-steps live in `PROJECT-PLAN.md §6.5`; per-step ship entries go to `PROJECT-PLAN.md §7`.
+
+- **5.1** — `assets/team-brand-spec.example.json` → `team-brand-spec.default.json` (policy rename); `scripts/init-brand.py` and its 9 tests updated.
+- **5.2** — `references/web3-game-style-stats.md`: 11-service evidence + aggregated defaults (web3 6: Uniswap, OpenSea, Phantom, Lens, Farcaster, Coinbase / game 5: Valorant, Genshin Impact, Destiny 2, Hades, Clash Royale). Full field coverage.
+- **5.3** — `scripts/figma-to-brand-spec.py` + tests: reads Figma file via REST API, emits spec. Reference inputs: Material 3 Design Kit (Android) + iOS Design Resources.
+- **5.4** — verify-and-doc.
+
+Order chosen: 5.2 → 5.1 → 5.3 → 5.4 so the default file has citations behind every value before the Figma tool starts overwriting them.
 
 ### What's intentionally NOT done
 
