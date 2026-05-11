@@ -165,7 +165,7 @@ team that adopts the skill into an internal context.
 
 ### 2026-05-09 · Step 1 complete
 
-- Repo created at `/Users/kevin/work/github/0xmhha/claude-design-skill`.
+- Repo created at <https://github.com/0xmhha/claude-design-skill> (local clone path was on the original-author machine; abstracted to `<repo-root>` in 2026-05-11 doc-path normalization).
 - 23 maintainer-authored files carried over from `huashu-design` fork.
 - 6 fresh files authored: SKILL.md (skeleton), README.md, LICENSE (MIT), CHANGELOG.md, .gitignore, this PROJECT-PLAN.md.
 - License: MIT for now, replaceable per team policy before any external publication.
@@ -318,13 +318,21 @@ team that adopts the skill into an internal context.
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
 
+### 2026-05-11 · Doc path normalization (A-2 resolved)
+
+- Policy decision (user, 2026-05-11): GitHub identifiers are written as **Full URL** (`<https://github.com/...>`) and local working directories use the **`<repo-root>`** placeholder. The append-only decisions-log gets a one-line update on past entries so the canonical repo location is consistent doc-wide.
+- **HANDOFF.md**: 5 absolute paths replaced — `§0 Repo` header now points at <https://github.com/0xmhha/claude-design-skill> with a `<repo-root>` annotation; `§1` verification block `cd` line uses `<repo-root>`; `§4` validated-facts table renames the *Sibling repo path* row to *Predecessor repo (GitHub)* with URL; `§4` codex-CLI expected line drops the nvm install path and names PATH instead; `§12` *Files to read* predecessor-fork warning links to <https://github.com/0xmhha/huashu-design>. `§13` Glossary entries for *Predecessor fork* and *Upstream* gain URLs at the definition site.
+- **PROJECT-PLAN.md**: §7 *2026-05-09 Step 1 complete* entry — the `Repo created at …` line now records the GitHub URL with a parenthetical noting that the original local path was on the author machine. Other historical entries reference repo names by short name (`huashu-design`), which remain unchanged because they are project-name references rather than location identifiers.
+- Out-of-scope on purpose: short-form repo-name mentions inside prose (e.g. *"the predecessor at `0xmhha/huashu-design`"*) were not touched — those are name references, not path identifiers, and rewriting them to Full URL would degrade readability of the decisions log and §0 briefing. The Full URL is recorded at every *location identifier* slot (repo header, table rows, glossary, fork-warning anchor).
+- License-clean: doc-only change. Tests rerun before commit: 18 / 13 / 19 / 19 / 9, all OK; both JSON templates parse.
+
 ### 2026-05-11 · Doc sync — HANDOFF / PROJECT-PLAN ↔ tree state
 
 - Triggered by a fresh-session audit comparing `HANDOFF.md` and `PROJECT-PLAN.md` against the actual tree. Eight commits (`e82418d` → `3cd7e74`) had landed after the 2026-05-10 Step-4 close and were not reflected in the briefing docs; PROJECT-PLAN.md §6 Step-4 checkboxes were still all unchecked despite four of the items being shipped.
 - **HANDOFF.md**: `Last updated` bumped to 2026-05-11; `Active version` line names the post-Step-4 follow-ups; §0 gains a *Post-Step-4 follow-ups already in tree* paragraph that lists the license change (MIT → Apache 2.0 + NOTICE), the `scripts/init-brand.py` fork-bootstrap helper, the repo-hygiene additions (`SECURITY.md`, `CONTRIBUTING.md`, `.github/dependabot.yml`, `assets/showcase-brand/README.md`), and the stale-references scrub.
 - **PROJECT-PLAN.md**: §2 Scripts table extended from 7 to 9 rows (init-brand + its test); §2 Authored-fresh table now reflects MIT → Apache 2.0 history on the `LICENSE` row and gains a *Post-Step-4 additions* sub-table covering `NOTICE`, `SECURITY.md`, `CONTRIBUTING.md`, `.github/dependabot.yml`, and the two `assets/showcase-brand/*.md` files. §6 Step 4 split into (a) repo-level defaults shipped (5 items, `[x]`) and (b) per-fork actions (6 items, `[ ]` — adopter-owned by design). §8 Validation block names the team-brand-spec JSON parse alongside the settings JSON, and the closing line records the 2026-05-11 full-chain pass (78 tests).
 - License-clean: doc-only change; no new code, no upstream prose. Tests rerun before this commit: 18 / 13 / 19 / 19 / 9, all OK; both JSON templates parse; `scan_assets.py --dir assets/` reports clean for every showcase PNG.
-- Items deliberately NOT touched in this pass: `HANDOFF.md §0` `Repo` path (still `/Users/kevin/...`) — operational policy decision (preserve original-author path vs abstract). Surfaced as A-2 in the audit for a future session to decide.
+- Items deliberately NOT touched in this pass: `HANDOFF.md §0` `Repo` path (still the original-author absolute path) — operational policy decision (preserve original-author path vs abstract). Surfaced as A-2 in the audit for a future session to decide. *Resolved in the 2026-05-11 doc-path normalization entry above.*
 
 ### 2026-05-10 · Step 4.4 — external asset hosts whitelist boost
 

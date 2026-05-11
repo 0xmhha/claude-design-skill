@@ -7,7 +7,7 @@
 
 **Last updated**: 2026-05-11
 **Active version**: Step 1–4 shipped (2026-05-10) + post-Step-4 doc/policy follow-ups (2026-05-10 → 2026-05-11)
-**Repo**: `/Users/kevin/work/github/0xmhha/claude-design-skill`
+**Repo**: <https://github.com/0xmhha/claude-design-skill> (clone locally; commands in this doc assume `cd <repo-root>` first)
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.
 
@@ -60,7 +60,7 @@ If you find yourself "filling in" a body section by reading the upstream and rew
 Before reading anything else, confirm the environment is sane.
 
 ```bash
-cd /Users/kevin/work/github/0xmhha/claude-design-skill
+cd <repo-root>   # your local clone of <https://github.com/0xmhha/claude-design-skill>
 
 # 1. Tests must all pass
 python3 scripts/test_svg_sanitize.py 2>&1        | grep -E '^(Ran|OK|FAIL)'
@@ -85,7 +85,7 @@ git status
 
 # 4. Codex CLI sanity (only if user asks for codex work)
 which codex && codex --version
-# Expected: /Users/kevin/.nvm/.../codex, version >= 0.130 (validated 2026-05-10).
+# Expected: codex on PATH (installed via nvm or system package), version >= 0.130 (validated 2026-05-10 with codex 0.130.0).
 ```
 
 If any of these fail, **stop and report**. Don't try to fix the environment by guessing — the user runs codex CLI from a node-version manager, has a private OAuth token, and changes there could be deliberate.
@@ -156,7 +156,7 @@ These were verified live on 2026-05-09. They might shift; if your session is muc
 | Generated PNG storage path | `~/.codex/generated_images/<session-id>/ig_<hash>.png` (one level deeper than the older flat layout) |
 | Every gpt-image-2 PNG embeds | `caBX` C2PA / JUMBF chunk (~25 KB) between IHDR and IDAT |
 | Predecessor fork status | Frozen at commit `528539f` on `master`, public at `0xmhha/huashu-design` |
-| Sibling repo path (predecessor) | `/Users/kevin/work/github/0xmhha/huashu-design` |
+| Predecessor repo (GitHub) | <https://github.com/0xmhha/huashu-design> |
 
 ### Tool versions / shell
 
@@ -448,14 +448,14 @@ When you finish a meaningful chunk of work in your session, update HANDOFF.md's 
 5. **`CHANGELOG.md`** — release log; entries from `[Unreleased]` map back to Step 2 / Step 3 / Step 4 commits (2026-05-09 → 2026-05-10).
 6. The specific reference doc for the section you're working on (e.g., for an animation pass, read `references/animation-engine.md`, `references/animation-best-practices.md`, `references/animation-pitfalls.md`; for a vague design brief, start at `references/design-styles.md`).
 
-Don't read the predecessor fork at `/Users/kevin/work/github/0xmhha/huashu-design` for prose. You can read it for code spec on files that have a maintainer-authored counterpart (e.g., `assets/android_frame.jsx`) — but `SKILL.md` and `references/design-styles.md` and `references/scene-templates.md` etc. **must not be a paraphrase source**. If you find yourself reading them for "inspiration", stop.
+Don't read the predecessor fork at <https://github.com/0xmhha/huashu-design> for prose. You can read it for code spec on files that have a maintainer-authored counterpart (e.g., `assets/android_frame.jsx`) — but `SKILL.md` and `references/design-styles.md` and `references/scene-templates.md` etc. **must not be a paraphrase source**. If you find yourself reading them for "inspiration", stop.
 
 ---
 
 ## 13 · Glossary (terms you'll see in this repo)
 
-- **Predecessor fork** — `0xmhha/huashu-design`, the security-hardened fork of the upstream `huashu-design` skill. Frozen at commit `528539f` on 2026-05-09. Public on GitHub.
-- **Upstream** — `alchaincyf/huashu-design`. The original skill the predecessor forked from. Personal-use license.
+- **Predecessor fork** — <https://github.com/0xmhha/huashu-design>, the security-hardened fork of the upstream skill. Frozen at commit `528539f` on 2026-05-09. Public on GitHub.
+- **Upstream** — <https://github.com/alchaincyf/huashu-design>. The original skill the predecessor forked from. Personal-use license.
 - **Carryover** — files brought from the predecessor fork that are 100% maintainer-authored (Phase 1–4.2 work). License-clean to bring here.
 - **Step 1 / Step 2 / Step 3 / Step 4** — see `PROJECT-PLAN.md`. Steps 1–4 all shipped on 2026-05-10; Step 3.5 SFX library was retired by user instruction (visual-only project). The remaining work is per-fork (real `team-brand-spec.json` values, internal codenames, internal hosts, LICENSE / mirror policy).
 - **Confidentiality gate** — the codename / NDA / unreleased-product check that fires before any external call. Patterns in `references/security-config.md §1.5`.
