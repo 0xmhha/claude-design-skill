@@ -102,6 +102,43 @@ Source: <https://www.coinbase.com/press> (official press kit; bot-gated on direc
 - **Asset host**: `www.coinbase.com`, `assets.coinbase.com`.
 - **Logo aspect**: mark ≈ 1:1; wordmark ≈ 4:1.
 
+### game-01 · Riot Games · Valorant
+
+Source: <https://colorcodeshub.com/brand/valorant> + <https://fontswan.com/valorant-font/> + <https://coryschmitz.com/VALORANT> (designer Cory Schmitz's case study for the original Valorant identity).
+
+- **Color — primary**: `Valorant Red #FF4655` (RGB 255 70 85, Pantone 1785 C).
+- **Color — palette extensions**: `#FD4556`, `#BD3944`, `#53212B` (deep red/maroon shades for HUD chrome), `#FFFBF5` (off-white surface / paper tone).
+- **Color — black**: pure black `#000000` for emblem + symbols + dark surfaces.
+- **Typography — in-game UI / menus / chat**: `DIN Next` (sans-serif, modern, high-legibility, condensed at HUD sizes).
+- **Typography — logo**: custom angular "Valorant" logotype (chevron-derived; not a redistributable typeface).
+- **Logo**: stylized `V` chevron mark + uppercase wordmark.
+- **Asset host**: `playvalorant.com`, Riot brand resources.
+- **Logo aspect**: chevron mark ≈ 1:1; with wordmark ≈ 4:1.
+
+### game-02 · miHoYo (HoYoverse) · Genshin Impact
+
+Source: <https://genshin-impact.fandom.com/wiki/Typeface> (community wiki; mirrors miHoYo's own UI specifications) + <https://1000logos.net/hoyoverse-logo/> (HoYoverse logo + identity overview).
+
+- **Color — game-side identity**: monochrome black + off-white for the Genshin wordmark; the in-game UI sits over photographic backgrounds and uses gold (`~#E6CDA0` warm gold, observation) for the primary accent / framing chrome on menus, inventory, gacha banner cards.
+- **Color — HoYoverse master brand**: black + white base with a "light and shiny gradient blue-purple-pink scheme" on the 3D ring emblem; blue is the dominant shade. Specific hex codes not enumerated in public sources as of 2026-05-11.
+- **Typography — primary**: `HYWenHei-85W` (proprietary miHoYo derivative of Hanyi WenHei 85W Extra Bold) — supports CJK with Japanese-style display when language is set to JP, fullwidth-interpunct fixes, and other tweaks. Not openly licensed.
+- **Typography — Latin fallback**: not centrally documented; in-game Latin glyphs visually align with a humanist serif/sans pairing (observation).
+- **Logo**: stylized "Genshin Impact" wordmark, monochrome black; "glyph transformations" so letters incorporate weapon shapes (a Schmitz-style identity choice).
+- **Asset host**: `genshin.hoyoverse.com`, `hoyoverse.com`.
+- **Logo aspect**: wordmark ≈ 5:1.
+
+### game-03 · Bungie · Destiny 2
+
+Source: <https://dwsn3ee3.wordpress.com/2014/09/16/destiny-futura-and-helvetica/> (Bungie typography reverse-engineering case study) + <https://www.bungie.net> production observation.
+
+- **Typography — logo / display**: `Futura` (geometric sans, the Destiny logo's wordmark and display headings).
+- **Typography — UI / menus / body**: `Neue Haas Grotesk` (the modern Helvetica that Christian Schwartz cleaned up in 2010). Standard Helvetica-family stack as fallback.
+- **Color — class identity (alpha-tier brand axis)**: Hunter cyan/navy band, Warlock yellow/orange band, Titan red band — these are the *content* axis, not the UI brand axis. Specific hex codes not enumerated in public Bungie press materials as of 2026-05-11.
+- **Color — UI chrome**: deep blue-black (`~#0C1216` observation) with high-luminance white text; status accents in cyan + amber for state changes (damage / cooldown), gold for legendary-tier loot framing. Observation, unconfirmed.
+- **Logo**: stylized `Destiny 2` wordmark in Futura; symbol set (mark + class glyphs) is the Tribal Symbols pack.
+- **Asset host**: `www.bungie.net`, `www.destinythegame.com`.
+- **Logo aspect**: wordmark ≈ 5:1.
+
 ---
 
 ## Sub-step status
@@ -112,9 +149,9 @@ Source: <https://www.coinbase.com/press> (official press kit; bot-gated on direc
 - [x] Lens Protocol (color values are PDF-only in brand-kit; recorded as known limitation)
 - [x] Farcaster / Warpcast (single-token CC0 brand: `#8A63D2`)
 - [x] Coinbase (primary `#1652F0` + Coinbase Sans + Public Sans 500 open fallback)
-- [ ] Valorant — Batch 3
-- [ ] Genshin Impact — Batch 3
-- [ ] Destiny 2 — Batch 3
+- [x] Valorant (primary `#FF4655` + DIN Next UI typography)
+- [x] Genshin Impact (HYWenHei-85W proprietary; UI gold accent observation)
+- [x] Destiny 2 (Futura logo + Neue Haas Grotesk UI; class-color axis qualitative)
 - [ ] Hades — Batch 4
 - [ ] Clash Royale — Batch 4
 - [ ] Aggregate decision values — Batch 5
