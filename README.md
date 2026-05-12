@@ -4,7 +4,7 @@
 [![sanitizers](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/0xmhha/claude-design-skill/actions/workflows/sanitizers.yml)
 
 > Claude Code-based design skill for hi-fi prototyping and Figma MCP-driven precision design work.
-> **Status: Step 1–6 shipped · 2026-05-10 → 2026-05-12 · clean-room rewrite, no upstream skill inherited.**
+> **Status: Step 1–7 shipped · v1.0.0 (2026-05-12) · clean-room rewrite, no upstream skill inherited.**
 > Step 5 promoted `team-brand-spec` from placeholder to operational default (evidence-anchored to an 11-service style sweep) and added a Figma → spec extractor.
 > CI: GitHub Actions on every push and PR. 18 + 13 + 19 + 19 + 11 + 13 + 15 = **108 regression tests** across the seven sanitizer / engine / fork-helper / Figma-extractor / Figma-viewer suites; 16 prebuilt visual showcases under `assets/showcase-brand/generated/`.
 

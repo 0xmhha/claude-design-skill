@@ -219,6 +219,10 @@ The setup above is **per-machine + per-project**. For a team:
    # Each teammate runs:
    claude plugin marketplace add 0xmhha/claude-design-skill
    #   (or your internal mirror: <your-internal-git-host>/claude-design-skill)
+   #   marketplace.json source.ref pins v1.0.0 — the install resolves to
+   #   that git tag, not master. Upgrading to a future v1.x release
+   #   requires the maintainer to bump source.ref and re-publish; adopters
+   #   then re-run `marketplace add` to refresh the pin.
    claude plugin install claude-design-skill
    ```
 

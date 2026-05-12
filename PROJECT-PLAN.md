@@ -548,6 +548,20 @@ Out of scope for Step 5:
 - The version stamp inside `_template_meta` bumped `2026-05-09 → 2026-05-10`.
 - Validated: 18/13/19/19 regression + JSON template parse all still OK.
 
+### 2026-05-12 · v1.0.0 release ship (via `/buddy:ship-release`)
+
+- D-01~D-06 sequence per `docs/plan/06-acceptance-criteria.md §1` and `docs/plan/08-buddy-skill-mapping.md`:
+  - **D-01 CHANGELOG split**: `## [Unreleased]` → empty placeholder + `## [1.0.0] · 2026-05-12` (contents = Step 1–7 + post-Step + plan-build + autoplan audit trail).
+  - **D-02 plugin/marketplace version bump**: `.claude-plugin/plugin.json` `version "0.1.0" → "1.0.0"`. `.claude-plugin/marketplace.json` `plugins[0].version "0.1.0" → "1.0.0"`, `source.ref "master" → "v1.0.0"` (pin per user taste decision — `claude plugin install` auto-resolves to the release tag).
+  - **D-03 doc version bump**: README + SKILL status header `Step 1–6` → `Step 1–7 shipped · v1.0.0 (2026-05-12)`. HANDOFF active version line bumped + Step 7 block `version 0.1.0 → 1.0.0`.
+  - **D-04 git tag push**: `git tag v1.0.0` stamped on the ship commit + `git push origin v1.0.0`.
+  - **D-05 GitHub release**: `gh release create v1.0.0` with body from CHANGELOG `[1.0.0]` section.
+  - **D-06 marketplace ref pin**: `QUICKSTART.md §6 step 4` gains the pin-semantics explanation (marketplace.json source.ref pins v1.0.0; upgrade requires maintainer ref bump + re-publish).
+- Pre-flight: 108/108 tests PASS on master HEAD `72752e2`. Post-edit re-run: 108/108 (no test-affecting code changed).
+- **Cross-decision: autoplan recommendation B accepted** — D + A + B-00 single cycle; C deferred. Rollback recipes (D-04: `git tag -d v1.0.0 && git push origin :refs/tags/v1.0.0`; D-05: `gh release delete v1.0.0 --yes`) live in `docs/plan/06-acceptance-criteria.md §1`.
+- License-clean: doc + manifest only. No upstream paraphrase.
+- Next: A category dogfooding (A-01 → A-04) — first real-world scenario uses the freshly-tagged v1.0.0 install.
+
 ---
 
 ## 8. Validation

@@ -8,11 +8,11 @@
     {
       "name": "claude-design-skill",
       "description": "Visual-only design skill — Junior Designer workflow · Anti-AI-slop checklist · App prototype rules · Slide deck conventions · Tweaks live-tuning · Critique guide · 18-direction design philosophy catalog · 9 scene templates · Stage / Sprite animation engine + 14-curve Easing · 16 prebuilt visual showcases · Figma extractor (`figma-to-brand-spec.py`) · Figma viewer (`figma-viewer.py`) · Codex image-2 bridge with strip-then-scan import gate. 108 regression tests, stdlib-only.",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "source": {
         "source": "url",
         "url": "https://github.com/0xmhha/claude-design-skill.git",
-        "ref": "master"
+        "ref": "v1.0.0"
       },
       "author": {
         "name": "0xmhha"

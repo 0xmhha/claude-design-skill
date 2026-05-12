@@ -9,6 +9,10 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 
 ## [Unreleased]
 
+## [1.0.0] · 2026-05-12
+
+First stable tagged release. Contents = everything below this line (Step 1 → Step 7 + post-Step doc + plan-build + autoplan audit trail).
+
 ### Added — `docs/plan/` implementation plan (via `/buddy:plan-build`)
 
 - 9 plan documents under `docs/plan/` (≈ 2100 lines): overview, current-state snapshot, remaining-work inventory (4 카테고리 × 17 항목), task decomposition (14 atomic tasks with actor_track / estimated_hours / dependencies / acceptance), dependencies DAG + critical path, parallel-execution worker matrix + 4 sync points, acceptance criteria (lint / test / smoke / human-judgement per task), calendar timeline (best 3d / expected 9d / p90 14d / worst 6w), buddy skill mapping with concrete `/buddy:*` command examples per task. Plus `B-guide-coverage.md` for the B-00 task artefact (PROJECT-PLAN §6 (b) 6/6 ✅).

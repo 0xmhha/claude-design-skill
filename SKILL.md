@@ -16,7 +16,7 @@ description: |
 
 # claude-design-skill
 
-> Status: **Step 1–6 shipped · 2026-05-10 → 2026-05-12**
+> Status: **Step 1–7 shipped · v1.0.0 (2026-05-12)**
 > All body sections are authored; the design-knowledge catalog,
 > animation engine, and prebuilt showcases ship alongside. Step 5
 > promotes `team-brand-spec` from placeholder to operational default
