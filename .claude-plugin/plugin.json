@@ -7,10 +7,7 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/0xmhha/claude-design-skill",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/0xmhha/claude-design-skill.git"
-  },
+  "repository": "https://github.com/0xmhha/claude-design-skill.git",
   "keywords": [
     "design",
     "figma",
