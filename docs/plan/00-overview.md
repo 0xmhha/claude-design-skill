@@ -91,3 +91,14 @@ B 카테고리는 adopter team의 결정 영역이므로 본 plan에서 *실행 
 - [ ] 각 문서 끝에 *다음 문서 / 참조* 라우팅 포함
 
 본 plan-build orchestrator의 산출물로서 commit message는 `docs: docs/plan/ — implementation plan via /buddy:plan-build` 형식.
+
+## 8 · autoplan audit trail (2026-05-12)
+
+`/buddy:autoplan` 4-mode review 통과. 결정 요약:
+
+- **Scope mode**: SELECTIVE EXPANSION (기존 product enhancement 단계). 전제 3/3 통과.
+- **Approach 선택**: **B (balanced)** — D (release) + A (dogfood) + B-00 (guide check) 1 cycle. C (Step 8+ enhancements)는 A-04 learning-edge 의존이라 defer.
+- **Eng review 결과**: DAG cycle 없음, 14 task 모두 single-PR scope, acceptance 100% verifiable. 2 minor gap 반영 → D-04/D-05 rollback recipe 추가 (§1), A-04 dogfood log template (`docs/dogfood/_template.md`) 추가.
+- **DevEx review 결과**: persona = team-lead distributing to teammates. POLISH 모드. T0 마찰 낮음 (plugin install 1줄). magical moment (figma-viewer.py) 존재. D-06 marketplace pin은 QUICKSTART §6 단계 4에 이미 명시.
+- **Cross-phase theme**: dogfood log schema 표준화 → A-04 합성을 grep recipe로 자동화. `_template.md` 의 5 H2 섹션이 SSoT.
+- **첫 실행 권장**: `/buddy:ship-release` (D-01 → D-06 sequence).

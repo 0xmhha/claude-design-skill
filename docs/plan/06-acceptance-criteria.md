@@ -63,6 +63,12 @@ git ls-remote --tags origin | grep v1.0.0
 [[ "$(git rev-parse v1.0.0)" = "$(git rev-parse master)" ]] && echo "tag = HEAD"
 ```
 
+**rollback** (tag을 잘못 찍었거나 D-05 직전에 취소해야 할 때):
+```bash
+git tag -d v1.0.0
+git push origin :refs/tags/v1.0.0
+```
+
 ### D-05-github-release
 
 **판정 방식**: GitHub API 응답
@@ -73,6 +79,12 @@ git ls-remote --tags origin | grep v1.0.0
 **verify**:
 ```bash
 gh release view v1.0.0 --json tagName,body -q '{tag:.tagName,body_lines:(.body|split("\n")|length)}'
+```
+
+**rollback** (release note 오류 또는 잘못된 tag으로 publish 했을 때):
+```bash
+gh release delete v1.0.0 --yes
+# 필요 시 D-04 rollback 함께 실행해서 tag 자체도 제거
 ```
 
 ### D-06-marketplace-ref-pin
@@ -92,27 +104,27 @@ grep -n "v1.0.0" QUICKSTART.md references/figma-mcp-setup.md 2>/dev/null
 ### A-01-default-dogfood-spec
 
 **판정 방식**: human (designer) judgement
-- ✅ `docs/dogfood/01-nft-card-spec.md` 신규 (1 파일)
+- ✅ `docs/dogfood/01-nft-card-spec.md` 신규 (1 파일) — `docs/dogfood/_template.md` schema 따름 (5 H2 섹션: scenario / steps / observed / friction / score)
 - ✅ 4-stage workflow 단계 모두 명시: assumptions list (≥ 5 entries with `(verified)` / `(inferred)` / `(open)` tags), reasoning paragraph, placeholder mockup (ASCII 또는 SVG 또는 figma-viewer.py 결과), anti-AI-slop self-score
 - ✅ self-score < 3 hits (threshold rule by `SKILL.md §Anti-AI-slop`)
 
 ### A-02-figma-mcp-smoke
 
 **판정 방식**: dogfood log + 외부 effect 검증
-- ✅ `docs/dogfood/02-figma-mcp-smoke.md` 신규
-- ✅ `figma_get_selection` 호출 결과 캡처 (node id + name)
-- ✅ batch rename 결과 (current → new 매핑 N개)
-- ✅ component promotion 결과 (component name + instance count)
-- ✅ 마찰점 (있다면) 명시
+- ✅ `docs/dogfood/02-figma-mcp-smoke.md` 신규 — `_template.md` schema 따름
+- ✅ `figma_get_selection` 호출 결과 캡처 (node id + name) → `observed` 섹션
+- ✅ batch rename 결과 (current → new 매핑 N개) → `observed`
+- ✅ component promotion 결과 (component name + instance count) → `observed`
+- ✅ 마찰점 (있다면) → `friction` 섹션 (P0/P1/P2 라벨)
 
 ### A-03-codex-e2e-smoke
 
 **판정 방식**: dogfood log + file 검증
-- ✅ `docs/dogfood/03-codex-e2e-smoke.md` 신규
-- ✅ Codex CLI 명령 + 출력 PNG SHA-256 명시
-- ✅ `codex-image-import.py` exit code 0 + 새 PROVENANCE.md entry
-- ✅ (옵션) Figma 배치 또는 manual placement instruction 출력
-- ✅ 마찰점 명시
+- ✅ `docs/dogfood/03-codex-e2e-smoke.md` 신규 — `_template.md` schema 따름
+- ✅ Codex CLI 명령 + 출력 PNG SHA-256 → `steps` + `observed`
+- ✅ `codex-image-import.py` exit code 0 + 새 PROVENANCE.md entry → `observed`
+- ✅ (옵션) Figma 배치 또는 manual placement instruction 출력 → `observed`
+- ✅ 마찰점 명시 → `friction` 섹션 (P0/P1/P2 라벨)
 
 ### A-04-feedback-backlog
 
@@ -120,6 +132,7 @@ grep -n "v1.0.0" QUICKSTART.md references/figma-mcp-setup.md 2>/dev/null
 - ✅ A-01·A-02·A-03 마찰점 N개 → `PROJECT-PLAN.md §7` decisions-log entry 1개 (날짜 + 항목 list)
 - ✅ 또는 GitHub Issues N개 (link 기록)
 - ✅ 각 마찰점에 *우선순위* (P0/P1/P2) 부여
+- ✅ 합성 입력: 세 dogfood log의 `friction` 섹션을 `_template.md` 의 grep recipe로 수집 — `grep -h "^| F-" docs/dogfood/0?-*.md`
 
 ## 3 · C · Step 8+ enhancement
 
