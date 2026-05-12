@@ -40,6 +40,8 @@
 
 *잘 안 되었거나 추가 학습이 필요했던 지점* — adopter 관점의 마찰점. P0/P1/P2 라벨 부여.
 
+**Priority rule**: *install path 단계 (clone / marketplace add / plugin install / config drop-in / brand stamp 직전까지)에서 발생한 마찰은 무조건 P0*. install이 막히면 adopter는 *first deliverable에 도달하지 못한다* — magical moment 자체가 차단되므로 P0. 그 뒤 단계의 마찰은 시나리오 영향도로 P1/P2.
+
 | ID | priority | description | suggested fix |
 |----|----------|-------------|---------------|
 | F-01 | P1 | `init-brand.py --example` 와 `--default` 가 동일 동작인지 명시 안 됨 | README §Quickstart에 alias 한 줄 추가 |

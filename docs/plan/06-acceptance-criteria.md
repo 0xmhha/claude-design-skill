@@ -105,6 +105,7 @@ grep -n "v1.0.0" QUICKSTART.md references/figma-mcp-setup.md 2>/dev/null
 
 **판정 방식**: human (designer) judgement
 - ✅ `docs/dogfood/01-nft-card-spec.md` 신규 (1 파일) — `docs/dogfood/_template.md` schema 따름 (5 H2 섹션: scenario / steps / observed / friction / score)
+- ✅ **Steps 첫 부분에 v1.0.0 plugin self-install verification** (fresh checkout · `claude plugin marketplace add` · `claude plugin install` · `/skill` 검출 + 소요시간 측정). install 단계 마찰은 `_template.md` priority rule 따라 **P0**로 기록.
 - ✅ 4-stage workflow 단계 모두 명시: assumptions list (≥ 5 entries with `(verified)` / `(inferred)` / `(open)` tags), reasoning paragraph, placeholder mockup (ASCII 또는 SVG 또는 figma-viewer.py 결과), anti-AI-slop self-score
 - ✅ self-score < 3 hits (threshold rule by `SKILL.md §Anti-AI-slop`)
 
