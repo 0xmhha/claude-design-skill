@@ -6,7 +6,7 @@
 > prevent.
 
 **Last updated**: 2026-05-12
-**Active version**: Step 1–7 shipped (2026-05-10 → 2026-05-12). Step 5 closed operational defaults + Figma ingestion path; Step 6 closed Figma viewer + MCP setup + image-export + page-organization; Step 7 added the 15-minute QUICKSTART.md walkthrough + Claude Code plugin manifest (`.claude-plugin/plugin.json` + `marketplace.json`) so teams can install with `claude plugin marketplace add` instead of clone-and-copy. 108 regression tests unchanged.
+**Active version**: Step 1–7 shipped (2026-05-10 → 2026-05-12) + `/buddy:plan-build` invocation (2026-05-12) producing 9 plan documents under `docs/plan/`. Step 5 closed operational defaults + Figma ingestion path; Step 6 closed Figma viewer + MCP setup + image-export + page-organization; Step 7 added the 15-minute QUICKSTART.md walkthrough + Claude Code plugin manifest. The plan-build output now drives the next phase: §7 ship-release (v1.0.0) → §5 build-feature (enhancements) → §8 iterate-product (backlog). 108 regression tests unchanged. Start at `docs/plan/00-overview.md`.
 **Repo**: <https://github.com/0xmhha/claude-design-skill> (clone locally; commands in this doc assume `cd <repo-root>` first)
 **User**: 0xmhha (Kevin) — internal design platform R&D, game/web3 studio.
 **Language preference**: Korean response with English technical terms allowed.

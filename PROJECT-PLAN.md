@@ -350,6 +350,23 @@ Out of scope for Step 5:
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
 
+### 2026-05-12 · plan-build invocation — docs/plan/ implementation plan
+
+- User triggered `/buddy:plan-build` orchestrator after Step 7 closed, asking to author a step-by-step plan under `docs/plan/` and map each remaining work item to a buddy lifecycle skill.
+- **Output**: 9 markdown files under `docs/plan/` (≈ 2100 lines combined):
+  - `00-overview.md` — plan map + buddy 9-phase 매핑 (3 카테고리 × 17 항목 raw + 14 atomic tasks).
+  - `01-current-state.md` — Step 1–7 shipped snapshot, 108 회귀 테스트 invariants, plugin install 검증 결과.
+  - `02-remaining-work-inventory.md` — 4 카테고리 (A · Adopter dogfooding · B · Per-fork · C · Enhancement · D · Release) × 17 항목 raw + priority 1~10.
+  - `03-task-decomposition.md` — 14 atomic tasks (D 6 · A 4 · C 3 · B 1) with `actor_track / estimated_hours / dependencies / acceptance` 필수 속성.
+  - `04-dependencies-dag.md` — ASCII DAG + edge list + critical path + parallel-safe levels L0~L6 + risk matrix.
+  - `05-parallel-execution.md` — worker capability matrix (W1 maintainer · W2 designer · W3 AI agent · W4 Dependabot) + level별 batch schedule + 4 sync points (S1~S4).
+  - `06-acceptance-criteria.md` — 14 task 별 lint / test / smoke / human-judgement 판정 기준 + 5 cross-task release-gate 조건.
+  - `07-timeline.md` — best (3 days) / expected (9 days) / p90 (14 days) / worst (6 weeks) scenarios + 5 milestones (M1 v1.0.0 ship → M5 v1.1.0).
+  - `08-buddy-skill-mapping.md` — 14 task 별 buddy command 매핑 (ship-release · iterate-product · build-feature · write-adr · autoplan · consult-codex · save/restore-context) + 7-step plan 사용 매뉴얼.
+  - `B-guide-coverage.md` — B-00 task 산출물, PROJECT-PLAN.md §6 (b) 6/6 ✅ checklist.
+- **첫 실행 명령** (사용자가 day-0 release ship 진행 시): `/buddy:ship-release -- "v1.0.0 release: CHANGELOG split + plugin/marketplace version bump + doc bumps + git tag + GitHub release. Reference: docs/plan/03 §D + docs/plan/06 §1."`
+- License-clean: doc-only change. 108 회귀 테스트 그대로 통과. Plan 자체가 본 entry의 *artefact*; 추후 plan 실행 결과는 별도 entry로 append.
+
 ### 2026-05-12 · CI pin bump + ci-template doc sync
 
 - Dependabot PR #1 merged (squash, `e37038d`): `actions/checkout@v4 → v6`, `actions/setup-python@v5 → v6`, `actions/setup-node@v4 → v6`. Post-merge CI green in 27 s; full local re-verification covered (a) 7-suite 108 tests OK, (b) 6 JSON files (settings + brand-spec default + 2 figma fixtures + plugin.json + marketplace.json) all parse, (c) asset scan clean across 16 showcase PNGs, (d) 3 CLI smoke (`figma-viewer.py`, `init-brand.py`, `figma-to-brand-spec.py`) all emit expected output (`#5B7CFA` from the merge path, `Default Studio` from the carrier).

@@ -26,6 +26,8 @@ Three load-bearing rules govern every external call:
 claude-design-skill/
 ├── HANDOFF.md                        # ⭐ READ FIRST in a new session — context briefing + anti-patterns
 ├── QUICKSTART.md                     # 🚀 15-minute walkthrough — individual / team / read-only paths
+├── docs/
+│   └── plan/                         # 9-doc implementation plan via /buddy:plan-build (overview · DAG · timeline · buddy mapping)
 ├── SKILL.md                          # main agent doc — workflows, App / Slide / Anti-slop / Junior Designer / Tweaks / Critique sections
 ├── README.md                         # this file
 ├── LICENSE                           # Apache-2.0

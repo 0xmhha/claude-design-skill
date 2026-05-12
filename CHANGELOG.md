@@ -9,6 +9,12 @@ This project is a clean-room rewrite. The history is independent. See `PROJECT-P
 
 ## [Unreleased]
 
+### Added — `docs/plan/` implementation plan (via `/buddy:plan-build`)
+
+- 9 plan documents under `docs/plan/` (≈ 2100 lines): overview, current-state snapshot, remaining-work inventory (4 카테고리 × 17 항목), task decomposition (14 atomic tasks with actor_track / estimated_hours / dependencies / acceptance), dependencies DAG + critical path, parallel-execution worker matrix + 4 sync points, acceptance criteria (lint / test / smoke / human-judgement per task), calendar timeline (best 3d / expected 9d / p90 14d / worst 6w), buddy skill mapping with concrete `/buddy:*` command examples per task. Plus `B-guide-coverage.md` for the B-00 task artefact (PROJECT-PLAN §6 (b) 6/6 ✅).
+- Plan-build orchestrator invocation logged in PROJECT-PLAN.md §7 (2026-05-12 entry). First executable command: `/buddy:ship-release` for v1.0.0 release ship (M1 milestone).
+- No code changed; 108 회귀 tests unchanged; CI green throughout.
+
 ### Added — Step 7: onboarding (`QUICKSTART.md`) + Claude Code plugin install
 
 - `QUICKSTART.md` — 15-minute walkthrough with three audience-aware paths: individual designer, team lead onboarding 5-20 designers (covers mirror + per-team `team-brand-spec.json` + Figma MCP wiring + plugin install), and read-only reviewer with no Claude Code seat (clone, read docs, run 108 tests, run viewer smoke). 9 sections including prerequisites, env verification, viewer smoke without a token, settings drop-in, brand stamp, first deliverable, team rollout, read-only path, troubleshooting (7-row table), and a next-steps router into the other docs.
