@@ -350,6 +350,12 @@ Out of scope for Step 5:
 - **License-clean evidence reaffirmed**: the 23 carry-over files (`PROJECT-PLAN §2`) and the verbatim domain-pack sections (`§7.1`, `§7.2`) are all the maintainer's own original work — the maintainer holds the copyright and is free to dual-license that work into this repo under Apache 2.0. See the per-step decisions log entries above for the read-scope discipline followed throughout Step 2 / Step 3 (predecessor prose was opened only at the explicit verbatim-allowed sections; license-clean evidence recorded per commit).
 - Doc updates: HANDOFF.md §0 banner + §14 closing list; README.md license section + directory-tree comment; this PROJECT-PLAN.md §1 result line; CHANGELOG.md `[Unreleased]` gets the matching entry. Historical Step 1 mentions of "MIT" inside this decisions log (entries dated 2026-05-09) are left unchanged — the decisions log is append-only and those statements were correct at the time of writing.
 
+### 2026-05-12 · CI pin bump + ci-template doc sync
+
+- Dependabot PR #1 merged (squash, `e37038d`): `actions/checkout@v4 → v6`, `actions/setup-python@v5 → v6`, `actions/setup-node@v4 → v6`. Post-merge CI green in 27 s; full local re-verification covered (a) 7-suite 108 tests OK, (b) 6 JSON files (settings + brand-spec default + 2 figma fixtures + plugin.json + marketplace.json) all parse, (c) asset scan clean across 16 showcase PNGs, (d) 3 CLI smoke (`figma-viewer.py`, `init-brand.py`, `figma-to-brand-spec.py`) all emit expected output (`#5B7CFA` from the merge path, `Default Studio` from the carrier).
+- `references/ci-template.md` GitHub Actions snippet template (the *active reference doc*, not a decisions-log entry) updated to match the live workflow — `actions/checkout@v6`, `actions/setup-python@v6`, `actions/setup-node@v6`. Historical mentions in `PROJECT-PLAN.md §7 2026-05-10 Step 4.3` and `CHANGELOG.md` *Added — Repository governance docs and Dependabot* are append-only and stay at the version they pinned at the time of writing.
+- License-clean: doc + dependency bump. No upstream paraphrase; the Dependabot config (`.github/dependabot.yml`) already grouped the three actions so the bump landed as a single PR not three.
+
 ### 2026-05-12 · Step 7 — onboarding (`QUICKSTART.md`) + plugin install path (`.claude-plugin/`)
 
 - Triggered by user question: *"huashu-design은 어떻게 설치해서 유저가 사용할 수 있도록 지원하고 있어? 그 방식은 편하다고 생각해? claude-design-skill 을 다수의 멀티 유저가 어떻게 쉽게 설치하고, mcp 까지 쉽게 사용할 수 있어?"* The comparison surfaced two gaps:
