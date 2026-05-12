@@ -213,14 +213,25 @@ The setup above is **per-machine + per-project**. For a team:
    plugin form). After your internal mirror is up:
 
    ```bash
+   # If a prior version of the marketplace is registered, remove it first
+   claude plugin marketplace remove claude-design-skill 2>/dev/null || true
+
    # Each teammate runs:
-   claude plugin marketplace add <your-internal-git-host>/claude-design-skill
+   claude plugin marketplace add 0xmhha/claude-design-skill
+   #   (or your internal mirror: <your-internal-git-host>/claude-design-skill)
    claude plugin install claude-design-skill
    ```
 
    The plugin's `.claude-plugin/plugin.json` + `marketplace.json` are
-   already in this repo (root); your internal mirror inherits them on
-   `git push internal`.
+   in the repo root. The marketplace's plugin entry uses a
+   `github` source pointing at this repo, so `marketplace add` may
+   accept either a `owner/repo` shorthand or a full git URL.
+
+   **Troubleshooting**: if `plugin install` reports
+   *"This plugin uses a source type your Claude Code version does
+   not support"*, run `claude --version` — versions older than
+   2.1.x may not yet support the `github` source form. Either
+   upgrade Claude Code or fall back to manual setup (§3 + §4).
 
 5. **CI for the design project.** If your design project (not the skill
    repo) ships its own CI, copy the matching snippet from
