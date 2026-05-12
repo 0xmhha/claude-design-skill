@@ -227,11 +227,20 @@ The setup above is **per-machine + per-project**. For a team:
    `github` source pointing at this repo, so `marketplace add` may
    accept either a `owner/repo` shorthand or a full git URL.
 
-   **Troubleshooting**: if `plugin install` reports
-   *"This plugin uses a source type your Claude Code version does
-   not support"*, run `claude --version` — versions older than
-   2.1.x may not yet support the `github` source form. Either
-   upgrade Claude Code or fall back to manual setup (§3 + §4).
+   **Troubleshooting**:
+   - *"This plugin uses a source type your Claude Code version does
+     not support"*: run `claude --version`. Versions before 2.1.x do
+     not recognise the `url` source form. Upgrade Claude Code or
+     fall back to manual setup (§3 + §4).
+   - *"ssh: connect to host github.com port 22: Operation timed out"*
+     or *"Failed to clone repository"*: your network blocks outbound
+     SSH (port 22). The marketplace ships with an HTTPS `url` source
+     to work around this — if you still see the SSH error, your local
+     git is rewriting `https://` URLs to `git@github.com:` via
+     `insteadOf`. Run `git config --global --get-all url.git@github.com:.insteadOf`
+     and remove any matching rule, or override per-clone with
+     `git config --global url.https://github.com/.insteadOf git@github.com:`
+     (HTTPS-first).
 
 5. **CI for the design project.** If your design project (not the skill
    repo) ships its own CI, copy the matching snippet from
