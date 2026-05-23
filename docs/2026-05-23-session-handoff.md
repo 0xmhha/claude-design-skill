@@ -41,6 +41,7 @@ docs/
 ├── 2026-05-21-figma-mcp-inventory.md                    ← PRE-02 spike (Figma MCP 도구 8 read + 8 write 분석)
 ├── 2026-05-21-pre01-prep.md                             ← PRE-01 미팅 준비 자료 (4 components + expected outcomes)
 ├── TODOS-autoplan.md                                     ← 전체 TODO 추적 (PRE/POST/MONTH-6/REJECTED)
+├── pii-anonymization-git-safety.md                       ← PII 익명화 규칙 + grilling specificity 재정의
 └── .autoplan-backups/                                    ← restore point (gitignored, PII 포함 가능)
 ```
 
@@ -144,12 +145,9 @@ Tracked but modified (이전 commit에 포함된 파일들):
 
 ---
 
-## 8. Memory
+## 8. PII 규칙
 
-project memory 위치: `~/.claude/projects/-Users-wm-it-22-00661-Work-github-study-ai-claude-design-skill/memory/`
-
-저장된 memory:
-- `pii-anonymization-git-safety.md` — anchor 실명 대신 placeholder 사용 규칙 + grilling 시 specificity 재정의 (이름 아닌 행동/시점/구조)
+`docs/pii-anonymization-git-safety.md` — anchor 실명 대신 placeholder 사용 규칙 + grilling 시 specificity 재정의 (이름 아닌 행동/시점/구조). 새 세션에서 반드시 읽을 것.
 
 ---
 
